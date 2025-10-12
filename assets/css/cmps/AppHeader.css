@@ -1,21 +1,20 @@
 .app-header {
     padding: var(--space-md);
     background: var(--clr-header);
-    color: var(--clr-text-invert);
-    border-bottom: 2px solid var(--clr-primary);
+    color: var(--clr-header-text);
+    border-bottom: 1px solid var(--clr-primary);
 }
 
-.app-header h3 {
-    font-family: "Fjalla One", sans-serif;
-    letter-spacing: 1px;
-    margin: 0;
+.logo {
+    height: 4rem;
+
 }
 
 nav a {
-    margin: 0 var(--space-sm);
     color: var(--clr-text-invert);
     text-decoration: none;
     transition: color var(--transition-fast);
+    font-size: 0.95rem;
 }
 
 nav a:hover {
@@ -25,5 +24,86 @@ nav a:hover {
 nav a.active {
     color: var(--clr-secondary);
     font-weight: bold;
-    text-decoration: overline;
+}
+
+.apps-menu-wrapper {
+    position: relative;
+}
+
+.apps-icon {
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--clr-text-invert);
+    padding: var(--space-xs);
+    border-radius: 50%;
+    transition: background var(--transition-fast);
+}
+
+.apps-icon:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* dropdown */
+.apps-dropdown {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background-color: var(--clr-bg);
+    color: var(--clr-text);
+    border-radius: 12px;
+    padding: var(--space-md);
+    grid-template-columns: repeat(3, 80px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transform-origin: top right;
+    animation: openMenu var(--transition-medium) ease-out;
+    z-index: 100;
+}
+
+.app-item {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease;
+}
+
+.app-item:hover {
+    transform: scale(1.05);
+}
+
+.app-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    font-size: 1.5rem;
+}
+
+.app-icon.gmail {
+    background-color: #ea4335;
+    color: #fff;
+}
+
+.app-icon.note {
+    background-color: #fbbc05;
+    color: #000;
+}
+
+.app-icon.books {
+    background-color: #4285f4;
+    color: #fff;
+}
+
+.app-icon.about {
+    background-color: #34a853;
+    color: #fff;
+}
+
+@keyframes openMenu {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
