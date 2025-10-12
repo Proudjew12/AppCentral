@@ -1,33 +1,20 @@
- /* home */
-
 .home {
-    background-color: var(--bg2);
-}
-
-.home .box-container {
-    padding: 1em 0;
+    background-color: var(--clr-bg-alt);
+    padding: var(--space-lg) 0;
 }
 
 .home .box1 {
-    background-color: var(--color1);
+    background-color: var(--clr-primary);
     min-height: 10em;
+    border-radius: 8px;
 }
 
 .home .box2 {
-    background-color: var(--color2);
+    background-color: var(--clr-secondary);
     min-height: 10em;
+    border-radius: 8px;
 }
 
- @media (min-width: 750px) {
-    .home .box-container {
-        display: flex;
-        flex-direction: row-reverse;
-    }
-    .home .box1 {
-        flex: 1
-    }
-    .home .box2 {
-        width: 30vw;
-    }
-    
+.home .box-container {
+    gap: var(--space-md);
 }
