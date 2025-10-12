@@ -1,8 +1,9 @@
-
 @import './basics/vars.css';
 @import './basics/base.css';
 @import './basics/helpers.css';
 @import './basics/layout.css';
+@import './basics/mq.css';
+@import './basics/typography.css';
 
 @import './cmps/home.css';
 @import './cmps/UserMsg.css';

@@ -1,13 +1,33 @@
 :root {
-    --bg1: lightblue;
-    --bg2: rgb(50, 160, 204);
-    --bg3: rgb(89, 134, 206);
-    
-    --color1: rgb(26, 115, 232);
-    --color2: rgb(24, 128, 56);
-    --color3: rgb(197, 34, 31);
+    --clr-primary: #0a4283;
+    --clr-primary-light: #1260b8;
+    --clr-primary-dark: #062d5b;
 
-    --gray2: #aaa;
-    --gray2: #888;
-    --gray2: #333;
+    --clr-secondary: #f39c12;
+    --clr-accent: #e74c3c;
+
+    --clr-bg: #fff;
+    --clr-bg-alt: #f4f4f4;
+
+    --clr-text: #222;
+    --clr-text-light: #666;
+    --clr-text-invert: #fff;
+
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 32px;
+    --space-xl: 64px;
+
+    --s: 600px;
+    --m: 890px;
+    --l: 1060px;
+
+    --transition-fast: .2s ease;
+    --transition-medium: .4s ease;
+    --transition-slow: .6s ease;
+
+    --bg-gradient-dark:
+        radial-gradient(circle at center, #2a2b30 0%, #1a1b1f 70%),
+        repeating-conic-gradient(rgba(255, 255, 255, .02) 0deg 10deg, transparent 10deg 20deg);
 }
