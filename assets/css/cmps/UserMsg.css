@@ -19,7 +19,7 @@
     background-color: var(--color3);
 }
 
-.user-msg button{
-   float: right;
-   margin-inline-start: 4px;
+.user-msg button {
+    float: right;
+    margin-inline-start: 4px;
 }

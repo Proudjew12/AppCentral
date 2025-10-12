@@ -1,7 +1,7 @@
-@import './basics/vars.css';
 @import './basics/base.css';
 @import './basics/helpers.css';
 @import './basics/layout.css';
+@import './basics/vars.css';
 @import './basics/mq.css';
 @import './basics/typography.css';
 

@@ -1,32 +1,43 @@
 import { eventBusService } from '../services/event-bus.service.js'
-const { useState, useEffect, useRef } = React
+const { useEffect } = React
 
 export function UserMsg() {
 
-  const [msg, setMsg] = useState(null)
-  const timeoutIdRef = useRef()
-
   useEffect(() => {
     const unsubscribe = eventBusService.on('show-user-msg', (msg) => {
-      setMsg(msg)
-      if (timeoutIdRef.current) {
-        clearTimeout(timeoutIdRef.current)
-        timeoutIdRef.current = null
-      }
-      timeoutIdRef.current = setTimeout(closeMsg, 3000)
+      showSweetAlert(msg)
     })
     return unsubscribe
   }, [])
 
-  function closeMsg() {
-    setMsg(null)
-  }
-  const className = (msg)? `${msg.type} open` : '' 
-  return (
-    <section className={`user-msg ${className}`}>
-      <button onClick={closeMsg}>x</button>
-      {msg && msg.txt}
-    </section>
-  )
-}
+  function showSweetAlert(msg) {
+    const { type, txt } = msg
 
+    const iconMap = {
+      success: 'success',
+      error: 'error',
+      warning: 'warning',
+      info: 'info'
+    }
+
+    Swal.fire({
+      title: txt || 'Something happened!',
+      icon: iconMap[type] || 'info',
+      timer: 2000,
+      showConfirmButton: false,
+      timerProgressBar: true,
+      position: 'middle',
+      toast: true,
+      background: '#fff',
+      color: '#333',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    })
+  }
+
+  return null // No need to render anything
+}
