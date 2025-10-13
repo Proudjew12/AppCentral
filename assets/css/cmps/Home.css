@@ -1,20 +1,53 @@
 .home {
-    background-color: var(--clr-bg-alt);
-    padding: var(--space-lg) 0;
+    background: linear-gradient(180deg, #141b2d 0%, #1c2944 100%);
+    color: var(--clr-text-invert);
+    height: 84.1vh;
 }
 
-.home .box1 {
-    background-color: var(--clr-primary);
-    min-height: 10em;
-    border-radius: 8px;
+.home h1 {
+    color: var(--clr-header-text);
+    font-size: 2.8rem;
+    text-shadow: 0 0 12px rgba(232, 200, 255, 0.2);
+    margin-bottom: var(--space-md);
 }
 
-.home .box2 {
+.home-tagline {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: var(--clr-text-invert);
+    opacity: 0.9;
+    margin-bottom: var(--space-lg);
+    max-width: 600px;
+}
+
+.btn-primary {
     background-color: var(--clr-secondary);
-    min-height: 10em;
-    border-radius: 8px;
+    color: var(--clr-text-invert);
+    border: none;
+    border-radius: 10px;
+    padding: var(--space-sm) var(--space-lg);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition-fast), transform var(--transition-fast);
 }
 
-.home .box-container {
-    gap: var(--space-md);
+.btn-primary:hover {
+    background-color: var(--clr-primary-light);
+    transform: translateY(-3px);
+}
+
+.highlight {
+    color: var(--clr-secondary);
+    animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+    }
+
+    to {
+        text-shadow: 0 0 25px rgba(243, 156, 18, 0.6);
+    }
 }
