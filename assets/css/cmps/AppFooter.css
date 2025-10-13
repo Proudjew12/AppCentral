@@ -1,0 +1,12 @@
+.app-footer {
+    padding: var(--space-md);
+    background-color: var(--clr-header);
+    color: var(--clr-header-text);
+    border-top: 1px solid var(--clr-primary-dark);
+    font-size: 0.9rem;
+    min-height: 60px;
+}
+
+.app-footer p {
+    margin: 0;
+}

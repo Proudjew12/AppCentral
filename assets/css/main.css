@@ -5,9 +5,11 @@
 @import './basics/mq.css';
 @import './basics/typography.css';
 
-@import './cmps/home.css';
-@import './cmps/UserMsg.css';
+@import './cmps/Home.css';
 @import './cmps/AppHeader.css';
+@import './cmps/AppFooter.css';
+@import './cmps/About.css';
+
 
 @import './apps/note/NoteIndex.css';
 @import './apps/mail/MailIndex.css';

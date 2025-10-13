@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+    height: 100%;
+}
+
 html {
     font-family: "Lato", sans-serif;
     line-height: 1.25;
@@ -18,4 +24,8 @@ body {
     background: var(--bg-gradient-dark);
     color: var(--clr-text-invert);
     min-height: 100vh;
+}
+
+.root-cmp {
+    min-height: 100%;
 }

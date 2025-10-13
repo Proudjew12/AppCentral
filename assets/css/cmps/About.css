@@ -1,0 +1,81 @@
+.about-intro {
+    max-width: 700px;
+    margin: 0 auto var(--space-xl);
+    line-height: 1.8;
+    color: var(--clr-text-invert);
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
+.about h1 {
+    margin-bottom: var(--space-lg);
+}
+
+
+.about-cards {
+    gap: var(--space-lg);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xl);
+
+}
+
+.about-card {
+    position: relative;
+    background-color: #1e2b47;
+    color: var(--clr-text-invert);
+    border-radius: 14px;
+    padding: var(--space-lg) var(--space-md);
+    width: 300px;
+    text-align: center;
+    font-weight: 500;
+    overflow: hidden;
+    cursor: default;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease;
+}
+
+.about-card::before {
+    content: "";
+    position: absolute;
+    top: -60%;
+    left: -70%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at top left,
+            rgba(255, 255, 255, 0.12),
+            transparent 70%);
+    transition: transform 0.7s ease;
+    z-index: 0;
+}
+
+.about-card:hover::before {
+    transform: translateX(10%) translateY(10%);
+}
+
+.about-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    background-color: #26385e;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+}
+
+.about-card h2 {
+    position: relative;
+    font-size: 1.5rem;
+    color: var(--clr-secondary);
+    margin-bottom: var(--space-sm);
+    z-index: 1;
+}
+
+.about-card p {
+    position: relative;
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.6;
+    color: var(--clr-text-invert);
+    opacity: 0.9;
+    z-index: 1;
+}

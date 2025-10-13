@@ -92,9 +92,15 @@
 .grow {
     flex: 1;
 }
-.hidden{
+
+.min-h-100 {
+    min-height: 100vh;
+}
+
+.hidden {
     display: none;
 }
-.selected-label{
+
+.selected-label {
     background-color: blue;
 }
