@@ -42,7 +42,7 @@ export function AppHeader() {
                                 <p>Mail</p>
                             </Link>
 
-                            <Link to="/note" className="app-item grid center text-center">
+                            <Link to="/keep" className="app-item grid center text-center">
                                 <div className="app-icon note grid center">📝</div>
                                 <p>Keep</p>
                             </Link>

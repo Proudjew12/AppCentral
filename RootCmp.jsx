@@ -1,20 +1,24 @@
+/* ⚙️ Router setup */
 const { Route, Routes } = ReactRouterDOM
 const Router = ReactRouterDOM.HashRouter
 
-//* Cmps
+/* 🧱 Core components */
 import { AppHeader } from './cmps/AppHeader.jsx'
 import { UserMsg } from './cmps/UserMsg.jsx'
 import { AppFooter } from './cmps/AppFooter.jsx'
 import { LabelPicker } from './cmps/LabelPicker.jsx'
 import { LongText } from './cmps/LongText.jsx'
 
-//*Pages
+/* 📄 Pages */
 import { About } from './pages/About.jsx'
 import { Home } from './pages/Home.jsx'
 
+/* 📚 Apps */
 import { MailIndex } from './apps/mail/pages/MailIndex.jsx'
-import { NoteIndex } from './apps/note/pages/NoteIndex.jsx'
+import { KeepIndex } from './apps/keep/pages/KeepIndex.jsx'
+import { BooksIndex } from './apps/books/pages/BooksIndex.jsx'
 
+/* 🚀 Root Component */
 export function RootCmp() {
     return <Router>
         <section className="root-cmp flex column min-h-100">
@@ -25,13 +29,13 @@ export function RootCmp() {
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/mail" element={<MailIndex />} />
-                    <Route path="/note" element={<NoteIndex />} />
+                    <Route path="/keep" element={<KeepIndex />} />
+                    <Route path="/books" element={<BooksIndex />} />
                 </Routes>
             </main>
 
             <AppFooter />
             <UserMsg />
-
         </section>
     </Router>
 }
