@@ -38,14 +38,14 @@ function save(note) {
 }
 
 function getEmptyNote(txt = '') {
-    const randomColor = utilService.getRandomIntInclusive(0, COLOR_CLASSES.length - 1)
     return {
         id: utilService.makeId(),
         txt,
-        color: COLOR_CLASSES[randomColor],
+        color: utilService.getRandomPastelColor(),
         createdAt: Date.now()
     }
 }
+
 
 function _createDemoNotes() {
     return [

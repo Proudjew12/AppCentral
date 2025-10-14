@@ -4,9 +4,11 @@ export function KeepNotes({ notes }) {
     return (
         <section className="keep-notes grid">
             {notes.map(note => (
-                <article key={note.id} className={`note-card flex column center ${note.color}`}>
+                <article key={note.id} className="note-card flex column center"
+                    style={{ backgroundColor: note.color }}>
                     <p>{note.txt}</p>
                 </article>
+
             ))}
         </section>
     )
