@@ -22,4 +22,5 @@
 
 /* 🗒️ Keep (Notes) app */
 @import './apps/keep/KeepIndex.css';
-@import './apps/keep/KeepList.css';
+@import './apps/keep/KeepNotes.css';
+@import './apps/keep/Textbox.css';

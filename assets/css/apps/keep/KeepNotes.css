@@ -1,0 +1,42 @@
+.keep-notes {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-md);
+    padding: var(--space-md);
+}
+
+.note-card {
+    border-radius: 12px;
+    padding: var(--space-md);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    min-height: 100px;
+    color: var(--clr-text);
+    transition: transform var(--transition-fast);
+}
+
+.note-card:hover {
+    transform: translateY(-4px);
+}
+
+.note-yellow {
+    background-color: #fff9c4;
+}
+
+.note-pink {
+    background-color: #ffe0e0;
+}
+
+.note-green {
+    background-color: #d0f8ce;
+}
+
+.note-blue {
+    background-color: #bbdefb;
+}
+
+.note-purple {
+    background-color: #e1bee7;
+}
+
+.note-orange {
+    background-color: #ffe0b2;
+}
