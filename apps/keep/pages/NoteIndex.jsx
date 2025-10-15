@@ -9,16 +9,32 @@ const { useState, useEffect } = React
 
 export function NoteIndex() {
     const [notes, setNotes] = useState([])
+    const [filterBy, setFilterBy] = useState({ txt: '', type: '' })
 
-    useEffect(() => { loadNotes() }, [])
+    useEffect(() => { loadNotes() }, [filterBy]) // reload when filter changes
 
     function loadNotes() {
         noteService.query().then(notes => {
+            let filtered = notes
 
-            const sortedNotes = [...notes].sort((a, b) => (b.isPinned === true) - (a.isPinned === true))
-            setNotes(sortedNotes)
+            if (filterBy.txt) {
+                const regex = new RegExp(filterBy.txt, 'i')
+                filtered = filtered.filter(note =>
+                    (note.info.txt && regex.test(note.info.txt)) ||
+                    (note.info.title && regex.test(note.info.title)) ||
+                    (note.info.url && regex.test(note.info.url))
+                )
+            }
+
+            if (filterBy.type) {
+                filtered = filtered.filter(note => note.type === filterBy.type)
+            }
+
+            const sorted = [...filtered].sort((a, b) => (b.isPinned === true) - (a.isPinned === true))
+            setNotes(sorted)
         })
     }
+
 
 
     function onAddNote({ txt, type, color }) {
@@ -98,12 +114,53 @@ export function NoteIndex() {
     return (
         <section className="keep-index flex column align-center">
             <h2>Keep App</h2>
+
             <NotePreview onAddNote={onAddNote} />
 
-            <button onClick={onResetDemo}>Reset Demo Notes</button>
-            <button onClick={onClearAll}>Clear All Notes</button>
+            <section className="note-filter flex row align-center space-between">
+                <div className="flex row align-center grow">
+                    <input
+                        type="text"
+                        placeholder="Search notes..."
+                        value={filterBy.txt}
+                        onChange={(ev) => setFilterBy({ ...filterBy, txt: ev.target.value })}
+                    />
+                    {filterBy.txt && (
+                        <button
+                            className="btn-clear-search"
+                            onClick={() => setFilterBy({ txt: '', type: '' })}
+                            title="Clear search"
+                        >
+                            <i className="fa-solid fa-xmark"></i>
+                        </button>
+                    )}
+                </div>
 
-            <NoteList notes={notes} onRemoveNote={onRemoveNote} onEditNote={onEditNote} onDuplicateNote={onDuplicateNote} onTogglePin={onTogglePin} />
+                <select
+                    value={filterBy.type}
+                    onChange={(ev) => setFilterBy({ ...filterBy, type: ev.target.value })}
+                >
+                    <option value="">All Types</option>
+                    <option value="NoteTxt">Text</option>
+                    <option value="NoteImg">Image</option>
+                    <option value="NoteVideo">Video</option>
+                    <option value="NoteTodos">Todos</option>
+                </select>
+            </section>
+
+
+            <div className="flex row align-center space-between">
+                <button onClick={onResetDemo}>Reset Demo Notes</button>
+                <button onClick={onClearAll}>Clear All Notes</button>
+            </div>
+
+            <NoteList
+                notes={notes}
+                onRemoveNote={onRemoveNote}
+                onEditNote={onEditNote}
+                onDuplicateNote={onDuplicateNote}
+                onTogglePin={onTogglePin}
+            />
         </section>
     )
 }
