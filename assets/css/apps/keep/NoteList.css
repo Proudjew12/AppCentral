@@ -1,0 +1,88 @@
+.keep-notes {
+    gap: var(--space-md);
+    padding: var(--space-md);
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.note-card {
+    width: 100%;
+    border-radius: 12px;
+    padding: var(--space-md);
+    background-color: var(--clr-bg);
+    color: var(--clr-text);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: transform var(--transition-fast), box-shadow var(--transition-medium);
+    text-align: center;
+    overflow: hidden;
+}
+
+.note-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.note-card p {
+    margin: 0.3em 0;
+    word-wrap: break-word;
+}
+
+.note-img img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.note-todos h4 {
+    margin-bottom: var(--space-sm);
+    font-size: 1rem;
+    color: var(--clr-text);
+}
+
+.note-todos ul {
+    margin: 0;
+    padding: 0;
+}
+
+.note-todos li {
+    list-style: none;
+    padding-left: 12px;
+    position: relative;
+    text-align: left;
+    margin-bottom: 6px;
+}
+
+.note-todos li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--clr-text-light);
+}
+
+.note-todos li.done {
+    text-decoration: line-through;
+    color: var(--clr-text-light);
+}
+
+.note-video iframe,
+.note-video video {
+    width: 100%;
+    border-radius: 10px;
+    aspect-ratio: 16 / 9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-delete {
+    border: none;
+    background: transparent;
+    color: var(--clr-text-light);
+    cursor: pointer;
+    align-self: flex-end;
+    font-size: 1.1rem;
+    transition: color var(--transition-fast);
+}
+
+.btn-delete:hover {
+    color: var(--clr-primary);
+}

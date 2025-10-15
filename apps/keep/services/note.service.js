@@ -12,11 +12,10 @@ export const noteService = {
     createDemoNotes
 }
 
-const COLOR_CLASSES = ['note-yellow', 'note-pink', 'note-green', 'note-blue', 'note-purple', 'note-orange']
-
 function query() {
     return storageService.query(NOTES_KEY)
 }
+
 function get(noteId) {
     return storageService.get(NOTES_KEY, noteId)
 }
@@ -38,13 +37,56 @@ function getEmptyNote(txt = '') {
     }
 }
 
-
-
 function createDemoNotes() {
-    return [
-        { ...getEmptyNote('Buy milk and coffee ☕🥛'), id: utilService.makeId() },
-        { ...getEmptyNote('Call mom ❤️'), id: utilService.makeId() },
-        { ...getEmptyNote('Finish React Keep project 🚀'), id: utilService.makeId() }
-    ]
-}
+    localStorage.removeItem(NOTES_KEY)
 
+    const notes = [
+        {
+            id: 'n101',
+            createdAt: 1112222,
+            type: 'NoteTxt',
+            isPinned: true,
+            style: { backgroundColor: utilService.getRandomPastelColor() },
+            info: { txt: 'Fullstack Me Baby!' }
+        },
+        {
+            id: 'n102',
+            createdAt: 1112223,
+            type: 'NoteImg',
+            isPinned: false,
+            style: { backgroundColor: utilService.getRandomPastelColor() },
+            info: {
+                url: 'https://picsum.photos/300/200',
+                title: 'Random nature photo 🌿'
+            }
+        },
+        {
+            id: 'n103',
+            createdAt: 1112224,
+            type: 'NoteTodos',
+            isPinned: false,
+            style: { backgroundColor: utilService.getRandomPastelColor() },
+            info: {
+                title: 'Get my stuff together',
+                todos: [
+                    { txt: 'Driving license', doneAt: null },
+                    { txt: 'Coding power', doneAt: 187111111 }
+                ]
+            }
+        },
+        {
+            id: 'n104',
+            createdAt: 1112225,
+            type: 'NoteVideo',
+            isPinned: false,
+            style: { backgroundColor: utilService.getRandomPastelColor() },
+            info: {
+                title: 'Amazing Ocean Waves 🌊',
+                url: 'https://www.youtube.com/embed/sU76IpHtRTI'
+            }
+        }
+    ]
+
+    utilService.saveToStorage(NOTES_KEY, notes)
+    return notes
+}
