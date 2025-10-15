@@ -64,3 +64,18 @@
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.2);
 }
+
+.random-color-btn {
+    border: none;
+    background: transparent;
+    color: var(--clr-text-light);
+    cursor: pointer;
+    margin-left: 6px;
+    font-size: 1.2rem;
+    transition: color var(--transition-fast), transform 0.1s ease;
+}
+
+.random-color-btn:hover {
+    color: var(--clr-primary);
+    transform: rotate(20deg);
+}

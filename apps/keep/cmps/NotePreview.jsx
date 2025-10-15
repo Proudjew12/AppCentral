@@ -9,6 +9,26 @@ export function NotePreview({ onAddNote }) {
     const [noteType, setNoteType] = useState('NoteTxt')
     const [color, setColor] = useState('#ffffff') // default color
 
+    function getRandomPastelColor() {
+        const r = Math.floor((Math.random() * 127) + 127)
+        const g = Math.floor((Math.random() * 127) + 127)
+        const b = Math.floor((Math.random() * 127) + 127)
+        return `rgb(${r}, ${g}, ${b})`
+    }
+
+    function handleRandomColor() {
+        const random = getRandomPastelColor()
+        setColor(rgbToHex(random))
+    }
+
+    function rgbToHex(rgb) {
+        const rgbValues = rgb.match(/\d+/g)
+        const hex = rgbValues
+            .map(x => parseInt(x).toString(16).padStart(2, '0'))
+            .join('')
+        return `#${hex}`
+    }
+
     function renderPreviewByType() {
         const commonProps = { onAddNote, color }
 
@@ -43,6 +63,15 @@ export function NotePreview({ onAddNote }) {
                     title="Pick note color"
                     className="color-picker"
                 />
+
+                <button
+                    type="button"
+                    onClick={handleRandomColor}
+                    title="Random pastel color"
+                    className="random-color-btn"
+                >
+                    <i className="fa-solid fa-dice"></i>
+                </button>
             </div>
 
             {renderPreviewByType()}
