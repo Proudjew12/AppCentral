@@ -4,45 +4,43 @@ export function NoteList({ notes, onRemoveNote, onEditNote }) {
     if (!notes || !notes.length) return <p className="text-center">No notes yet...</p>
 
     async function onNoteClick(note) {
-        if (note.type === 'NoteTxt') {
-            const result = await Swal.fire({
-                title: '🗒️ Your Note',
-                text: note.info.txt,
-                showCancelButton: true,
-                confirmButtonText: '✏️ Edit',
-                cancelButtonText: 'Close',
-                showDenyButton: true,
-                denyButtonText: '🗑️ Delete',
-                background: (note.style && note.style.backgroundColor) || '#fff',
-                color: '#111',
-            })
+        const result = await Swal.fire({
+            title: '🗒️ Edit Note',
+            input: 'textarea',
+            inputValue: note.info.txt || note.info.url || note.info.title || '',
+            inputPlaceholder: 'Edit your note...',
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            cancelButtonText: 'Cancel',
+            showDenyButton: true,
+            denyButtonText: '🗑️ Delete',
+            background: (note.style && note.style.backgroundColor) || '#fff',
+            color: '#111',
+        })
 
-            if (result.isDenied) {
-                onRemoveNote(note.id)
-                return
+        if (result.isDenied) return onRemoveNote(note.id)
+
+        if (result.isConfirmed && result.value !== undefined) {
+            let updatedNote = { ...note }
+
+            switch (note.type) {
+                case 'NoteTxt':
+                    updatedNote.info.txt = result.value
+                    break
+                case 'NoteImg':
+                case 'NoteVideo':
+                    updatedNote.info.url = result.value
+                    break
+                case 'NoteTodos':
+                    updatedNote.info.title = result.value
+                    break
             }
 
-            if (result.isConfirmed) {
-                const { value: newTxt } = await Swal.fire({
-                    title: '✏️ Edit Note',
-                    input: 'textarea',
-                    inputValue: note.info.txt,
-                    inputPlaceholder: 'Edit your note here...',
-                    showCancelButton: true,
-                    confirmButtonText: 'Save',
-                    cancelButtonText: 'Cancel',
-                })
-
-                if (newTxt && newTxt !== note.info.txt) {
-                    const updatedNote = { ...note, info: { ...note.info, txt: newTxt } }
-                    onEditNote(updatedNote)
-                    showSuccessMsg('✏️ Note updated!')
-                } else if (newTxt === '') {
-                    showErrorMsg('❌ Cannot save empty note')
-                }
-            }
+            onEditNote(updatedNote)
+            showSuccessMsg('✅ Note updated!')
         }
     }
+
 
     function renderNoteContent(note) {
         switch (note.type) {
