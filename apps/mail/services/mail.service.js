@@ -1,10 +1,18 @@
-import {utilService} from './services/util.service.js'
-import { storageService } from './services/async-storage.service.js'
+
+import { storageService } from '../../../services/async-storage.service.js'
+import {utilService} from '../../../services/util.service.js'
 
 const MAIL_KEY = 'mailDB'
 
+export const mailService = {
+    query,
+    get,
+    remove,
+    save
 
-function query(filterBy = {}) {
+}
+_createDemoData()
+function query(filterBy = {},sortBy='date') {
     return storageService.query(MAIL_KEY)
         .then(Mails => {
             if (filterBy.search) {
@@ -13,6 +21,12 @@ function query(filterBy = {}) {
             }
             if (filterBy.read) {
                 Mails = Mails.filter(mail => mail.isRead === filterBy.read)
+            }
+            if(sortBy === 'date'){
+                Mails = Mails.sort((mail1,mail2)=>(mail1.createdAt>mail2.createdAt))
+            }
+            else{
+                Mails = Mails.sort((mail1,mail2)=>(mail1.subject.localeCompare(mail2.subject)))
             }
             return Mails
         })
@@ -31,4 +45,36 @@ function save(mail) {
     } else {
         return storageService.post(MAIL_KEY, mail)
     }
+}
+function _createDemoData(){
+    const mails = [
+        {id: 'e101',
+createdAt : Date.now(),
+subject: 'Miss you!',
+body: 'Would love to catch up sometimes',
+isRead: false,
+sentAt : 1551112330594,
+removedAt : null,
+from: 'momo@momo.com',
+to: 'user@appsus.com'},
+        {id: 'e102',
+createdAt : 1551133124500,
+subject: 'Hallo!',
+body: 'Would love to catch up sometimes',
+isRead: false,
+sentAt : 1551133930594,
+removedAt : null,
+from: 'momo@momo.com',
+to: 'user@appsus.com'},
+        {id: 'e103',
+createdAt : 1551133930500,
+subject: 'Guten Morgen!',
+body: 'Would love to catch up sometimes',
+isRead: false,
+sentAt : 1551133930594,
+removedAt : null,
+from: 'momo@momo.com',
+to: 'user@appsus.com'},
+    ]
+    utilService.saveToStorage(MAIL_KEY,mails)
 }
