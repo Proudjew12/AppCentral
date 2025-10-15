@@ -1,5 +1,4 @@
 
-
 export function LabelPicker({labels,selectedLabels,setSelectedLabels}){
     
     function isSelectedLabel(label){
@@ -9,18 +8,14 @@ export function LabelPicker({labels,selectedLabels,setSelectedLabels}){
     return false
     }
     function onAddSelectedLabel(label){
-    selectedLabels.push(label)
-    setSelectedLabels(selectedLabels)
+    setSelectedLabels([...setSelectedLabels,label])
     }
-    function onRemoveSelectedLabel(label){
-    const idx = selectedLabels.indexOf(label)
-    labels.splice(idx,1)   
-    setSelectedLabels(selectedLabels)
+    function onRemoveSelectedLabel(removedLabel){   
+    setSelectedLabels(selectedLabels.filter(label=>(label!==removedLabel)))
     }
     return(
     <ul>
-    {labels.map(
-        
+    {labels.map(        
      label=>
         (isSelectedLabel)?
         <li>
