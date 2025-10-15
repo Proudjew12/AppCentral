@@ -41,7 +41,6 @@ export function NoteList({ notes, onRemoveNote, onEditNote }) {
         }
     }
 
-
     function renderNoteContent(note) {
         switch (note.type) {
             case 'NoteTxt':
@@ -49,11 +48,10 @@ export function NoteList({ notes, onRemoveNote, onEditNote }) {
 
             case 'NoteImg':
                 return (
-                    <div className="note-img flex column align-center">
+                    <div className="note-img flex column align-center justify-center grow">
                         <img
                             src={note.info.url}
                             alt={note.info.title || 'Note image'}
-                            style={{ maxWidth: '100%', borderRadius: '6px' }}
                             onError={(ev) => ev.target.style.display = 'none'}
                         />
                         {note.info.title && <p>{note.info.title}</p>}
@@ -62,19 +60,17 @@ export function NoteList({ notes, onRemoveNote, onEditNote }) {
 
             case 'NoteTodos':
                 return (
-                    <div className="note-todos">
+                    <div className="note-todos flex column align-start justify-center grow">
                         <h4>{note.info.title}</h4>
                         <ul className="clean-list">
-                            {note.info.todos.map(function (todo, idx) {
-                                return (
-                                    <li
-                                        key={idx}
-                                        style={{ textDecoration: todo.doneAt ? 'line-through' : 'none' }}
-                                    >
-                                        {todo.txt}
-                                    </li>
-                                )
-                            })}
+                            {note.info.todos.map((todo, idx) => (
+                                <li
+                                    key={idx}
+                                    className={todo.doneAt ? 'done' : ''}
+                                >
+                                    {todo.txt}
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 )
@@ -82,9 +78,8 @@ export function NoteList({ notes, onRemoveNote, onEditNote }) {
             case 'NoteVideo':
                 const embedUrl = getEmbedUrl(note.info.url)
                 return (
-                    <div className="note-video flex column align-center">
+                    <div className="note-video flex column align-center justify-center grow">
                         <iframe
-                            style={{ width: '100%', aspectRatio: '16 / 9', borderRadius: '8px' }}
                             src={embedUrl}
                             title={note.info.title}
                             frameBorder="0"
@@ -109,23 +104,21 @@ export function NoteList({ notes, onRemoveNote, onEditNote }) {
 
     return (
         <section className="keep-notes grid">
-            {notes.map(function (note) {
-                return (
-                    <article
-                        key={note.id}
-                        className="note-card flex column align-center"
-                        style={{
-                            backgroundColor:
-                                (note.style && note.style.backgroundColor) ||
-                                note.color ||
-                                '#fff',
-                        }}
-                        onClick={function () { onNoteClick(note) }}
-                    >
-                        {renderNoteContent(note)}
-                    </article>
-                )
-            })}
+            {notes.map(note => (
+                <article
+                    key={note.id}
+                    className="note-card flex column align-center justify-between"
+                    style={{
+                        backgroundColor:
+                            (note.style && note.style.backgroundColor) ||
+                            note.color ||
+                            '#fff',
+                    }}
+                    onClick={() => onNoteClick(note)}
+                >
+                    {renderNoteContent(note)}
+                </article>
+            ))}
         </section>
     )
 }
