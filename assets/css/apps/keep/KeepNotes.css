@@ -19,3 +19,24 @@
     transform: translateY(-4px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
+
+.btn-delete {
+    border: none;
+    background: transparent;
+    color: #333;
+    cursor: pointer;
+    align-self: flex-end;
+    transition: color 0.2s ease;
+}
+
+.btn-delete:hover {
+    color: var(--clr-primary);
+}
+
+.note-edit-input {
+    width: 90%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 1rem;
+}

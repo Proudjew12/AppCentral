@@ -39,12 +39,12 @@ function save(note) {
 
 function getEmptyNote(txt = '') {
     return {
-        id: utilService.makeId(),
         txt,
         color: utilService.getRandomPastelColor(),
         createdAt: Date.now()
     }
 }
+
 
 
 function _createDemoNotes() {

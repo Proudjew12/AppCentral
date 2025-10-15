@@ -1,1 +1,26 @@
- /* keep Notes */
+.text-box {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.text-box input {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--clr-text-invert);
+    padding: 0.6em 1em;
+    font-size: 1rem;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.text-box input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.text-box input:focus {
+    outline: none;
+    border-color: var(--clr-primary-light);
+    background-color: rgba(255, 255, 255, 0.2);
+}

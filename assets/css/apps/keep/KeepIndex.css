@@ -1,1 +1,34 @@
- /* keep index */
+.keep-index {
+    gap: var(--space-md);
+    padding-block: var(--space-lg);
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.keep-index h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--clr-text-invert);
+    text-align: center;
+}
+
+.keep-index button {
+    background-color: var(--clr-primary-light);
+    color: var(--clr-text-invert);
+    border: none;
+    border-radius: 8px;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color var(--transition-fast);
+}
+
+.keep-index button:hover {
+    background-color: var(--clr-primary);
+}
+
+/* ensure notes section fits */
+.keep-notes {
+    width: 100%;
+}
