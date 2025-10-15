@@ -1,70 +1,40 @@
+import { NoteTxt } from './note-types/NoteTxt.jsx'
+import { NoteImg } from './note-types/NoteImg.jsx'
+import { NoteVideo } from './note-types/NoteVideo.jsx'
+import { NoteTodos } from './note-types/NoteTodos.jsx'
+
 const { useState } = React
 
 export function NotePreview({ onAddNote }) {
-    const [text, setText] = useState('')
-    const [noteType, setNoteType] = useState('text') // text | image | video | todos
-    const [isFocused, setIsFocused] = useState(false)
+    const [noteType, setNoteType] = useState('NoteTxt')
 
-    function handleKeyPress(ev) {
-        if (ev.key === 'Enter' && text.trim()) {
-            onAddNote({ txt: text.trim(), type: noteType })
-            setText('')
-            setIsFocused(false)
-        }
-    }
-
-    function getPlaceholder() {
+    function renderPreviewByType() {
         switch (noteType) {
-            case 'image': return 'Enter image URL...'
-            case 'video': return 'Enter video URL...'
-            case 'todos': return 'Enter comma separated list...'
-            default: return 'Take a note...'
+            case 'NoteTxt': return <NoteTxt onAddNote={onAddNote} />
+            case 'NoteImg': return <NoteImg onAddNote={onAddNote} />
+            case 'NoteVideo': return <NoteVideo onAddNote={onAddNote} />
+            case 'NoteTodos': return <NoteTodos onAddNote={onAddNote} />
         }
     }
 
     return (
-        <section className={`note-preview flex row align-center space-between ${isFocused ? 'active' : ''}`}>
-            <input
-                type="text"
-                value={text}
-                onChange={(ev) => setText(ev.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder={getPlaceholder()}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                className="grow"
-            />
-
-            <div className="note-type-btns flex row align-center">
-                <button
-                    className={noteType === 'text' ? 'active' : ''}
-                    title="Text note"
-                    onClick={() => setNoteType('text')}
-                >
+        <section className="note-preview flex column align-center">
+            <div className="note-type-btns flex row align-center space-between">
+                <button className={noteType === 'NoteTxt' ? 'active' : ''} onClick={() => setNoteType('NoteTxt')}>
                     <i className="fa-solid fa-font"></i>
                 </button>
-                <button
-                    className={noteType === 'image' ? 'active' : ''}
-                    title="Image note"
-                    onClick={() => setNoteType('image')}
-                >
+                <button className={noteType === 'NoteImg' ? 'active' : ''} onClick={() => setNoteType('NoteImg')}>
                     <i className="fa-regular fa-image"></i>
                 </button>
-                <button
-                    className={noteType === 'video' ? 'active' : ''}
-                    title="Video note"
-                    onClick={() => setNoteType('video')}
-                >
+                <button className={noteType === 'NoteVideo' ? 'active' : ''} onClick={() => setNoteType('NoteVideo')}>
                     <i className="fa-brands fa-youtube"></i>
                 </button>
-                <button
-                    className={noteType === 'todos' ? 'active' : ''}
-                    title="Todo list"
-                    onClick={() => setNoteType('todos')}
-                >
+                <button className={noteType === 'NoteTodos' ? 'active' : ''} onClick={() => setNoteType('NoteTodos')}>
                     <i className="fa-solid fa-list-check"></i>
                 </button>
             </div>
+
+            {renderPreviewByType()}
         </section>
     )
 }

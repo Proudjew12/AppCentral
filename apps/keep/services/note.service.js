@@ -29,13 +29,62 @@ function save(note) {
     else return storageService.post(NOTES_KEY, note)
 }
 
-function getEmptyNote(txt = '') {
-    return {
-        txt,
-        color: utilService.getRandomPastelColor(),
-        createdAt: Date.now()
+function getEmptyNote(txt = '', type = 'NoteTxt') {
+    switch (type) {
+        case 'NoteTxt':
+            return {
+                type,
+                isPinned: false,
+                style: { backgroundColor: utilService.getRandomPastelColor() },
+                info: { txt },
+                createdAt: Date.now()
+            }
+
+        case 'NoteImg':
+            return {
+                type,
+                isPinned: false,
+                style: { backgroundColor: utilService.getRandomPastelColor() },
+                info: { url: txt, title: 'New image note' },
+                createdAt: Date.now()
+            }
+
+        case 'NoteVideo':
+            const embedUrl = txt.includes('watch?v=')
+                ? txt.replace('watch?v=', 'embed/')
+                : txt.includes('youtu.be/')
+                    ? txt.replace('youtu.be/', 'www.youtube.com/embed/')
+                    : txt
+
+            return {
+                type,
+                isPinned: false,
+                style: { backgroundColor: utilService.getRandomPastelColor() },
+                info: { url: embedUrl, title: 'New video note' },
+                createdAt: Date.now()
+            }
+
+        case 'NoteTodos':
+            const todos = txt.split(',').map(todo => ({ txt: todo.trim(), doneAt: null }))
+            return {
+                type,
+                isPinned: false,
+                style: { backgroundColor: utilService.getRandomPastelColor() },
+                info: { title: 'New todo list', todos },
+                createdAt: Date.now()
+            }
+
+        default:
+            return {
+                type: 'NoteTxt',
+                isPinned: false,
+                style: { backgroundColor: utilService.getRandomPastelColor() },
+                info: { txt },
+                createdAt: Date.now()
+            }
     }
 }
+
 
 function createDemoNotes() {
     localStorage.removeItem(NOTES_KEY)

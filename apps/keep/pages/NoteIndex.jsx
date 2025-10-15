@@ -16,8 +16,10 @@ export function NoteIndex() {
         noteService.query().then(setNotes)
     }
 
-    function onAddNote(txt) {
-        const note = noteService.getEmptyNote(txt)
+    function onAddNote({ txt, type }) {
+        const noteType = type || 'NoteTxt'
+
+        const note = noteService.getEmptyNote(txt, noteType)
         noteService.save(note)
             .then(() => {
                 showSuccessMsg('✅ Note added!')
@@ -25,6 +27,7 @@ export function NoteIndex() {
             })
             .catch(() => showErrorMsg('❌ Failed to add note'))
     }
+
 
     function onRemoveNote(noteId) {
         noteService.remove(noteId)
