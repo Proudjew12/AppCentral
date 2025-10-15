@@ -9,21 +9,14 @@ export const keepService = {
     remove,
     save,
     getEmptyNote,
-    _createDemoNotes
+    createDemoNotes
 }
 
 const COLOR_CLASSES = ['note-yellow', 'note-pink', 'note-green', 'note-blue', 'note-purple', 'note-orange']
 
 function query() {
-    return storageService.query(NOTES_KEY).then(notes => {
-        if (!notes || !notes.length) {
-            notes = _createDemoNotes()
-            utilService.saveToStorage(NOTES_KEY, notes)
-        }
-        return notes
-    })
+    return storageService.query(NOTES_KEY)
 }
-
 function get(noteId) {
     return storageService.get(NOTES_KEY, noteId)
 }
@@ -47,10 +40,11 @@ function getEmptyNote(txt = '') {
 
 
 
-function _createDemoNotes() {
+function createDemoNotes() {
     return [
-        getEmptyNote('Buy milk and coffee ☕🥛'),
-        getEmptyNote('Call mom ❤️'),
-        getEmptyNote('Finish React Keep project 🚀')
+        { ...getEmptyNote('Buy milk and coffee ☕🥛'), id: utilService.makeId() },
+        { ...getEmptyNote('Call mom ❤️'), id: utilService.makeId() },
+        { ...getEmptyNote('Finish React Keep project 🚀'), id: utilService.makeId() }
     ]
 }
+

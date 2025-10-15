@@ -1,6 +1,7 @@
 import { TextBox } from '../cmps/Textbox.jsx'
 import { KeepNotes } from '../cmps/KeepNotes.jsx'
 import { keepService } from '../services/keep.service.js'
+import { utilService } from '../../../services/util.service.js'
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 
 const { useState, useEffect } = React
@@ -40,13 +41,27 @@ export function KeepIndex() {
             .finally(loadNotes)
     }
 
+    function onResetDemo() {
+        const demoNotes = keepService.createDemoNotes()
+        utilService.saveToStorage('keepDB', demoNotes)
+        showSuccessMsg('✨ Demo notes reloaded!')
+        loadNotes()
+    }
+
+    function onClearAll() {
+        localStorage.removeItem('keepDB')
+        showSuccessMsg('🗑️ All notes cleared!')
+        loadNotes()
+    }
+
     return (
         <section className="keep-index flex column align-center">
             <h2>Keep App</h2>
             <TextBox onAddNote={onAddNote} />
-            <button onClick={() => { localStorage.removeItem('keepDB'); loadNotes() }}>
-                Reset Demo Notes
-            </button>
+
+            <button onClick={onResetDemo}>Reset Demo Notes</button>
+            <button onClick={onClearAll}>Clear All Notes</button>
+
             <KeepNotes notes={notes} onRemoveNote={onRemoveNote} onEditNote={onEditNote} />
         </section>
     )

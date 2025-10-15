@@ -26,7 +26,7 @@ export function UserMsg() {
       timer: 2000,
       showConfirmButton: false,
       timerProgressBar: true,
-      position: 'middle',
+      position: 'center',
       toast: true,
       background: '#fff',
       color: '#333',
