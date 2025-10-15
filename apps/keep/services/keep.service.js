@@ -14,9 +14,16 @@ export const keepService = {
 
 const COLOR_CLASSES = ['note-yellow', 'note-pink', 'note-green', 'note-blue', 'note-purple', 'note-orange']
 
-function query() {
-    return storageService.query(NOTES_KEY)
+async function query() {
+    try {
+        return await storageService.query(NOTES_KEY)
+    } catch (err) {
+        console.error('Failed to load notes:', err)
+        localStorage.removeItem(NOTES_KEY)
+        return []
+    }
 }
+
 function get(noteId) {
     return storageService.get(NOTES_KEY, noteId)
 }
@@ -42,9 +49,9 @@ function getEmptyNote(txt = '') {
 
 function createDemoNotes() {
     return [
-        { ...getEmptyNote('Buy milk and coffee ☕🥛'), id: utilService.makeId() },
-        { ...getEmptyNote('Call mom ❤️'), id: utilService.makeId() },
-        { ...getEmptyNote('Finish React Keep project 🚀'), id: utilService.makeId() }
-    ]
+        getEmptyNote('Buy milk and coffee ☕🥛'),
+        getEmptyNote('Call mom ❤️'),
+        getEmptyNote('Finish React Keep project 🚀')
+    ].map(note => ({ ...note, id: utilService.makeId() }))
 }
 

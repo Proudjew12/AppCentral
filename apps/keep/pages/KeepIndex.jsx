@@ -50,9 +50,10 @@ export function KeepIndex() {
 
     function onClearAll() {
         localStorage.removeItem('keepDB')
+        setNotes([])
         showSuccessMsg('🗑️ All notes cleared!')
-        loadNotes()
     }
+
 
     return (
         <section className="keep-index flex column align-center">
