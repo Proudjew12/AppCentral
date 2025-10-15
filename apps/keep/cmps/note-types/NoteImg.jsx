@@ -5,9 +5,33 @@ export function NoteImg({ onAddNote }) {
 
     function handleKeyPress(ev) {
         if (ev.key === 'Enter' && url.trim()) {
-            onAddNote({ txt: url.trim(), type: 'NoteImg' })
-            setUrl('')
+            validateImage(url.trim())
         }
+    }
+
+    function validateImage(imageUrl) {
+        const img = new Image()
+        img.onload = () => {
+            onAddNote({ txt: imageUrl, type: 'NoteImg' })
+            setUrl('')
+            Swal.fire({
+                title: '🖼️ Image added!',
+                text: 'Your image note was successfully created.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+            })
+        }
+        img.onerror = () => {
+            Swal.fire({
+                title: '⚠️ Invalid Image',
+                text: 'This URL is not a valid image.',
+                icon: 'warning',
+                timer: 1800,
+                showConfirmButton: false,
+            })
+        }
+        img.src = imageUrl
     }
 
     return (
