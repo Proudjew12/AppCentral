@@ -1,7 +1,7 @@
 import { NotePreview } from '../cmps/NotePreview.jsx'
 import { NoteList } from '../cmps/NoteList.jsx'
 
-import { keepService } from '../services/note.service.js'
+import { noteService } from '../services/note.service.js'
 import { utilService } from '../../../services/util.service.js'
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 
@@ -13,12 +13,12 @@ export function NoteIndex() {
     useEffect(() => { loadNotes() }, [])
 
     function loadNotes() {
-        keepService.query().then(setNotes)
+        noteService.query().then(setNotes)
     }
 
     function onAddNote(txt) {
-        const note = keepService.getEmptyNote(txt)
-        keepService.save(note)
+        const note = noteService.getEmptyNote(txt)
+        noteService.save(note)
             .then(() => {
                 showSuccessMsg('✅ Note added!')
                 loadNotes()
@@ -27,7 +27,7 @@ export function NoteIndex() {
     }
 
     function onRemoveNote(noteId) {
-        keepService.remove(noteId)
+        noteService.remove(noteId)
             .then(() => {
                 showSuccessMsg('🗑️ Note deleted!')
                 loadNotes()
@@ -36,14 +36,14 @@ export function NoteIndex() {
     }
 
     function onEditNote(updatedNote) {
-        keepService.save(updatedNote)
+        noteService.save(updatedNote)
             .then(() => showSuccessMsg('✏️ Note updated!'))
             .catch(() => showErrorMsg('❌ Update failed'))
             .finally(loadNotes)
     }
 
     function onResetDemo() {
-        const demoNotes = keepService.createDemoNotes()
+        const demoNotes = noteService.createDemoNotes()
         utilService.saveToStorage('keepDB', demoNotes)
         showSuccessMsg('✨ Demo notes reloaded!')
         loadNotes()

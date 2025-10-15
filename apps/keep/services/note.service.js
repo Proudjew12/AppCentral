@@ -3,7 +3,7 @@ import { storageService } from '../../../services/async-storage.service.js'
 
 const NOTES_KEY = 'keepDB'
 
-export const keepService = {
+export const noteService = {
     query,
     get,
     remove,
