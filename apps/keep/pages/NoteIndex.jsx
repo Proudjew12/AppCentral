@@ -1,12 +1,13 @@
-import { TextBox } from '../cmps/Textbox.jsx'
-import { KeepNotes } from '../cmps/KeepNotes.jsx'
-import { keepService } from '../services/keep.service.js'
+import { NotePreview } from '../cmps/NotePreview.jsx'
+import { NoteList } from '../cmps/NoteList.jsx'
+
+import { keepService } from '../services/note.service.js'
 import { utilService } from '../../../services/util.service.js'
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 
 const { useState, useEffect } = React
 
-export function KeepIndex() {
+export function NoteIndex() {
     const [notes, setNotes] = useState([])
 
     useEffect(() => { loadNotes() }, [])
@@ -57,12 +58,12 @@ export function KeepIndex() {
     return (
         <section className="keep-index flex column align-center">
             <h2>Keep App</h2>
-            <TextBox onAddNote={onAddNote} />
+            <NotePreview onAddNote={onAddNote} />
 
             <button onClick={onResetDemo}>Reset Demo Notes</button>
             <button onClick={onClearAll}>Clear All Notes</button>
 
-            <KeepNotes notes={notes} onRemoveNote={onRemoveNote} onEditNote={onEditNote} />
+            <NoteList notes={notes} onRemoveNote={onRemoveNote} onEditNote={onEditNote} />
         </section>
     )
 }

@@ -1,6 +1,6 @@
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 
-export function KeepNotes({ notes, onRemoveNote, onEditNote }) {
+export function NoteList({ notes, onRemoveNote, onEditNote }) {
     if (!notes || !notes.length) return <p className="text-center">No notes yet...</p>
 
     async function onNoteClick(note) {

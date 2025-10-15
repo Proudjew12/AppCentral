@@ -1,6 +1,6 @@
 const { useState } = React
 
-export function TextBox({ onAddNote }) {
+export function NotePreview({ onAddNote }) {
     const [text, setText] = useState('')
 
     function handleKeyPress(ev) {
