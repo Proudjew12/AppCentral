@@ -56,6 +56,12 @@ export function NotePreview({ onAddNote }) {
                     <i className="fa-solid fa-list-check"></i>
                 </button>
 
+                <button onClick={() => setNoteType('NoteAudio')}><i className="fa-solid fa-music"></i></button>
+                <button onClick={() => setNoteType('NoteCanvas')}><i className="fa-solid fa-paintbrush"></i></button>
+                <button onClick={() => setNoteType('NoteMap')}><i className="fa-solid fa-map-location-dot"></i></button>
+                <button onClick={() => setNoteType('NoteRecording')}><i className="fa-solid fa-microphone"></i></button>
+
+
                 <input
                     type="color"
                     value={color}
