@@ -1,11 +1,11 @@
 const { useState } = React
 
-export function NoteTxt({ onAddNote }) {
+export function NoteTxt({ onAddNote, color }) {
     const [txt, setTxt] = useState('')
 
     function handleKeyPress(ev) {
         if (ev.key === 'Enter' && txt.trim()) {
-            onAddNote({ txt: txt.trim(), type: 'NoteTxt' })
+            onAddNote({ txt: txt.trim(), type: 'NoteTxt', color })
             setTxt('')
         }
     }

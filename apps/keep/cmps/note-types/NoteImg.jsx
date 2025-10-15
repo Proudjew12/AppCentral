@@ -5,6 +5,7 @@ export function NoteImg({ onAddNote }) {
 
     function handleKeyPress(ev) {
         if (ev.key === 'Enter' && url.trim()) {
+            onAddNote({ txt: inputValue, type: 'NoteImg', color })
             validateImage(url.trim())
         }
     }

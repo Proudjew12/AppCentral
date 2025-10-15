@@ -7,13 +7,16 @@ const { useState } = React
 
 export function NotePreview({ onAddNote }) {
     const [noteType, setNoteType] = useState('NoteTxt')
+    const [color, setColor] = useState('#ffffff') // default color
 
     function renderPreviewByType() {
+        const commonProps = { onAddNote, color }
+
         switch (noteType) {
-            case 'NoteTxt': return <NoteTxt onAddNote={onAddNote} />
-            case 'NoteImg': return <NoteImg onAddNote={onAddNote} />
-            case 'NoteVideo': return <NoteVideo onAddNote={onAddNote} />
-            case 'NoteTodos': return <NoteTodos onAddNote={onAddNote} />
+            case 'NoteTxt': return <NoteTxt {...commonProps} />
+            case 'NoteImg': return <NoteImg {...commonProps} />
+            case 'NoteVideo': return <NoteVideo {...commonProps} />
+            case 'NoteTodos': return <NoteTodos {...commonProps} />
         }
     }
 
@@ -32,6 +35,14 @@ export function NotePreview({ onAddNote }) {
                 <button className={noteType === 'NoteTodos' ? 'active' : ''} onClick={() => setNoteType('NoteTodos')}>
                     <i className="fa-solid fa-list-check"></i>
                 </button>
+
+                <input
+                    type="color"
+                    value={color}
+                    onChange={(ev) => setColor(ev.target.value)}
+                    title="Pick note color"
+                    className="color-picker"
+                />
             </div>
 
             {renderPreviewByType()}

@@ -49,3 +49,18 @@
 .note-preview input::placeholder {
     color: #999;
 }
+
+.color-picker {
+    width: 28px;
+    height: 28px;
+    border: none;
+    cursor: pointer;
+    margin-left: 8px;
+    background: transparent;
+    padding: 0;
+}
+
+.color-picker::-webkit-color-swatch {
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}

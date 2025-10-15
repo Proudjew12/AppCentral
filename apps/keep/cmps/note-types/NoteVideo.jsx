@@ -5,6 +5,7 @@ export function NoteVideo({ onAddNote }) {
 
     function handleKeyPress(ev) {
         if (ev.key === 'Enter' && url.trim()) {
+            onAddNote({ txt: inputValue, type: 'NoteImg', color })
             validateVideo(url.trim())
         }
     }
@@ -12,7 +13,6 @@ export function NoteVideo({ onAddNote }) {
     function validateVideo(videoUrl) {
         const embedUrl = getEmbedUrl(videoUrl)
 
-        // ✅ Check if it's a valid YouTube link
         const isYouTube = /youtu\.?be/.test(videoUrl)
         if (!isYouTube) {
             Swal.fire({

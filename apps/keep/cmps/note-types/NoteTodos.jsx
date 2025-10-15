@@ -1,11 +1,11 @@
 const { useState } = React
 
-export function NoteTodos({ onAddNote }) {
+export function NoteTodos({ onAddNote, color }) {
     const [list, setList] = useState('')
 
     function handleKeyPress(ev) {
         if (ev.key === 'Enter' && list.trim()) {
-            onAddNote({ txt: list.trim(), type: 'NoteTodos' })
+            onAddNote({ txt: list.trim(), type: 'NoteTodos', color })
             setList('')
         }
     }
