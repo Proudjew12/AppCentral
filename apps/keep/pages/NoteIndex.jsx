@@ -1,0 +1,166 @@
+import { NotePreview } from '../cmps/NotePreview.jsx'
+import { NoteList } from '../cmps/NoteList.jsx'
+
+import { noteService } from '../services/note.service.js'
+import { utilService } from '../../../services/util.service.js'
+import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
+
+const { useState, useEffect } = React
+
+export function NoteIndex() {
+    const [notes, setNotes] = useState([])
+    const [filterBy, setFilterBy] = useState({ txt: '', type: '' })
+
+    useEffect(() => { loadNotes() }, [filterBy]) // reload when filter changes
+
+    function loadNotes() {
+        noteService.query().then(notes => {
+            let filtered = notes
+
+            if (filterBy.txt) {
+                const regex = new RegExp(filterBy.txt, 'i')
+                filtered = filtered.filter(note =>
+                    (note.info.txt && regex.test(note.info.txt)) ||
+                    (note.info.title && regex.test(note.info.title)) ||
+                    (note.info.url && regex.test(note.info.url))
+                )
+            }
+
+            if (filterBy.type) {
+                filtered = filtered.filter(note => note.type === filterBy.type)
+            }
+
+            const sorted = [...filtered].sort((a, b) => (b.isPinned === true) - (a.isPinned === true))
+            setNotes(sorted)
+        })
+    }
+
+
+
+    function onAddNote({ txt, type, color }) {
+        const noteType = type || 'NoteTxt'
+        const note = noteService.getEmptyNote(txt, noteType)
+
+        note.style = { backgroundColor: color }
+
+        noteService.save(note)
+            .then(() => {
+                showSuccessMsg('✅ Note added!')
+                loadNotes()
+            })
+            .catch(() => showErrorMsg('❌ Failed to add note'))
+    }
+
+
+
+    function onRemoveNote(noteId) {
+        noteService.remove(noteId)
+            .then(() => {
+                showSuccessMsg('🗑️ Note deleted!')
+                loadNotes()
+            })
+            .catch(() => showErrorMsg('❌ Failed to delete note'))
+    }
+
+    function onEditNote(updatedNote) {
+        noteService.save(updatedNote)
+            .then(() => showSuccessMsg('✏️ Note updated!'))
+            .catch(() => showErrorMsg('❌ Update failed'))
+            .finally(loadNotes)
+    }
+
+    function onDuplicateNote(note) {
+        const duplicate = {
+            ...note,
+            id: utilService.makeId(),
+            createdAt: Date.now(),
+            isPinned: false,
+        }
+
+        noteService.add(duplicate)
+            .then(() => {
+                showSuccessMsg('📋 Note duplicated!')
+                loadNotes()
+            })
+            .catch(() => showErrorMsg('❌ Failed to duplicate note'))
+    }
+
+    function onTogglePin(note) {
+        const updatedNote = { ...note, isPinned: !note.isPinned }
+
+        noteService.save(updatedNote)
+            .then(() => {
+                showSuccessMsg(updatedNote.isPinned ? '📌 Note pinned!' : '📍 Note unpinned!')
+                loadNotes()
+            })
+            .catch(() => showErrorMsg('❌ Failed to toggle pin'))
+    }
+
+
+
+    function onResetDemo() {
+        const demoNotes = noteService.createDemoNotes()
+        utilService.saveToStorage('keepDB', demoNotes)
+        showSuccessMsg('✨ Demo notes reloaded!')
+        loadNotes()
+    }
+
+    function onClearAll() {
+        localStorage.removeItem('keepDB')
+        showSuccessMsg('🗑️ All notes cleared!')
+        loadNotes()
+    }
+
+    return (
+        <section className="keep-index flex column align-center">
+            <h2>Keep App</h2>
+
+            <NotePreview onAddNote={onAddNote} />
+
+            <section className="note-filter flex row align-center space-between">
+                <div className="flex row align-center grow">
+                    <input
+                        type="text"
+                        placeholder="Search notes..."
+                        value={filterBy.txt}
+                        onChange={(ev) => setFilterBy({ ...filterBy, txt: ev.target.value })}
+                    />
+                    {filterBy.txt && (
+                        <button
+                            className="btn-clear-search"
+                            onClick={() => setFilterBy({ txt: '', type: '' })}
+                            title="Clear search"
+                        >
+                            <i className="fa-solid fa-xmark"></i>
+                        </button>
+                    )}
+                </div>
+
+                <select
+                    value={filterBy.type}
+                    onChange={(ev) => setFilterBy({ ...filterBy, type: ev.target.value })}
+                >
+                    <option value="">All Types</option>
+                    <option value="NoteTxt">Text</option>
+                    <option value="NoteImg">Image</option>
+                    <option value="NoteVideo">Video</option>
+                    <option value="NoteTodos">Todos</option>
+                </select>
+            </section>
+
+
+            <div className="flex row align-center space-between">
+                <button onClick={onResetDemo}>Reset Demo Notes</button>
+                <button onClick={onClearAll}>Clear All Notes</button>
+            </div>
+
+            <NoteList
+                notes={notes}
+                onRemoveNote={onRemoveNote}
+                onEditNote={onEditNote}
+                onDuplicateNote={onDuplicateNote}
+                onTogglePin={onTogglePin}
+            />
+        </section>
+    )
+}

@@ -1,0 +1,148 @@
+.keep-notes {
+    gap: var(--space-md);
+    padding: var(--space-md);
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    transition: all 0.4s ease;
+
+}
+
+.note-card {
+    width: 100%;
+    border-radius: 12px;
+    padding: var(--space-md);
+    background-color: var(--clr-bg);
+    color: var(--clr-text);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: transform var(--transition-fast),
+        box-shadow var(--transition-medium),
+        order 0.3s ease;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+
+}
+
+.note-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.note-card.pinned {
+    animation: pop-to-top 0.4s ease;
+
+}
+
+@keyframes pop-to-top {
+    0% {
+        transform: scale(0.95) translateY(10px);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+
+.btn-pin {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    border: none;
+    background: transparent;
+    color: var(--clr-text-light);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: transform 0.3s ease, color 0.2s ease;
+    z-index: 2;
+}
+
+.btn-pin:hover {
+    color: var(--clr-primary-light);
+    transform: scale(1.1);
+}
+
+
+.btn-pin.active {
+    transform: rotate(180deg) scale(0.9);
+    color: var(--clr-primary);
+}
+
+
+
+.note-card p {
+    margin: 0.3em 0;
+    word-wrap: break-word;
+}
+
+
+.note-img img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.note-todos h4 {
+    margin-bottom: var(--space-sm);
+    font-size: 1rem;
+    color: var(--clr-text);
+}
+
+.note-todos ul {
+    margin: 0;
+    padding: 0;
+}
+
+.note-todos li {
+    list-style: none;
+    padding-left: 12px;
+    position: relative;
+    text-align: left;
+    margin-bottom: 6px;
+}
+
+.note-todos li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--clr-text-light);
+}
+
+.note-todos li.done {
+    text-decoration: line-through;
+    color: var(--clr-text-light);
+}
+
+
+.note-video iframe,
+.note-video video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    max-height: 180px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+
+.btn-delete {
+    border: none;
+    background: transparent;
+    color: var(--clr-text-light);
+    cursor: pointer;
+    align-self: flex-end;
+    font-size: 1.1rem;
+    transition: color var(--transition-fast);
+}
+
+.btn-delete:hover {
+    color: var(--clr-primary);
+}
