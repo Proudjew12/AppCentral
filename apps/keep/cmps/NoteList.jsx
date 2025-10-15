@@ -1,6 +1,6 @@
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 
-export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote }) {
+export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onTogglePin }) {
     if (!notes || !notes.length) return <p className="text-center">No notes yet...</p>
 
     async function onNoteClick(note) {
@@ -117,7 +117,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote }) {
             {notes.map(note => (
                 <article
                     key={note.id}
-                    className="note-card flex column align-center justify-between"
+                    className={`note-card flex column align-center justify-between ${note.isPinned ? 'pinned' : ''}`}
                     style={{
                         backgroundColor:
                             (note.style && note.style.backgroundColor) ||
@@ -126,8 +126,21 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote }) {
                     }}
                     onClick={() => onNoteClick(note)}
                 >
+
+                    <button
+                        className={`btn-pin ${note.isPinned ? 'active' : ''}`}
+                        title={note.isPinned ? 'Unpin note' : 'Pin note'}
+                        onClick={(ev) => {
+                            ev.stopPropagation()
+                            onTogglePin(note)
+                        }}
+                    >
+                        <i className="fa-solid fa-thumbtack"></i>
+                    </button>
+
                     {renderNoteContent(note)}
                 </article>
+
             ))}
         </section>
     )

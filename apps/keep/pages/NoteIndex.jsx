@@ -13,8 +13,13 @@ export function NoteIndex() {
     useEffect(() => { loadNotes() }, [])
 
     function loadNotes() {
-        noteService.query().then(setNotes)
+        noteService.query().then(notes => {
+
+            const sortedNotes = [...notes].sort((a, b) => (b.isPinned === true) - (a.isPinned === true))
+            setNotes(sortedNotes)
+        })
     }
+
 
     function onAddNote({ txt, type, color }) {
         const noteType = type || 'NoteTxt'
@@ -64,6 +69,17 @@ export function NoteIndex() {
             .catch(() => showErrorMsg('❌ Failed to duplicate note'))
     }
 
+    function onTogglePin(note) {
+        const updatedNote = { ...note, isPinned: !note.isPinned }
+
+        noteService.save(updatedNote)
+            .then(() => {
+                showSuccessMsg(updatedNote.isPinned ? '📌 Note pinned!' : '📍 Note unpinned!')
+                loadNotes()
+            })
+            .catch(() => showErrorMsg('❌ Failed to toggle pin'))
+    }
+
 
 
     function onResetDemo() {
@@ -87,7 +103,7 @@ export function NoteIndex() {
             <button onClick={onResetDemo}>Reset Demo Notes</button>
             <button onClick={onClearAll}>Clear All Notes</button>
 
-            <NoteList notes={notes} onRemoveNote={onRemoveNote} onEditNote={onEditNote} onDuplicateNote={onDuplicateNote} />
+            <NoteList notes={notes} onRemoveNote={onRemoveNote} onEditNote={onEditNote} onDuplicateNote={onDuplicateNote} onTogglePin={onTogglePin} />
         </section>
     )
 }

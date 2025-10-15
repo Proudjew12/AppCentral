@@ -98,7 +98,7 @@ function createDemoNotes() {
             id: 'n101',
             createdAt: 1112222,
             type: 'NoteTxt',
-            isPinned: true,
+            isPinned: false,
             style: { backgroundColor: utilService.getRandomPastelColor() },
             info: { txt: 'Fullstack Me Baby!' }
         },
