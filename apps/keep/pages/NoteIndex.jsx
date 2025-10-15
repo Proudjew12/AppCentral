@@ -48,6 +48,24 @@ export function NoteIndex() {
             .finally(loadNotes)
     }
 
+    function onDuplicateNote(note) {
+        const duplicate = {
+            ...note,
+            id: utilService.makeId(),
+            createdAt: Date.now(),
+            isPinned: false,
+        }
+
+        noteService.add(duplicate)
+            .then(() => {
+                showSuccessMsg('📋 Note duplicated!')
+                loadNotes()
+            })
+            .catch(() => showErrorMsg('❌ Failed to duplicate note'))
+    }
+
+
+
     function onResetDemo() {
         const demoNotes = noteService.createDemoNotes()
         utilService.saveToStorage('keepDB', demoNotes)
@@ -69,7 +87,7 @@ export function NoteIndex() {
             <button onClick={onResetDemo}>Reset Demo Notes</button>
             <button onClick={onClearAll}>Clear All Notes</button>
 
-            <NoteList notes={notes} onRemoveNote={onRemoveNote} onEditNote={onEditNote} />
+            <NoteList notes={notes} onRemoveNote={onRemoveNote} onEditNote={onEditNote} onDuplicateNote={onDuplicateNote} />
         </section>
     )
 }

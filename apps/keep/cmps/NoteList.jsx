@@ -1,24 +1,33 @@
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 
-export function NoteList({ notes, onRemoveNote, onEditNote }) {
+export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote }) {
     if (!notes || !notes.length) return <p className="text-center">No notes yet...</p>
 
     async function onNoteClick(note) {
         const result = await Swal.fire({
-            title: '🗒️ Edit Note',
+            title: '🗒️ Note Options',
             input: 'textarea',
             inputValue: note.info.txt || note.info.url || note.info.title || '',
             inputPlaceholder: 'Edit your note...',
             showCancelButton: true,
             confirmButtonText: 'Save',
-            cancelButtonText: 'Cancel',
+            cancelButtonText: '📋 Duplicate',
             showDenyButton: true,
             denyButtonText: '🗑️ Delete',
+            reverseButtons: true,
             background: (note.style && note.style.backgroundColor) || '#fff',
             color: '#111',
         })
 
-        if (result.isDenied) return onRemoveNote(note.id)
+        if (result.isDenied) {
+            onRemoveNote(note.id)
+            return
+        }
+
+        if (result.dismiss === Swal.DismissReason.cancel) {
+            onDuplicateNote(note)
+            return
+        }
 
         if (result.isConfirmed && result.value !== undefined) {
             let updatedNote = { ...note }
@@ -40,6 +49,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote }) {
             showSuccessMsg('✅ Note updated!')
         }
     }
+
 
     function renderNoteContent(note) {
         switch (note.type) {

@@ -8,6 +8,7 @@ export const noteService = {
     get,
     remove,
     save,
+    add,
     getEmptyNote,
     createDemoNotes
 }
@@ -85,6 +86,9 @@ function getEmptyNote(txt = '', type = 'NoteTxt') {
     }
 }
 
+function add(note) {
+    return storageService.post(NOTES_KEY, note)
+}
 
 function createDemoNotes() {
     localStorage.removeItem(NOTES_KEY)
