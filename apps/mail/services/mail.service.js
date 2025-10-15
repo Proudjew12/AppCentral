@@ -3,12 +3,16 @@ import { storageService } from '../../../services/async-storage.service.js'
 import {utilService} from '../../../services/util.service.js'
 
 const MAIL_KEY = 'mailDB'
-
+const loggedinUser = {
+ email: 'user@appsus.com',
+ fullname: 'Popo Ovadia'
+}
 export const mailService = {
     query,
     get,
     remove,
-    save
+    save,
+    getUser
 
 }
 _createDemoData()
@@ -77,4 +81,7 @@ from: 'momo@momo.com',
 to: 'user@appsus.com'},
     ]
     utilService.saveToStorage(MAIL_KEY,mails)
+}
+function getUser(){
+    return loggedinUser
 }

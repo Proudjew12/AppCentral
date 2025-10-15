@@ -1,13 +1,15 @@
 import { MailList } from '../cmps/MailList.jsx'
+import { MailPreview } from '../cmps/MailPreview.jsx'
 import { mailService } from '../services/mail.service.js'
 const {useState,useEffect} = React
 export function MailIndex() {
     const [mails,setMails] = useState(null)
+    const style = {backgroundColor:'white',color:'black',height:'100%',width:'100%'}
     useEffect(()=>{
       mailService.query()
       .then(setMails)  
     },[])
-    if(mails) return (<section className="container"><MailList mails={mails}/></section>)
+    if(mails) return (<section style={style}><MailPreview mail={mails[0]}/></section>)
     else return <div>Loading Mails...</div>
     
 }
