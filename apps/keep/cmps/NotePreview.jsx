@@ -2,12 +2,16 @@ import { NoteTxt } from './note-types/NoteTxt.jsx'
 import { NoteImg } from './note-types/NoteImg.jsx'
 import { NoteVideo } from './note-types/NoteVideo.jsx'
 import { NoteTodos } from './note-types/NoteTodos.jsx'
+import { NoteAudio } from './note-types/NoteAudio.jsx'
+import { NoteCanvas } from './note-types/NoteCanvas.jsx'
+import { NoteMap } from './note-types/NoteMap.jsx'
+import { NoteRecording } from './note-types/NoteRecording.jsx'
 
 const { useState } = React
 
 export function NotePreview({ onAddNote }) {
     const [noteType, setNoteType] = useState('NoteTxt')
-    const [color, setColor] = useState('#ffffff') // default color
+    const [color, setColor] = useState('#ffffff')
 
     function getRandomPastelColor() {
         const r = Math.floor((Math.random() * 127) + 127)
@@ -37,6 +41,11 @@ export function NotePreview({ onAddNote }) {
             case 'NoteImg': return <NoteImg {...commonProps} />
             case 'NoteVideo': return <NoteVideo {...commonProps} />
             case 'NoteTodos': return <NoteTodos {...commonProps} />
+            case 'NoteAudio': return <NoteAudio {...commonProps} />  // ✅ FIXED
+            case 'NoteCanvas': return <NoteCanvas {...commonProps} />
+            case 'NoteMap': return <NoteMap {...commonProps} />
+            case 'NoteRecording': return <NoteRecording {...commonProps} />
+            default: return <NoteTxt {...commonProps} />
         }
     }
 
@@ -56,10 +65,19 @@ export function NotePreview({ onAddNote }) {
                     <i className="fa-solid fa-list-check"></i>
                 </button>
 
-                <button onClick={() => setNoteType('NoteAudio')}><i className="fa-solid fa-music"></i></button>
-                <button onClick={() => setNoteType('NoteCanvas')}><i className="fa-solid fa-paintbrush"></i></button>
-                <button onClick={() => setNoteType('NoteMap')}><i className="fa-solid fa-map-location-dot"></i></button>
-                <button onClick={() => setNoteType('NoteRecording')}><i className="fa-solid fa-microphone"></i></button>
+                <button className={noteType === 'NoteAudio' ? 'active' : ''} onClick={() => setNoteType('NoteAudio')}>
+                    <i className="fa-solid fa-music"></i>
+                </button>
+
+                <button className={noteType === 'NoteCanvas' ? 'active' : ''} onClick={() => setNoteType('NoteCanvas')}>
+                    <i className="fa-solid fa-paintbrush"></i>
+                </button>
+                <button className={noteType === 'NoteMap' ? 'active' : ''} onClick={() => setNoteType('NoteMap')}>
+                    <i className="fa-solid fa-map-location-dot"></i>
+                </button>
+                <button className={noteType === 'NoteRecording' ? 'active' : ''} onClick={() => setNoteType('NoteRecording')}>
+                    <i className="fa-solid fa-microphone"></i>
+                </button>
 
 
                 <input

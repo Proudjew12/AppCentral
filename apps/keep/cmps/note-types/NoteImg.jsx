@@ -1,11 +1,10 @@
 const { useState } = React
 
-export function NoteImg({ onAddNote }) {
+export function NoteImg({ onAddNote, color }) {
     const [url, setUrl] = useState('')
 
     function handleKeyPress(ev) {
         if (ev.key === 'Enter' && url.trim()) {
-            onAddNote({ txt: inputValue, type: 'NoteImg', color })
             validateImage(url.trim())
         }
     }
@@ -13,7 +12,7 @@ export function NoteImg({ onAddNote }) {
     function validateImage(imageUrl) {
         const img = new Image()
         img.onload = () => {
-            onAddNote({ txt: imageUrl, type: 'NoteImg' })
+            onAddNote({ txt: imageUrl, type: 'NoteImg', color })
             setUrl('')
             Swal.fire({
                 title: '🖼️ Image added!',

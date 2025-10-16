@@ -1,11 +1,10 @@
 const { useState } = React
 
-export function NoteVideo({ onAddNote }) {
+export function NoteVideo({ onAddNote, color }) {
     const [url, setUrl] = useState('')
 
     function handleKeyPress(ev) {
         if (ev.key === 'Enter' && url.trim()) {
-            onAddNote({ txt: inputValue, type: 'NoteImg', color })
             validateVideo(url.trim())
         }
     }
@@ -25,7 +24,7 @@ export function NoteVideo({ onAddNote }) {
             return
         }
 
-        onAddNote({ txt: embedUrl, type: 'NoteVideo' })
+        onAddNote({ txt: embedUrl, type: 'NoteVideo', color }) // ✅ fixed type
         setUrl('')
         Swal.fire({
             title: '🎬 Video added!',

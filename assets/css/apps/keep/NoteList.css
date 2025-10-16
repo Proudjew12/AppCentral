@@ -146,3 +146,21 @@
 .btn-delete:hover {
     color: var(--clr-primary);
 }
+
+.note-audio audio,
+.note-recording audio {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 6px;
+    margin-top: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.note-canvas img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    margin-top: 6px;
+}
