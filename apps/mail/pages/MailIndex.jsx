@@ -9,7 +9,7 @@ export function MailIndex() {
       mailService.query()
       .then(setMails)  
     },[])
-    if(mails) return (<section style={style}><MailPreview mail={mails[0]}/></section>)
+    if(mails) return (<section style={style}><MailList mails={mails}/></section>)
     else return <div>Loading Mails...</div>
     
 }

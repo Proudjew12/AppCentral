@@ -1,5 +1,6 @@
 import { utilService } from "../../../services/util.service.js"
 
+const { Link } = ReactRouterDOM
 
 export function MailList({ mails }) {
     const style = {
@@ -22,12 +23,13 @@ export function MailList({ mails }) {
             {mails.map(
                 mail =>
                     <li key={mail.id}>
+                        <Link to={`${mail.id}`}>
                         <div style={style}>
                             <span>{mail.from}</span>
                             <span>{mail.subject}</span>
                             <span>{getDate(mail.createdAt)}</span>
-
                         </div>
+                        </Link>
                     </li>
             )}
         </ul>

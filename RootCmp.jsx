@@ -17,6 +17,7 @@ import { Home } from './pages/Home.jsx'
 import { MailIndex } from './apps/mail/pages/MailIndex.jsx'
 import { NoteIndex } from './apps/keep/pages/NoteIndex.jsx'
 import { BooksIndex } from './apps/books/pages/BooksIndex.jsx'
+import { MailDetails } from './apps/mail/pages/MailDetails.jsx'
 
 
 
@@ -33,6 +34,7 @@ export function RootCmp() {
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/mail" element={<MailIndex />} />
+                    <Route path='/mail/:mailId' element={<MailDetails />} />
                     <Route path="/keep" element={<NoteIndex />} />
                     <Route path="/books" element={<BooksIndex />} />
                 </Routes>
