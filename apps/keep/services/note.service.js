@@ -74,6 +74,15 @@ function getEmptyNote(txt = '', type = 'NoteTxt') {
                 info: { title: 'New todo list', todos },
                 createdAt: Date.now()
             }
+        case 'NoteAudio':
+            return {
+                type,
+                isPinned: false,
+                style: { backgroundColor: utilService.getRandomPastelColor() },
+                info: { url: txt, title: 'Audio Note 🎵' },
+                createdAt: Date.now()
+            }
+
 
         default:
             return {

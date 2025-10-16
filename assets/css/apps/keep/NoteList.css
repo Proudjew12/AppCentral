@@ -147,20 +147,21 @@
     color: var(--clr-primary);
 }
 
-.note-audio audio,
-.note-recording audio {
+.note-audio {
     width: 100%;
-    max-width: 300px;
-    border-radius: 6px;
-    margin-top: 6px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    padding: var(--space-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.note-canvas img {
+.note-audio audio {
     width: 100%;
-    max-width: 300px;
-    height: auto;
+    max-width: 320px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid #333;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    margin-top: 6px;
 }

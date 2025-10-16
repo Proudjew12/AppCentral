@@ -52,6 +52,8 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
 
 
     function renderNoteContent(note) {
+        console.log('Rendering note:', note)
+
         switch (note.type) {
             case 'NoteTxt':
                 return <p>{note.info.txt}</p>
@@ -99,6 +101,17 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                         <p>{note.info.title}</p>
                     </div>
                 )
+
+            case 'NoteAudio':
+                const audioSrc = note.info.url || note.info.txt
+                return (
+                    <div className="note-audio flex column align-center justify-center grow">
+                        <audio controls src={audioSrc} style={{ width: '100%' }}>
+                            Your browser does not support the audio tag.
+                        </audio>
+                    </div>
+                )
+
 
             default:
                 return <p>Unsupported note type</p>
