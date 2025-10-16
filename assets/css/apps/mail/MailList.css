@@ -1,1 +1,9 @@
  /* mail list */
+
+ .isRead{
+    background-color: #f2f6fc;
+ }
+ .createdAt-span{
+  position: absolute;
+  right: 5px;  
+ }
