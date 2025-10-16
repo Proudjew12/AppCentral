@@ -197,9 +197,19 @@ function createDemoNotes() {
                 url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
             }
         },
+        {
+            id: 'n108',
+            type: 'NoteMap',
+            isPinned: false,
+            style: { backgroundColor: utilService.getRandomPastelColor() },
+            info: {
+                title: 'Location Info 🗺️',
+                txt: 'Bnei Dan, The New North - Northern part, The New North, Tel Aviv, Tel-Aviv, Tel Aviv Subdistrict, Tel-Aviv District, 6230231, Israel'
+            },
+            createdAt: Date.now()
+        }
 
     ]
-
     utilService.saveToStorage(NOTES_KEY, notes)
     return notes
 }

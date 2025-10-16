@@ -141,6 +141,13 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                     </div>
                 )
 
+            case 'NoteMap':
+                return (
+                    <div className="note-map-preview flex column align-center grow">
+                        <p>{note.info.txt}</p>
+                    </div>
+                )
+
 
 
             default:
