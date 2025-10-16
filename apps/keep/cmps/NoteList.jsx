@@ -100,6 +100,56 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                     </div>
                 )
 
+            case 'NoteAudio':
+                const audioSrc = note.info.url || note.info.txt
+                return (
+                    <div className="note-audio flex column align-center justify-center grow">
+                        <audio controls src={audioSrc} style={{ width: '100%' }}>
+                            Your browser does not support the audio tag.
+                        </audio>
+                    </div>
+                )
+            case 'NoteCanvas':
+                const canvasImg = note.info.url || note.info.txt
+                return (
+                    <div
+                        className="note-canvas flex column align-center justify-center grow"
+                        style={{
+                            width: '100%',
+                            padding: '0.5em',
+                        }}
+                    >
+                        <img
+                            src={canvasImg}
+                            alt={note.info.title || 'Canvas drawing'}
+                        />
+                        {note.info.title && (
+                            <p style={{ marginTop: '8px', fontWeight: 500 }}>{note.info.title}</p>
+                        )}
+                    </div>
+                )
+
+            case 'NoteRecording':
+                return (
+                    <div className="note-recording flex column align-center justify-center grow">
+                        <audio
+                            controls
+                            src={note.info.url || note.info.txt}
+                            style={{ width: '100%', maxWidth: '320px' }}
+                        ></audio>
+                        {note.info.title && <p>{note.info.title}</p>}
+                    </div>
+                )
+
+            case 'NoteMap':
+                return (
+                    <div className="note-map-preview flex column align-center grow">
+                        <p>{note.info.txt}</p>
+                    </div>
+                )
+
+
+
             default:
                 return <p>Unsupported note type</p>
         }

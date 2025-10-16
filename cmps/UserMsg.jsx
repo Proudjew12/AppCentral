@@ -39,5 +39,5 @@ export function UserMsg() {
     })
   }
 
-  return null // No need to render anything
+  return null
 }

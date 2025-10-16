@@ -25,4 +25,5 @@
 @import './apps/keep/KeepIndex.css';
 @import './apps/keep/NoteList.css';
 @import './apps/keep/NotePreview.css';
-@import './apps/keep//NoteFilter.css';
+@import './apps/keep/NoteFilter.css';
+@import './apps/keep/NoteMap.css';
