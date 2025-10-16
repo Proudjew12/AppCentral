@@ -52,8 +52,6 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
 
 
     function renderNoteContent(note) {
-        console.log('Rendering note:', note)
-
         switch (note.type) {
             case 'NoteTxt':
                 return <p>{note.info.txt}</p>
@@ -111,6 +109,38 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                         </audio>
                     </div>
                 )
+            case 'NoteCanvas':
+                const canvasImg = note.info.url || note.info.txt
+                return (
+                    <div
+                        className="note-canvas flex column align-center justify-center grow"
+                        style={{
+                            width: '100%',
+                            padding: '0.5em',
+                        }}
+                    >
+                        <img
+                            src={canvasImg}
+                            alt={note.info.title || 'Canvas drawing'}
+                        />
+                        {note.info.title && (
+                            <p style={{ marginTop: '8px', fontWeight: 500 }}>{note.info.title}</p>
+                        )}
+                    </div>
+                )
+
+            case 'NoteRecording':
+                return (
+                    <div className="note-recording flex column align-center justify-center grow">
+                        <audio
+                            controls
+                            src={note.info.url || note.info.txt}
+                            style={{ width: '100%', maxWidth: '320px' }}
+                        ></audio>
+                        {note.info.title && <p>{note.info.title}</p>}
+                    </div>
+                )
+
 
 
             default:

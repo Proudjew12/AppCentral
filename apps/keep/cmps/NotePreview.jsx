@@ -48,7 +48,7 @@ export function NotePreview({ onAddNote }) {
             default: return <NoteTxt {...commonProps} />
         }
     }
-    { console.log('NotePreview currently rendering type:', noteType) }
+
 
     return (
         <section className="note-preview flex column align-center">
@@ -85,7 +85,6 @@ export function NotePreview({ onAddNote }) {
                     <i className="fa-solid fa-list-check"></i>
                 </button>
 
-                {/* ✅ FIXED BUTTON */}
                 <button
                     className={noteType === 'NoteAudio' ? 'active' : ''}
                     onClick={() => setNoteType('NoteAudio')}

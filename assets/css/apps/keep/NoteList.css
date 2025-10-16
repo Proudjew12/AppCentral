@@ -165,3 +165,67 @@
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
+
+.note-canvas img {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.note-recording {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: var(--space-md);
+    background: var(--clr-bg-light, #f9fafb);
+    border-radius: 12px;
+}
+
+.note-recording audio {
+    width: 100%;
+    max-width: 300px;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.note-recording audio:hover {
+    transform: scale(1.01);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+.note-recording button {
+    background-color: var(--clr-primary-light, #6e85b7);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6em 1.2em;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.note-recording button:hover {
+    background-color: var(--clr-primary, #5b6caa);
+    transform: translateY(-1px);
+}
+
+.note-recording button:active {
+    transform: scale(0.98);
+}
+
+
+.note-recording.recording button {
+    background-color: #d94a4a;
+    /* red */
+}
