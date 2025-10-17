@@ -12,7 +12,8 @@ export const mailService = {
     get,
     remove,
     save,
-    getUser
+    getUser,
+    getEmptyMail
 
 }
 _createDemoData()
@@ -45,6 +46,7 @@ function remove(mailId) {
 
 function save(mail) {
     if (mail.id) {
+        mail.sentAt = Date.now()
         return storageService.put(MAIL_KEY, mail)
     } else {
         return storageService.post(MAIL_KEY, mail)
@@ -84,4 +86,19 @@ to: 'user@appsus.com'},
 }
 function getUser(){
     return loggedinUser
+}
+function getEmptyMail(){
+    const mail={
+     id: '',
+createdAt : Date.now(),
+subject: '',
+body: '',
+isRead: true,
+sentAt : null,
+removedAt : null,
+from: loggedinUser.email,
+to: ''
+}
+         
+    return mail
 }

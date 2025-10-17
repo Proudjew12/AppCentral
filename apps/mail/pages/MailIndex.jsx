@@ -10,7 +10,11 @@ export function MailIndex() {
       mailService.query()
       .then(setMails)  
     },[])
-    if(mails) return (<section style={style}><MailCompose/><MailList mails={mails}/></section>)
+    function addMail(mail){
+    mailService.save(mail)
+    .then(newMail=>(setMails([...mails,newMail])))
+    }
+    if(mails) return (<section style={style}><MailCompose addMail={addMail}/><MailList mails={mails}/></section>)
     else return <div>Loading Mails...</div>
     
 }
