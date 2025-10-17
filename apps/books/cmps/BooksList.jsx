@@ -8,13 +8,29 @@ export function BooksList({ books, onEditBook, onRemoveBook }) {
                             src={`assets/img/${book.thumbnail}`}
                             alt={book.title}
                             className="book-img"
-                            onError={ev => ev.target.src = 'assets/img/1.jpg'}
+                            onError={ev => (ev.target.src = 'assets/img/1.jpg')}
                         />
                         <div>
                             <h3>{book.title}</h3>
                             <p className="subtitle">{book.subtitle}</p>
                             <p>{book.authors.join(', ')}</p>
-                            <p>💲{book.listPrice.amount}</p>
+
+                            {book.listPrice.isOnSale ? (
+                                <p className="book-price">
+                                    <span className="old-price">
+                                        💲{book.listPrice.amount.toFixed(2)}
+                                    </span>
+                                    <span className="new-price">
+                                        💲{(book.listPrice.amount * 0.5).toFixed(2)}
+                                    </span>
+                                    <span className="sale-badge">SALE</span>
+                                </p>
+                            ) : (
+                                <p className="book-price">
+                                    💲{book.listPrice.amount.toFixed(2)}
+                                </p>
+                            )}
+
                             <div className="star-rating">
                                 {[1, 2, 3, 4, 5].map(star => (
                                     <span
