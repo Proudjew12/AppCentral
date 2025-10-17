@@ -12,20 +12,15 @@ export const bookService = {
     getDefaultFilter,
     createDemoBooks,
     clearAllBooks,
-    resetDemoBooks
+    resetDemoBooks,
+    getEmptyBook,
 }
 
 function query(filterBy = getDefaultFilter()) {
     return storageService.query(BOOKS_KEY).then(books => {
         const { title, maxPrice } = filterBy
-        if (title) {
-            books = books.filter(book =>
-                book.title.toLowerCase().includes(title.toLowerCase())
-            )
-        }
-        if (maxPrice) {
-            books = books.filter(book => book.listPrice.amount <= +maxPrice)
-        }
+        if (title) books = books.filter(book => book.title.toLowerCase().includes(title.toLowerCase()))
+        if (maxPrice) books = books.filter(book => book.listPrice.amount <= +maxPrice)
         return books
     })
 }
@@ -45,10 +40,9 @@ function save(book) {
             book.thumbnail = `${imgNum}.jpg`
         }
         return storageService.post(BOOKS_KEY, book)
-    } else {
-        return storageService.put(BOOKS_KEY, book)
-    }
+    } else return storageService.put(BOOKS_KEY, book)
 }
+
 function add(book) {
     return storageService.post(BOOKS_KEY, book)
 }
@@ -68,14 +62,29 @@ function resetDemoBooks() {
     return Promise.resolve()
 }
 
+function getEmptyBook() {
+    return {
+        id: '',
+        title: '',
+        subtitle: '',
+        authors: [''],
+        publishedDate: '',
+        description: '',
+        pageCount: '',
+        categories: [],
+        thumbnail: '',
+        language: 'en',
+        listPrice: { amount: '', currencyCode: 'USD', isOnSale: false },
+        rating: 0,
+    }
+}
+
 function createDemoBooks() {
     localStorage.removeItem(BOOKS_KEY)
-
     function getRandomImg() {
         const imgNum = Math.ceil(Math.random() * 20)
         return `${imgNum}.jpg`
     }
-
     const books = [
         {
             id: utilService.makeId(),
@@ -89,7 +98,7 @@ function createDemoBooks() {
             thumbnail: getRandomImg(),
             language: 'en',
             listPrice: { amount: 19.99, currencyCode: 'USD', isOnSale: false },
-            rating: 5,
+            rating: 3,
         },
         {
             id: utilService.makeId(),
@@ -97,13 +106,13 @@ function createDemoBooks() {
             subtitle: 'There and Back Again',
             authors: ['J.R.R. Tolkien'],
             publishedDate: 1937,
-            description: 'Bilbo Baggins embarks on a journey with a group of dwarves to reclaim their mountain home.',
+            description: 'Bilbo Baggins embarks on a journey with dwarves to reclaim their home.',
             pageCount: 310,
             categories: ['Fantasy', 'Adventure'],
             thumbnail: getRandomImg(),
             language: 'en',
             listPrice: { amount: 14.99, currencyCode: 'USD', isOnSale: true },
-            rating: 2,
+            rating: 5,
         },
         {
             id: utilService.makeId(),
@@ -117,10 +126,9 @@ function createDemoBooks() {
             thumbnail: getRandomImg(),
             language: 'en',
             listPrice: { amount: 9.99, currencyCode: 'USD', isOnSale: false },
-            rating: 4,
+            rating: 1,
         },
     ]
-
     utilService.saveToStorage(BOOKS_KEY, books)
     return books
 }

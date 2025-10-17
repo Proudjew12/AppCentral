@@ -13,7 +13,7 @@ export function BookFilter({ filterBy, onSetFilter }) {
     }
 
     return (
-        <form className="book-filter">
+        <form className="book-filter flex gap10">
             <input
                 type="text"
                 name="title"

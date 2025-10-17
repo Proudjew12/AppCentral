@@ -1,16 +1,16 @@
 const { useState, useEffect, useRef } = React
 
-import { BookList } from '../cmps/BooksList.jsx'
+import { BooksList } from '../cmps/BooksList.jsx'
 import { BookFilter } from '../cmps/BookFilter.jsx'
 import { BookAdd } from '../cmps/BookAdd.jsx'
 import { bookService } from '../services/books.service.js'
+import { notify } from '../services/notification.service.js'
 
 export function BooksIndex() {
     const [books, setBooks] = useState([])
     const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
     const [isAddOpen, setIsAddOpen] = useState(false)
     const [bookToEdit, setBookToEdit] = useState(null)
-
     const modalRef = useRef(null)
 
     useEffect(() => {
@@ -23,8 +23,7 @@ export function BooksIndex() {
             const books = await bookService.query(filterBy)
             setBooks(books)
         } catch (err) {
-            console.error('Failed to load books:', err)
-            Swal.fire('Error', 'Failed to load books', 'error')
+            notify.error('Failed to load books')
         }
     }
 
@@ -32,7 +31,6 @@ export function BooksIndex() {
         setFilterBy(prev => ({ ...prev, ...updatedFilter }))
     }
 
-    // open modal for add or edit
     function openAddModal(book = null) {
         setBookToEdit(book)
         setIsAddOpen(true)
@@ -42,55 +40,24 @@ export function BooksIndex() {
         setIsAddOpen(false)
     }
 
-    // close modal when clicking outside
     useEffect(() => {
         function handleClickOutside(ev) {
-            if (modalRef.current && !modalRef.current.contains(ev.target)) {
-                closeAddModal()
-            }
+            if (modalRef.current && !modalRef.current.contains(ev.target)) closeAddModal()
         }
         if (isAddOpen) document.addEventListener('mousedown', handleClickOutside)
         else document.removeEventListener('mousedown', handleClickOutside)
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [isAddOpen])
 
-    function onSelectBook(book) {
-        Swal.fire({
-            title: book.title,
-            html: `
-                <div style="text-align:left">
-                    <img src="assets/img/${book.thumbnail}" style="width:150px;border-radius:8px;margin-bottom:10px">
-                    <p><b>Author:</b> ${(book.authors && book.authors.join(', ')) || 'N/A'}</p>
-                    <p><b>Price:</b> ${book.listPrice.amount} ${book.listPrice.currencyCode}</p>
-                    <p><b>Rating:</b> ${'★'.repeat(book.rating || 0)}</p>
-                    <p><b>Language:</b> ${book.language}</p>
-                </div>
-            `,
-            background: '#1e1f22',
-            color: '#f3f3f3',
-            confirmButtonColor: '#ffb347'
-        })
+    async function onRemoveBook(bookId) {
+        const result = await notify.confirmDelete('Delete this book?')
+        if (result.isConfirmed) {
+            await bookService.remove(bookId)
+            notify.toast('Book deleted!')
+            loadBooks()
+        }
     }
 
-    function onRemoveBook(bookId) {
-        Swal.fire({
-            title: 'Delete this book?',
-            text: 'This cannot be undone!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
-        }).then(result => {
-            if (result.isConfirmed) {
-                bookService.remove(bookId).then(() => {
-                    loadBooks()
-                    Swal.fire('Deleted!', 'Book has been removed.', 'success')
-                })
-            }
-        })
-    }
-
-    // 🧠 new edit logic
     function onEditBook(book) {
         openAddModal(book)
     }
@@ -122,7 +89,7 @@ export function BooksIndex() {
                         onClick={() => {
                             bookService.clearAllBooks()
                             setBooks([])
-                            Swal.fire('All books removed!', '', 'success')
+                            notify.toast('All books removed!', 'info')
                         }}
                     >
                         🗑️ Clear All
@@ -146,9 +113,8 @@ export function BooksIndex() {
             )}
 
             {!!books.length && (
-                <BookList
+                <BooksList
                     books={books}
-                    onSelectBook={onSelectBook}
                     onRemoveBook={onRemoveBook}
                     onEditBook={onEditBook}
                 />
