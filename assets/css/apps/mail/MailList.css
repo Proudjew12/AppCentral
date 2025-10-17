@@ -1,9 +1,36 @@
  /* mail list */
-
+.mail{
+   height: 50px;
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+}
+.mail:hover{
+  transform: scale(1.01);
+  transition: all 0.15s ease
+}
+.mail:hover .remove-btn{
+visibility: visible;
+}
  .isRead{
     background-color: #f2f6fc;
  }
- .createdAt-span{
+ .date-and-remove-btn-container{
   position: absolute;
   right: 5px;  
+  display: flex;
+  align-items: center;
+  gap: 10px;
+ }
+ .remove-btn{
+  z-index: 10;
+  border-radius: 50%; 
+  background-color: transparent;
+  border: 0;
+  visibility: hidden;
+  padding: 10px;
+  cursor: pointer;
+ }
+ .remove-btn:hover{
+  background-color: gray; 
  }

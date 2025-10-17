@@ -12,9 +12,14 @@ export function MailIndex() {
     },[])
     function addMail(mail){
     mailService.save(mail)
-    .then(newMail=>(setMails([...mails,newMail])))
+    .then(newMail=>(setMails([newMail,...mails])))
     }
-    if(mails) return (<section style={style}><MailCompose addMail={addMail}/><MailList mails={mails}/></section>)
+    function removeMail(ev,mailId){
+        ev.preventDefault()
+     mailService.remove(mailId)
+     .then((setMails(mails.filter(mail=>(mailId!==mail.id)))))
+    }
+    if(mails) return (<section style={style}><MailCompose addMail={addMail}/><MailList mails={mails} removeMail={removeMail}/></section>)
     else return <div>Loading Mails...</div>
     
 }

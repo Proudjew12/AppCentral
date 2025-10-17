@@ -28,7 +28,7 @@ function query(filterBy = {},sortBy='date') {
                 Mails = Mails.filter(mail => mail.isRead === filterBy.read)
             }
             if(sortBy === 'date'){
-                Mails = Mails.sort((mail1,mail2)=>(mail1.createdAt>mail2.createdAt))
+                Mails = Mails.sort((mail1,mail2)=>(mail1.sentAt>mail2.sentAt))
             }
             else{
                 Mails = Mails.sort((mail1,mail2)=>(mail1.subject.localeCompare(mail2.subject)))
@@ -59,7 +59,7 @@ createdAt : Date.now(),
 subject: 'Miss you!',
 body: 'Would love to catch up sometimes',
 isRead: false,
-sentAt : 1551112330594,
+sentAt : 1351992330577,
 removedAt : null,
 from: 'momo@momo.com',
 to: 'user@appsus.com'},
