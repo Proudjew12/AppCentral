@@ -26,12 +26,12 @@ export function MailList({ mails,removeMail }) {
             {mails.map(
                 mail =>
                     <li key={mail.id}>
-                        <Link to={`${mail.id}`}>
+                        <Link to={`${mail.id}`} style={{textDecoration: 'none'}}>
                         <div  className={'mail '+getClassName(mail)} style={style}>
                             <span>{mail.from}</span>
                             <span>{mail.subject}</span>
                             <div className='date-and-remove-btn-container'>
-                            <span className='createdAt-span'>{getDate(mail.createdAt)}</span>
+                            <span>{getDate(mail.createdAt)}</span>
                             <button className='remove-btn' onClick={(ev)=>{removeMail(ev,mail.id)}}>
                             <TrashIcon />
                             </button>

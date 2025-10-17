@@ -1,0 +1,20 @@
+.mail-preview-container {
+  background-color: white;
+  padding: 20px;
+}
+.MailPreview {
+  background-color: white;
+  color: black;
+  padding: "20px";
+  color: "black";
+}
+.back-btn {
+  border-radius: 50%;
+  cursor: pointer;
+  border: 0;
+  background-color: transparent;
+  padding: 10px;
+}
+.back-btn:hover {
+  background-color: #f1f3f4;
+}
