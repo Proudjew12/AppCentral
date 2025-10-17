@@ -15,6 +15,7 @@
 /* 📚 Books app */
 @import './apps/books/BooksIndex.css';
 @import './apps/books/BooksList.css';
+@import './apps/books/BookAdd.css';
 
 /* 📧 Mail app */
 @import './apps/mail/MailIndex.css';
