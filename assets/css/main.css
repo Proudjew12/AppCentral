@@ -20,6 +20,7 @@
 /* 📧 Mail app */
 @import './apps/mail/MailIndex.css';
 @import './apps/mail/MailList.css';
+@import './apps/mail/MailCompose.css';
 
 /* 🗒️ Keep (Notes) app */
 @import './apps/keep/KeepIndex.css';

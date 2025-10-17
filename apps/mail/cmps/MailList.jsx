@@ -1,10 +1,10 @@
 import { utilService } from "../../../services/util.service.js"
 
+const { Link } = ReactRouterDOM
 
 export function MailList({ mails }) {
     const style = {
-        padding: '15px', 
-        backgroundColor: 'white', 
+        padding: '15px',  
         color: 'black',
         display: 'flex',
         border: 'solid 1px black',
@@ -17,17 +17,21 @@ export function MailList({ mails }) {
         const currentYear = new Date().getFullYear()
        return (currentYear-2>=year) ? year : month.substring(0,3)+' '+year
     }
+    function getClassName(mail){
+    return (mail.isRead) ? 'isRead' : ''
+    }
     return (
         <ul style={{listStyleType:'none',padding:'0'}}>
             {mails.map(
                 mail =>
                     <li key={mail.id}>
-                        <div style={style}>
+                        <Link to={`${mail.id}`}>
+                        <div  className={'mail '+getClassName(mail)} style={style}>
                             <span>{mail.from}</span>
                             <span>{mail.subject}</span>
-                            <span>{getDate(mail.createdAt)}</span>
-
+                            <span className='createdAt-span'>{getDate(mail.createdAt)}</span>
                         </div>
+                        </Link>
                     </li>
             )}
         </ul>
