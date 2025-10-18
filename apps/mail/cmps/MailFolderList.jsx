@@ -1,8 +1,21 @@
-export function MailFolderList(){
+import { utilService } from "../../../services/util.service.js"
+
+const {useState,useEffect,useRef} = React
+export function MailFolderList({filterBy,onSetFilterBy}){
+
+const [filterByToEdit,setFilterByToEdit] = useState(filterBy)
+const onSetFilterDebounce = useRef(utilService.debounce(onSetFilterBy, 500))
+
+useEffect(()=>{
+    onSetFilterDebounce.current(filterByToEdit)
+},[filterByToEdit])
+function handleChange(value) {
+        setFilterByToEdit((prevFilter) => ({ ...prevFilter, type: value }))
+    }
 return<section className='mail-folder-list'>
-      <button><InboxIcon/></button>
+      <button onClick={()=>handleChange('inbox')}><InboxIcon/></button>
       <button><StarIcon/></button>
-      <button><SentIcon/></button>
+      <button onClick={()=>handleChange('sent')}><SentIcon/></button>
       <button><DraftIcon/></button>
       <button><TrashIcon/></button>
 </section>    

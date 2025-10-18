@@ -20,6 +20,7 @@ export function MailIndex() {
     setSearchParams({
       subject: filterBy.subject,
       isRead: filterBy.isRead,
+      type: filterBy.type,
       sortBy: sortBy
     })
     mailService.query(filterBy,sortBy).then(setMails)
@@ -43,7 +44,7 @@ export function MailIndex() {
   if (mails) return (<section className='mail-index-container' >
     <nav>
       <MailCompose addMail={addMail} />
-      <MailFolderList/>
+      <MailFolderList filterBy={filterBy} onSetFilterBy={onSetFilterBy}/>
       </nav>
       <section style={style}>
     

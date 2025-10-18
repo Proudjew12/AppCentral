@@ -3,7 +3,6 @@ import { utilService } from "../../../services/util.service.js"
 export function MailFilter({ filterBy, onSetFilterBy }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
-    const initialFilterBy = useRef({ ...filterBy })
     const onSetFilterDebounce = useRef(utilService.debounce(onSetFilterBy, 500))
 
     useEffect(() => {
