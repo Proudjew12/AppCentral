@@ -1,1 +1,9 @@
  /* mail index  */
+ .mail-index-container{
+    display: grid;
+    background-color: 'white'; 
+    color: 'black'; 
+    height: '100%';
+     width: '100%'
+ }
+ 

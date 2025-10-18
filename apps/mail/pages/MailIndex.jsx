@@ -1,7 +1,6 @@
 import { MailCompose } from '../cmps/MailCompose.jsx'
 import { MailFilter } from '../cmps/MailFilter.jsx'
 import { MailList } from '../cmps/MailList.jsx'
-import { MailPreview } from '../cmps/MailPreview.jsx'
 import { MailSort } from '../cmps/MailSort.jsx'
 import { mailService } from '../services/mail.service.js'
 const { useState, useEffect } = React
@@ -42,6 +41,9 @@ export function MailIndex() {
       .then((setMails(mails.filter(mail => (mailId !== mail.id)))))
   }
   if (mails) return (<section style={style}>
+    <nav>
+      <button></button>
+      </nav>
     <MailCompose addMail={addMail} />
     <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy}/>
     <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy}/>

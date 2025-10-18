@@ -1,3 +1,16 @@
 .sort-container{
-display: flex;    
+display: flex;   
+gap: 15px; 
+align-items: center;
+padding: 10px;
+}
+.sort-container button{
+    border-radius: 500px;
+    background-color: transparent;
+    border: 1px solid #D1D1D1;
+    padding-inline: 15px;
+    height: 30px;
+    width: max-content;
+    display: flex;
+    align-items: center;
 }
