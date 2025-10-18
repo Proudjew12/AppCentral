@@ -13,19 +13,22 @@ export const mailService = {
     remove,
     save,
     getUser,
-    getEmptyMail
+    getEmptyMail,
+    getDefaultFilter,
+    getFilterFromParams
 
 }
 _createDemoData()
 function query(filterBy = {},sortBy='date') {
+    
     return storageService.query(MAIL_KEY)
         .then(Mails => {
-            if (filterBy.search) {
-                const regExp = new RegExp(filterBy.search, 'i')
+            if (filterBy.subject) {
+                const regExp = new RegExp(filterBy.subject, 'i')
                 Mails = Mails.filter(mail => regExp.test(mail.subject))
             }
-            if (filterBy.read) {
-                Mails = Mails.filter(mail => mail.isRead === filterBy.read)
+            if (filterBy.isRead) {
+                Mails = Mails.filter(mail => JSON.stringify(mail.isRead) === filterBy.isRead)
             }
             if(sortBy === 'date'){
                 Mails = Mails.sort((mail1,mail2)=>(mail1.sentAt>mail2.sentAt))
@@ -33,6 +36,7 @@ function query(filterBy = {},sortBy='date') {
             else{
                 Mails = Mails.sort((mail1,mail2)=>(mail1.subject.localeCompare(mail2.subject)))
             }
+            
             return Mails
         })
 }
@@ -101,4 +105,16 @@ to: ''
 }
          
     return mail
+}
+function getDefaultFilter(filterBy = { subject: '', isRead:'' }) {
+    return { subject: filterBy.subject, isRead: filterBy.isRead }
+}
+
+function getFilterFromParams(searchParams = {}) {
+    const defaultFilter = getDefaultFilter()
+    return {
+        subject: searchParams.get('subject') || defaultFilter.subject,
+        isRead: searchParams.get('isRead') || defaultFilter.isRead,
+
+    }
 }
