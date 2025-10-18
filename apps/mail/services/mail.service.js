@@ -15,7 +15,9 @@ export const mailService = {
     getUser,
     getEmptyMail,
     getDefaultFilter,
-    getFilterFromParams
+    getFilterFromParams,
+    getDefaultSort,
+    getSortFromParams
 
 }
 _createDemoData()
@@ -117,4 +119,11 @@ function getFilterFromParams(searchParams = {}) {
         isRead: searchParams.get('isRead') || defaultFilter.isRead,
 
     }
+}
+function getDefaultSort(sortBy='date'){
+    return sortBy
+}
+function getSortFromParams(searchParams={}){
+    const defaultSort = getDefaultSort()
+    return searchParams.get('sortBy') || defaultSort
 }

@@ -2,24 +2,35 @@ import { MailCompose } from '../cmps/MailCompose.jsx'
 import { MailFilter } from '../cmps/MailFilter.jsx'
 import { MailList } from '../cmps/MailList.jsx'
 import { MailPreview } from '../cmps/MailPreview.jsx'
+import { MailSort } from '../cmps/MailSort.jsx'
 import { mailService } from '../services/mail.service.js'
 const { useState, useEffect } = React
 const { Link, useSearchParams } = ReactRouterDOM
 export function MailIndex() {
 
   const [searchParams, setSearchParams] = useSearchParams()
+  const [sortParams, setSortParams] = useSearchParams()
 
   const [mails, setMails] = useState([])
   const style = { backgroundColor: 'white', color: 'black', height: '100%', width: '100%' }
   const [filterBy, setFilterBy] = useState(mailService.getFilterFromParams(searchParams))
+  const [sortBy, setSortBy] = useState(mailService.getSortFromParams(searchParams))
+
 
   useEffect(() => {
-    setSearchParams(filterBy)
-    mailService.query(filterBy).then(setMails)
-  }, [filterBy])
+    setSearchParams({
+      subject: filterBy.subject,
+      isRead: filterBy.isRead,
+      sortBy: sortBy
+    })
+    mailService.query(filterBy,sortBy).then(setMails)
+  }, [filterBy,sortBy])
 
   function onSetFilterBy(newFilter){
   setFilterBy(prevFilter => ({ ...prevFilter, ...newFilter }))  
+  }
+  function onSetSortBy(newSort){
+  setSortBy(newSort)  
   }
   function addMail(mail) {
     mailService.save(mail)
@@ -30,7 +41,11 @@ export function MailIndex() {
     mailService.remove(mailId)
       .then((setMails(mails.filter(mail => (mailId !== mail.id)))))
   }
-  if (mails) return (<section style={style}><MailCompose addMail={addMail} /><MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy}/><MailList mails={mails} removeMail={removeMail} /></section>)
+  if (mails) return (<section style={style}>
+    <MailCompose addMail={addMail} />
+    <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy}/>
+    <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy}/>
+    <MailList mails={mails} removeMail={removeMail} /></section>)
   else return <div>Loading Mails...</div>
 
 }

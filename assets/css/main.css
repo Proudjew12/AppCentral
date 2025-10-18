@@ -23,6 +23,7 @@
 @import './apps/mail/MailCompose.css';
 @import './apps/mail/MailPreview.css';
 @import './apps/mail/MailFilter.css';
+@import './apps/mail/MailSort.css';
 
 /* 🗒️ Keep (Notes) app */
 @import './apps/keep/KeepIndex.css';
