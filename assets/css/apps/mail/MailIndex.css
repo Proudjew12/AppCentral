@@ -1,9 +1,10 @@
  /* mail index  */
  .mail-index-container{
-    display: grid;
-    background-color: 'white'; 
-    color: 'black'; 
-    height: '100%';
-     width: '100%'
+    display: flex;
+ }
+ .mail-index-container nav{
+   background-color: #F6F9FC;
+   padding: 5px;
+   display: grid;
  }
  

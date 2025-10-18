@@ -24,6 +24,7 @@
 @import './apps/mail/MailPreview.css';
 @import './apps/mail/MailFilter.css';
 @import './apps/mail/MailSort.css';
+@import './apps/mail/MailFolderList.css';
 
 /* 🗒️ Keep (Notes) app */
 @import './apps/keep/KeepIndex.css';

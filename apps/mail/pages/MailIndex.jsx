@@ -1,5 +1,6 @@
 import { MailCompose } from '../cmps/MailCompose.jsx'
 import { MailFilter } from '../cmps/MailFilter.jsx'
+import { MailFolderList } from '../cmps/MailFolderList.jsx'
 import { MailList } from '../cmps/MailList.jsx'
 import { MailSort } from '../cmps/MailSort.jsx'
 import { mailService } from '../services/mail.service.js'
@@ -8,7 +9,6 @@ const { Link, useSearchParams } = ReactRouterDOM
 export function MailIndex() {
 
   const [searchParams, setSearchParams] = useSearchParams()
-  const [sortParams, setSortParams] = useSearchParams()
 
   const [mails, setMails] = useState([])
   const style = { backgroundColor: 'white', color: 'black', height: '100%', width: '100%' }
@@ -40,15 +40,20 @@ export function MailIndex() {
     mailService.remove(mailId)
       .then((setMails(mails.filter(mail => (mailId !== mail.id)))))
   }
-  if (mails) return (<section style={style}>
+  if (mails) return (<section className='mail-index-container' >
     <nav>
-      <button></button>
+      <MailCompose addMail={addMail} />
+      <MailFolderList/>
       </nav>
-    <MailCompose addMail={addMail} />
+      <section style={style}>
+    
     <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy}/>
     <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy}/>
-    <MailList mails={mails} removeMail={removeMail} /></section>)
+    <MailList mails={mails} removeMail={removeMail} />
+    </section>
+    </section>)
   else return <div>Loading Mails...</div>
-
 }
+
+
 

@@ -17,7 +17,8 @@ export const mailService = {
     getDefaultFilter,
     getFilterFromParams,
     getDefaultSort,
-    getSortFromParams
+    getSortFromParams,
+    getSentMails
 
 }
 _createDemoData()
@@ -32,6 +33,7 @@ function query(filterBy = {},sortBy='date') {
             if (filterBy.isRead) {
                 Mails = Mails.filter(mail => JSON.stringify(mail.isRead) === filterBy.isRead)
             }
+            
             if(sortBy === 'date'){
                 Mails = Mails.sort((mail1,mail2)=>(mail1.sentAt>mail2.sentAt))
             }
@@ -126,4 +128,7 @@ function getDefaultSort(sortBy='date'){
 function getSortFromParams(searchParams={}){
     const defaultSort = getDefaultSort()
     return searchParams.get('sortBy') || defaultSort
+}
+function getSentMails(mails){
+mails = mails.filter(mail=>(mail.from === loggedinUser.email))
 }
