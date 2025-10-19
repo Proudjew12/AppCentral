@@ -1,8 +1,12 @@
-export function BooksList({ books, onEditBook, onRemoveBook }) {
+export function BooksList({ books, onEditBook, onRemoveBook, onViewBook }) {
     return (
         <ul className="book-list clean-list">
             {books.map(book => (
-                <li key={book.id} className="book-item flex space-between align-center">
+                <li
+                    key={book.id}
+                    className="book-item flex space-between align-center"
+                    onClick={() => onViewBook(book)}
+                >
                     <div className="flex align-center gap10">
                         <img
                             src={`assets/img/${book.thumbnail}`}
@@ -44,7 +48,10 @@ export function BooksList({ books, onEditBook, onRemoveBook }) {
                         </div>
                     </div>
 
-                    <div className="actions flex gap10">
+                    <div
+                        className="actions flex gap10"
+                        onClick={ev => ev.stopPropagation()}
+                    >
                         <button onClick={() => onEditBook(book)}>✏️ Edit</button>
                         <button onClick={() => onRemoveBook(book.id)}>🗑️ Remove</button>
                     </div>

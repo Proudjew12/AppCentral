@@ -3,6 +3,7 @@ const { useState, useEffect, useRef } = React
 import { BooksList } from '../cmps/BooksList.jsx'
 import { BookFilter } from '../cmps/BookFilter.jsx'
 import { BookAdd } from '../cmps/BookAdd.jsx'
+import { BookPreview } from '../cmps/BookPreview.jsx'
 import { bookService } from '../services/books.service.js'
 import { notify } from '../services/notification.service.js'
 
@@ -10,7 +11,9 @@ export function BooksIndex() {
     const [books, setBooks] = useState([])
     const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
     const [isAddOpen, setIsAddOpen] = useState(false)
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false)
     const [bookToEdit, setBookToEdit] = useState(null)
+    const [selectedBook, setSelectedBook] = useState(null)
     const modalRef = useRef(null)
 
     useEffect(() => {
@@ -35,19 +38,35 @@ export function BooksIndex() {
         setBookToEdit(book)
         setIsAddOpen(true)
     }
+
     function closeAddModal() {
         setBookToEdit(null)
         setIsAddOpen(false)
     }
 
+    function openPreviewModal(book) {
+        setSelectedBook(book)
+        setIsPreviewOpen(true)
+    }
+
+    function closePreviewModal() {
+        setSelectedBook(null)
+        setIsPreviewOpen(false)
+    }
+
     useEffect(() => {
         function handleClickOutside(ev) {
-            if (modalRef.current && !modalRef.current.contains(ev.target)) closeAddModal()
+            if (modalRef.current && !modalRef.current.contains(ev.target)) {
+                if (isAddOpen) closeAddModal()
+                if (isPreviewOpen) closePreviewModal()
+            }
         }
-        if (isAddOpen) document.addEventListener('mousedown', handleClickOutside)
+
+        if (isAddOpen || isPreviewOpen) document.addEventListener('mousedown', handleClickOutside)
         else document.removeEventListener('mousedown', handleClickOutside)
+
         return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [isAddOpen])
+    }, [isAddOpen, isPreviewOpen])
 
     async function onRemoveBook(bookId) {
         const result = await notify.confirmDelete('Delete this book?')
@@ -112,11 +131,20 @@ export function BooksIndex() {
                 </div>
             )}
 
+            {isPreviewOpen && selectedBook && (
+                <div className="modal-overlay">
+                    <div ref={modalRef} className="modal-content">
+                        <BookPreview book={selectedBook} onClose={closePreviewModal} />
+                    </div>
+                </div>
+            )}
+
             {!!books.length && (
                 <BooksList
                     books={books}
                     onRemoveBook={onRemoveBook}
                     onEditBook={onEditBook}
+                    onViewBook={openPreviewModal}
                 />
             )}
             {!books.length && <p>No books yet...</p>}
