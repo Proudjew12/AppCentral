@@ -10,7 +10,19 @@ export function BookPreview({ book, onClose }) {
 
     if (!currBook) return null
 
-    const { title, description, authors, publishedDate, listPrice, rating, thumbnail } = currBook
+    const {
+        title,
+        description,
+        authors,
+        publishedDate,
+        listPrice,
+        rating,
+        thumbnail,
+        pageCount,
+        categories = [],
+        language = 'en'
+    } = currBook
+
     const currencySymbol = bookService.getCurrencySymbol(listPrice.currencyCode)
     const fullPrice = Number(listPrice.amount || 0)
     const salePrice = Number(fullPrice * 0.5)
@@ -38,6 +50,9 @@ export function BookPreview({ book, onClose }) {
 
             <div className="preview-details column align-center justify-center text-center">
                 <p><strong>Published:</strong> {publishedDate}</p>
+                <p><strong>Pages:</strong> {pageCount}</p>
+                <p><strong>Categories:</strong> {categories.join(', ')}</p>
+                <p><strong>Language:</strong> {language.toUpperCase()}</p>
 
                 {listPrice.isOnSale ? (
                     <p className="book-price">
