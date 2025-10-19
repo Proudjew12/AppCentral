@@ -24,8 +24,9 @@ export function BooksList({ books, onEditBook, onRemoveBook, onViewBook }) {
                                         💲{Number(book.listPrice.amount || 0).toFixed(2)}
                                     </span>
                                     <span className="new-price">
-                                        💲{Number(book.listPrice.amount || 0 * 0.5).toFixed(2)}
+                                        💲{Number((book.listPrice.amount || 0) * 0.5).toFixed(2)}
                                     </span>
+
 
                                 </p>
                             ) : (
