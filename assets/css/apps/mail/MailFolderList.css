@@ -1,13 +1,23 @@
 .mail-folder-list{
     display: grid;
-    justify-content: center;
+    justify-content: start;
 }
 .mail-folder-list button{
-border-radius: 50%;
+border-radius: 999px;
 height: max-content;
-aspect-ratio: 1;
+width: 300px;
+padding-block: 5px;
+padding-inline-start: 15px;
 background-color: transparent;
 border: none;
+display: flex;
+justify-content: start;
+gap: 10px;
+align-items: center;
+}
+.clicked-option{
+  color: red; 
+  background-color: blue;
 }
 .mail-folder-list button:hover{
 background-color: #ECEFF1;

@@ -4,7 +4,9 @@
  }
  .mail-index-container nav{
    background-color: #F6F9FC;
-   padding: 5px;
+   padding-block-start: 10px;
+   padding-inline-end: 10px;
    display: grid;
+   gap: 15px;
  }
  
