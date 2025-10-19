@@ -1,9 +1,15 @@
 .compose-btn{
     background-color: #C7E9FF;
-    width: 50px;
-    height: 50px;
-    border-radius: 30%;
+    width: 120px;
+    height: max-content;
+    border-radius: 18px;
     border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    padding-block: 10px;
 }
 .closeComposeBtn{
  position: absolute;
