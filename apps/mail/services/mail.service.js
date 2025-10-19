@@ -16,7 +16,7 @@ export const mailService = {
   getDefaultFilter,
   getFilterFromParams,
   getDefaultSort,
-  getSortFromParams
+  getSortFromParams,
 };
 _createDemoData();
 function query(filterBy = {}, sortBy = "date") {
@@ -27,7 +27,9 @@ function query(filterBy = {}, sortBy = "date") {
     if(filterBy.type === 'inbox'){
       Mails = Mails.filter((mail)=> (mail.from !== loggedinUser.email))
     }
-
+    if(filterBy.type === 'starred'){
+      Mails = Mails.filter((mail)=>(mail.starred))
+    }
      if (filterBy.subject) {
       const regExp = new RegExp(filterBy.subject, "i");
       Mails = Mails.filter((mail) => regExp.test(mail.subject));
@@ -77,6 +79,7 @@ function _createDemoData() {
       removedAt: null,
       from: "user@appsus.com",
       to: "user@appsus.com",
+      starred: false
     },
     {
       id: "e102",
@@ -88,6 +91,7 @@ function _createDemoData() {
       removedAt: null,
       from: "momo@momo.com",
       to: "user@appsus.com",
+      starred: false
     },
     {
       id: "e103",
@@ -99,6 +103,7 @@ function _createDemoData() {
       removedAt: null,
       from: "momo@momo.com",
       to: "user@appsus.com",
+      starred: true
     },
   ];
   utilService.saveToStorage(MAIL_KEY, mails);

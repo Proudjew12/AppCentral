@@ -22,6 +22,10 @@
 .mail:hover .remove-btn {
   visibility: visible;
 }
+.star-btn{
+  background-color: transparent;
+  border: none;
+}
 .isRead {
   background-color: #f2f6fc;
 }

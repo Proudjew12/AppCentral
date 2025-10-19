@@ -24,6 +24,7 @@
   justify-content: start;
   gap: 10px;
   align-items: center;
+  position: relative;
 }
 .clicked-option {
   background-color: #e8f0fe !important;
@@ -31,4 +32,8 @@
 }
 .mail-folder-list button:hover {
   background-color: #eceff1;
+}
+.type-counter{
+  position: absolute;
+  right: 20px;
 }
