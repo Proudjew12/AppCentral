@@ -11,7 +11,6 @@ export function useBooksController() {
     const [selectedBook, setSelectedBook] = useState(null)
     const modalRef = useRef(null)
 
-
     useEffect(() => {
         if (!localStorage.getItem('booksDB')) bookService.createDemoBooks()
         loadBooks()
@@ -26,14 +25,12 @@ export function useBooksController() {
         }
     }
 
-
     function onSetFilter(updatedFilter) {
         setFilterBy(prev => ({ ...prev, ...updatedFilter }))
     }
 
-
-    function openAddModal(book = null) {
-        setBookToEdit(book)
+    function openAddModal(book) {
+        setBookToEdit(book || null)
         setIsAddOpen(true)
     }
 
@@ -52,7 +49,6 @@ export function useBooksController() {
         setIsPreviewOpen(false)
     }
 
-
     async function onRemoveBook(bookId) {
         const result = await notify.confirmDelete('Delete this book?')
         if (result.isConfirmed) {
@@ -62,11 +58,9 @@ export function useBooksController() {
         }
     }
 
-
     function onEditBook(book) {
         openAddModal(book)
     }
-
 
     function onResetDemo() {
         bookService.resetDemoBooks()
