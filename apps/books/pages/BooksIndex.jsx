@@ -7,6 +7,7 @@ import { BookPreview } from '../cmps/BookPreview.jsx'
 import { bookService } from '../services/books.service.js'
 import { notify } from '../services/notification.service.js'
 
+
 export function BooksIndex() {
     const [books, setBooks] = useState([])
     const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())

@@ -16,7 +16,6 @@ export function BooksList({ books, onEditBook, onRemoveBook, onViewBook }) {
                         />
                         <div>
                             <h3>{book.title}</h3>
-                            <p className="subtitle">{book.subtitle}</p>
                             <p>{book.authors.join(', ')}</p>
 
                             {book.listPrice.isOnSale ? (

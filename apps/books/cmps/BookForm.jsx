@@ -6,7 +6,14 @@ export function BookForm({ book = bookService.getEmptyBook(), onSave }) {
     const [bookToEdit, setBookToEdit] = useState(book)
 
     useEffect(() => {
-        setBookToEdit(book)
+        if (!book.description || !book.description.trim()) {
+            setBookToEdit(prev => ({
+                ...prev,
+
+            }))
+        } else {
+            setBookToEdit(book)
+        }
     }, [book])
 
     function handleChange({ target }) {
@@ -17,9 +24,7 @@ export function BookForm({ book = bookService.getEmptyBook(), onSave }) {
                 ...prev,
                 listPrice: { ...prev.listPrice, amount: value ? +value : 0 }
             }))
-        }
-
-        if (name.startsWith('listPrice.')) {
+        } else if (name.startsWith('listPrice.')) {
             const key = name.split('.')[1]
             setBookToEdit(prev => ({
                 ...prev,
@@ -40,10 +45,20 @@ export function BookForm({ book = bookService.getEmptyBook(), onSave }) {
     return (
         <form onSubmit={handleSubmit} className="book-form flex column align-start">
             <label>Title:</label>
-            <input type="text" name="title" value={bookToEdit.title} onChange={handleChange} />
+            <input
+                type="text"
+                name="title"
+                value={bookToEdit.title}
+                onChange={handleChange}
+            />
 
-            <label>Subtitle:</label>
-            <input type="text" name="subtitle" value={bookToEdit.subtitle} onChange={handleChange} />
+            <label>Description:</label>
+            <textarea
+                name="description"
+                rows="4"
+                value={bookToEdit.description}
+                onChange={handleChange}
+            />
 
             <label>Author(s):</label>
             <input
@@ -101,7 +116,9 @@ export function BookForm({ book = bookService.getEmptyBook(), onSave }) {
                 ))}
             </div>
 
-            <button className="btn-save">{bookToEdit.id ? 'Update Book' : 'Add Book'}</button>
+            <button className="btn-save">
+                {bookToEdit.id ? 'Update Book' : 'Add Book'}
+            </button>
         </form>
     )
 }
