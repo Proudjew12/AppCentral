@@ -11,7 +11,6 @@ export function MailIndex() {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const [mails, setMails] = useState([])
-  const style = { backgroundColor: 'white', color: 'black', height: '100%', width: '100%' }
   const [filterBy, setFilterBy] = useState(mailService.getFilterFromParams(searchParams))
   const [sortBy, setSortBy] = useState(mailService.getSortFromParams(searchParams))
 
@@ -43,10 +42,9 @@ export function MailIndex() {
   }
   if (mails) return (<section className='mail-index-container' >
     <nav>
-      <MailCompose addMail={addMail} />
-      <MailFolderList filterBy={filterBy} onSetFilterBy={onSetFilterBy}/>
+      <MailFolderList filterBy={filterBy} onSetFilterBy={onSetFilterBy} addMail={addMail}/>
       </nav>
-      <section style={style}>
+      <section className='mail-list-container'>
     
     <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy}/>
     <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy}/>

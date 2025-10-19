@@ -1,6 +1,7 @@
  /* mail index  */
  .mail-index-container{
     display: flex;
+    flex: 1;
  }
  .mail-index-container nav{
    background-color: #F6F9FC;

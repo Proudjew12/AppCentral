@@ -1,7 +1,8 @@
 import { utilService } from "../../../services/util.service.js"
+import { MailCompose } from "./MailCompose.jsx"
 
 const { useState, useEffect, useRef } = React
-export function MailFolderList({ filterBy, onSetFilterBy }) {
+export function MailFolderList({ filterBy, onSetFilterBy,addMail }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const onSetFilterDebounce = useRef(utilService.debounce(onSetFilterBy, 500))
@@ -14,11 +15,14 @@ export function MailFolderList({ filterBy, onSetFilterBy }) {
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, type: value }))
     }
     return <section className='mail-folder-list'>
+        <MailCompose addMail={addMail} />
+        <nav>
         <button className={(mailType ==='inbox')?'clicked-option':''}onClick={() => handleChange('inbox')}><InboxIcon /> Inbox</button>
         <button className={(mailType ==='starred')?'clicked-option':''}><StarIcon /> Starred</button>
         <button className={(mailType ==='sent')?'clicked-option':''} onClick={() => handleChange('sent')}><SentIcon /> Sent</button>
         <button className={(mailType ==='draft')?'clicked-option':''}><DraftIcon /> Draft</button>
         <button className={(mailType ==='trash')?'clicked-option':''}><TrashIcon /> Trash</button>
+        </nav>
     </section>
 }
 function InboxIcon() {

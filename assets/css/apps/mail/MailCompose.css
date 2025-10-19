@@ -1,23 +1,23 @@
-.compose-btn{
-    background-color: #C7E9FF;
-    width: 120px;
-    height: max-content;
-    border-radius: 18px;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 15px;
-    padding-block: 10px;
+.compose-btn {
+    background-color: #C7E9FF !important;
+    width: 120px !important;
+    height: max-content !important;
+    border-radius: 18px !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 15px !important;
+    padding-block: 10px !important;
 }
 .closeComposeBtn{
- position: absolute;
- right: 10px;
- background-color: transparent;
- border: 0px;  
- width: 30px;
-aspect-ratio: 1; 
+ position: absolute !important;
+ right: 10px !important;
+ background-color: transparent !important;
+ border: 0px !important;  
+ width: 30px !important;
+aspect-ratio: 1 !important; 
 }
 .closeComposeBtn:hover{
     background-color: #DADCE0;
@@ -39,4 +39,7 @@ padding-inline: 10px;
     width: 500px;
     border: 0;
     border-radius: 20px;
+}
+.mail-compose-container{
+    height: max-content;
 }

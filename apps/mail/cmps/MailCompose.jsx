@@ -15,7 +15,7 @@ export function MailCompose({addMail}){
     addMail(mail)
     }
 return(
-    <section>
+    <section className='mail-compose-container'>
     <button className='compose-btn'onClick={()=>{setOpen(true)}}><WriteIcon/> Compose</button>
     <dialog open={open} className='compose-modal'>
         <div className='compose-title'>

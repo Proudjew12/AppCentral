@@ -4,13 +4,7 @@ import { mailService } from "../services/mail.service.js"
 const { Link } = ReactRouterDOM
 
 export function MailList({ mails,removeMail }) {
-    const style = {
-        padding: '15px',  
-        color: 'black',
-        display: 'flex',
-        border: 'solid 1px black',
-        gap: '10vw'
-    }
+
     function getDate(createdAt){
         const date = new Date(createdAt)
         const year = date.getFullYear()
@@ -22,12 +16,13 @@ export function MailList({ mails,removeMail }) {
     return (mail.isRead) ? 'isRead' : ''
     }
     return (
+        <section className='mail-list-container'>
         <ul style={{listStyleType:'none',padding:'0'}}>
             {mails.map(
                 mail =>
                     <li key={mail.id}>
                         <Link to={`${mail.id}`} style={{textDecoration: 'none'}}>
-                        <div  className={'mail '+getClassName(mail)} style={style}>
+                        <div  className={'mail '+getClassName(mail)}>
                             <span>{mail.from}</span>
                             <span>{mail.subject}</span>
                             <div className='date-and-remove-btn-container'>
@@ -41,6 +36,7 @@ export function MailList({ mails,removeMail }) {
                     </li>
             )}
         </ul>
+        </section>
     )
 
 }

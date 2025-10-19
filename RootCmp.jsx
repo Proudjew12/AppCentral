@@ -29,7 +29,7 @@ export function RootCmp() {
         <section className="root-cmp flex column min-h-100">
             <AppHeader />
 
-            <main className="main-content grow">
+            <main className="main-content flex column grow">
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
