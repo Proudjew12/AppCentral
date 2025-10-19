@@ -74,7 +74,7 @@ function getEmptyBook() {
         categories: [],
         thumbnail: '',
         language: 'en',
-        listPrice: { amount: '', currencyCode: 'USD', isOnSale: false },
+        listPrice: { amount: 0, currencyCode: 'USD', isOnSale: false },
         rating: 0,
     }
 }

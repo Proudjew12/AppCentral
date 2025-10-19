@@ -32,9 +32,10 @@ export function BookPreview({ book, onClose }) {
             <div className="preview-details">
                 <p><strong>Published:</strong> {publishedDate}</p>
                 <p>
-                    <strong>Price:</strong> 💲{listPrice.amount.toFixed(2)} {listPrice.currencyCode}
+                    <strong>Price:</strong> 💲{Number(listPrice.amount || 0).toFixed(2)} {listPrice.currencyCode}
                     {listPrice.isOnSale && <span className="sale-badge">SALE</span>}
                 </p>
+
 
                 <div className="star-rating">
                     {[1, 2, 3, 4, 5].map(star => (

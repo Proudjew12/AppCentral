@@ -22,17 +22,18 @@ export function BooksList({ books, onEditBook, onRemoveBook, onViewBook }) {
                             {book.listPrice.isOnSale ? (
                                 <p className="book-price">
                                     <span className="old-price">
-                                        💲{book.listPrice.amount.toFixed(2)}
+                                        💲{Number(book.listPrice.amount || 0).toFixed(2)}
                                     </span>
                                     <span className="new-price">
-                                        💲{(book.listPrice.amount * 0.5).toFixed(2)}
+                                        💲{Number(book.listPrice.amount || 0 * 0.5).toFixed(2)}
                                     </span>
-                                    <span className="sale-badge">SALE</span>
+
                                 </p>
                             ) : (
                                 <p className="book-price">
-                                    💲{book.listPrice.amount.toFixed(2)}
+                                    💲{Number(book.listPrice.amount || 0).toFixed(2)}
                                 </p>
+
                             )}
 
                             <div className="star-rating">

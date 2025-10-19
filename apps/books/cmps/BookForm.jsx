@@ -15,9 +15,10 @@ export function BookForm({ book = bookService.getEmptyBook(), onSave }) {
         if (name === 'listPrice.amount') {
             setBookToEdit(prev => ({
                 ...prev,
-                listPrice: { ...prev.listPrice, amount: +value }
+                listPrice: { ...prev.listPrice, amount: value ? +value : 0 }
             }))
         }
+
         if (name.startsWith('listPrice.')) {
             const key = name.split('.')[1]
             setBookToEdit(prev => ({
