@@ -1,63 +1,61 @@
 export function BooksList({ books, onEditBook, onRemoveBook, onViewBook }) {
     return (
         <ul className="book-list clean-list">
-            {books.map(book => (
-                <li
-                    key={book.id}
-                    className="book-item flex space-between align-center"
-                    onClick={() => onViewBook(book)}
-                >
-                    <div className="flex align-center gap10">
-                        <img
-                            src={`assets/img/${book.thumbnail}`}
-                            alt={book.title}
-                            className="book-img"
-                            onError={ev => (ev.target.src = 'assets/img/1.jpg')}
-                        />
-                        <div>
-                            <h3>{book.title}</h3>
-                            <p>{book.authors.join(', ')}</p>
+            {books.map(book => {
+                const { id, title, authors, listPrice, rating, thumbnail } = book
+                const fullPrice = Number(listPrice.amount || 0)
+                const salePrice = Number((listPrice.amount || 0) * 0.5)
 
-                            {book.listPrice.isOnSale ? (
-                                <p className="book-price">
-                                    <span className="old-price">
-                                        💲{Number(book.listPrice.amount || 0).toFixed(2)}
-                                    </span>
-                                    <span className="new-price">
-                                        💲{Number((book.listPrice.amount || 0) * 0.5).toFixed(2)}
-                                    </span>
+                return (
+                    <li
+                        key={id}
+                        className="book-item flex space-between align-center"
+                        onClick={() => onViewBook(book)}
+                    >
+                        <div className="flex align-center gap10">
+                            <img
+                                src={`assets/img/${thumbnail}`}
+                                alt={title}
+                                className="book-img"
+                                onError={ev => (ev.target.src = 'assets/img/1.jpg')}
+                            />
+                            <div>
+                                <h3>{title}</h3>
+                                <p>{authors.join(', ')}</p>
 
+                                {listPrice.isOnSale ? (
+                                    <p className="book-price">
+                                        <span className="old-price">💲{fullPrice.toFixed(2)}</span>
+                                        <span className="new-price">💲{salePrice.toFixed(2)}</span>
+                                        <span className="sale-badge">SALE</span>
+                                    </p>
+                                ) : (
+                                    <p className="book-price">💲{fullPrice.toFixed(2)}</p>
+                                )}
 
-                                </p>
-                            ) : (
-                                <p className="book-price">
-                                    💲{Number(book.listPrice.amount || 0).toFixed(2)}
-                                </p>
-
-                            )}
-
-                            <div className="star-rating">
-                                {[1, 2, 3, 4, 5].map(star => (
-                                    <span
-                                        key={star}
-                                        className={star <= book.rating ? 'star filled' : 'star'}
-                                    >
-                                        ★
-                                    </span>
-                                ))}
+                                <div className="star-rating row gap3 align-center">
+                                    {[1, 2, 3, 4, 5].map(star => (
+                                        <span
+                                            key={star}
+                                            className={star <= rating ? 'star filled' : 'star'}
+                                        >
+                                            ★
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div
-                        className="actions flex gap10"
-                        onClick={ev => ev.stopPropagation()}
-                    >
-                        <button onClick={() => onEditBook(book)}>✏️ Edit</button>
-                        <button onClick={() => onRemoveBook(book.id)}>🗑️ Remove</button>
-                    </div>
-                </li>
-            ))}
+                        <div
+                            className="actions flex gap10"
+                            onClick={ev => ev.stopPropagation()}
+                        >
+                            <button onClick={() => onEditBook(book)}>✏️ Edit</button>
+                            <button onClick={() => onRemoveBook(id)}>🗑️ Remove</button>
+                        </div>
+                    </li>
+                )
+            })}
         </ul>
     )
 }

@@ -1,50 +1,68 @@
-
 export const notify = {
     success,
     error,
-    info,
-    confirm,
-    confirmDelete,
     toast,
+    confirmDelete,
 }
 
-function success(msg = 'Success', title = '') {
-    Swal.fire({ icon: 'success', title, text: msg, timer: 1200, showConfirmButton: false })
-}
-function error(msg = 'Something went wrong', title = 'Error') {
-    Swal.fire({ icon: 'error', title, text: msg })
-}
-function info(msg = '', title = 'Info') {
-    Swal.fire({ icon: 'info', title, text: msg })
-}
-function confirm(msg = 'Are you sure?', options = {}) {
-    return Swal.fire({
-        title: msg,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'Cancel',
-        confirmButtonColor: '#3085d6',
-        ...options,
+function success(msg) {
+    Swal.fire({
+        title: '✅ Success!',
+        text: msg,
+        icon: 'success',
+        confirmButtonColor: '#ffb347',
+        background: '#1e1f22',
+        color: '#fff',
     })
 }
-function confirmDelete(msg = 'Delete this item?') {
+
+function error(msg) {
+    Swal.fire({
+        title: '❌ Error',
+        text: msg,
+        icon: 'error',
+        confirmButtonColor: '#e63946',
+        background: '#1e1f22',
+        color: '#fff',
+    })
+}
+
+function toast(msg, type = 'success') {
+    const icons = {
+        success: '✅',
+        info: 'ℹ️',
+        error: '❌',
+    }
+
+    const colors = {
+        success: '#ffb347',
+        info: '#4dabf7',
+        error: '#e63946',
+    }
+
+    Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        title: `${icons[type]} ${msg}`,
+        background: '#2a2c30',
+        color: '#fff',
+        iconColor: colors[type],
+    })
+}
+
+function confirmDelete(msg = 'Are you sure?') {
     return Swal.fire({
         title: msg,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes, delete it!',
         cancelButtonText: 'Cancel',
-        confirmButtonColor: '#d33',
+        background: '#1e1f22',
+        color: '#fff',
+        confirmButtonColor: '#e63946',
+        cancelButtonColor: '#555',
     })
-}
-function toast(msg, type = 'success', timer = 1500) {
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'bottom-end',
-        showConfirmButton: false,
-        timer,
-        timerProgressBar: true,
-    })
-    Toast.fire({ icon: type, title: msg })
 }

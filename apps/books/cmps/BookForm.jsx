@@ -1,40 +1,39 @@
 const { useState, useEffect } = React
 import { bookService } from '../services/books.service.js'
 
-
 export function BookForm({ book = bookService.getEmptyBook(), onSave }) {
     const [bookToEdit, setBookToEdit] = useState(book)
 
     useEffect(() => {
-        if (!book.description || !book.description.trim()) {
-            setBookToEdit(prev => ({
-                ...prev,
-
-            }))
-        } else {
-            setBookToEdit(book)
-        }
+        const hasDescription = book.description && book.description.trim()
+        setBookToEdit(hasDescription ? book : { ...book, description: '' })
     }, [book])
 
     function handleChange({ target }) {
         const { name, value, type, checked } = target
 
-        if (name === 'listPrice.amount') {
-            setBookToEdit(prev => ({
-                ...prev,
-                listPrice: { ...prev.listPrice, amount: value ? +value : 0 }
-            }))
-        } else if (name.startsWith('listPrice.')) {
+        if (name.startsWith('listPrice.')) {
             const key = name.split('.')[1]
             setBookToEdit(prev => ({
                 ...prev,
-                listPrice: { ...prev.listPrice, [key]: type === 'checkbox' ? checked : value },
+                listPrice: {
+                    ...prev.listPrice,
+                    [key]: type === 'checkbox' ? checked : +value || value,
+                },
             }))
-        } else if (name === 'authors') {
-            setBookToEdit(prev => ({ ...prev, authors: value.split(',').map(a => a.trim()) }))
-        } else {
-            setBookToEdit(prev => ({ ...prev, [name]: value }))
+            return
         }
+
+        if (name === 'authors') {
+            const authors = value.split(',').map(a => a.trim())
+            setBookToEdit(prev => ({ ...prev, authors }))
+            return
+        }
+
+        setBookToEdit(prev => ({
+            ...prev,
+            [name]: type === 'number' ? +value : value,
+        }))
     }
 
     function handleSubmit(ev) {
@@ -42,15 +41,14 @@ export function BookForm({ book = bookService.getEmptyBook(), onSave }) {
         onSave(bookToEdit)
     }
 
+    const price = bookToEdit.listPrice.amount
+    const currency = bookToEdit.listPrice.currencyCode
+    const isOnSale = bookToEdit.listPrice.isOnSale
+
     return (
         <form onSubmit={handleSubmit} className="book-form flex column align-start">
             <label>Title:</label>
-            <input
-                type="text"
-                name="title"
-                value={bookToEdit.title}
-                onChange={handleChange}
-            />
+            <input type="text" name="title" value={bookToEdit.title} onChange={handleChange} />
 
             <label>Description:</label>
             <textarea
@@ -80,16 +78,12 @@ export function BookForm({ book = bookService.getEmptyBook(), onSave }) {
             <input
                 type="number"
                 name="listPrice.amount"
-                value={bookToEdit.listPrice.amount}
+                value={price}
                 onChange={handleChange}
             />
 
             <label>Currency:</label>
-            <select
-                name="listPrice.currencyCode"
-                value={bookToEdit.listPrice.currencyCode}
-                onChange={handleChange}
-            >
+            <select name="listPrice.currencyCode" value={currency} onChange={handleChange}>
                 <option value="USD">USD</option>
                 <option value="EUR">EUR</option>
                 <option value="ILS">ILS</option>
@@ -99,7 +93,7 @@ export function BookForm({ book = bookService.getEmptyBook(), onSave }) {
             <input
                 type="checkbox"
                 name="listPrice.isOnSale"
-                checked={bookToEdit.listPrice.isOnSale}
+                checked={isOnSale}
                 onChange={handleChange}
             />
 

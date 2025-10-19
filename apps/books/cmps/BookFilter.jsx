@@ -1,33 +1,26 @@
-const { useState, useEffect } = React
-
 export function BookFilter({ filterBy, onSetFilter }) {
-    const [filterToEdit, setFilterToEdit] = useState(filterBy)
-
-    useEffect(() => {
-        onSetFilter(filterToEdit)
-    }, [filterToEdit])
-
     function handleChange({ target }) {
         const { name, value } = target
-        setFilterToEdit(prev => ({ ...prev, [name]: value }))
+        onSetFilter({ [name]: value })
     }
 
     return (
-        <form className="book-filter flex gap10">
+        <section className="book-filter flex align-center gap10">
             <input
                 type="text"
                 name="title"
-                value={filterToEdit.title}
-                placeholder="Search by title..."
+                value={filterBy.title}
                 onChange={handleChange}
+                placeholder="Search by title..."
             />
+
             <input
                 type="number"
                 name="maxPrice"
-                value={filterToEdit.maxPrice || ''}
-                placeholder="Max price"
+                value={filterBy.maxPrice}
                 onChange={handleChange}
+                placeholder="Max price"
             />
-        </form>
+        </section>
     )
 }

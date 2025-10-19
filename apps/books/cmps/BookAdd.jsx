@@ -1,4 +1,3 @@
-
 import { BookForm } from './BookForm.jsx'
 import { bookService } from '../services/books.service.js'
 import { notify } from '../services/notification.service.js'
@@ -16,6 +15,7 @@ export function BookAdd({ bookToEdit, onBookAdded }) {
 
     return (
         <section className="book-add main-layout flex column align-center">
+            <h2>{bookToEdit ? 'Edit Book' : 'Add New Book'}</h2>
             <BookForm book={bookToEdit || bookService.getEmptyBook()} onSave={handleSave} />
         </section>
     )

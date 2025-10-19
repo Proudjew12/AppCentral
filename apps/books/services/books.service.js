@@ -10,18 +10,30 @@ export const bookService = {
     save,
     add,
     getDefaultFilter,
-    createDemoBooks,
+    getEmptyBook,
     clearAllBooks,
     resetDemoBooks,
-    getEmptyBook,
+    createDemoBooks,
 }
 
 function query(filterBy = getDefaultFilter()) {
     return storageService.query(BOOKS_KEY).then(books => {
         const { title, maxPrice } = filterBy
-        if (title) books = books.filter(book => book.title.toLowerCase().includes(title.toLowerCase()))
-        if (maxPrice) books = books.filter(book => book.listPrice.amount <= +maxPrice)
-        return books
+        let filtered = [...books]
+
+        if (title) {
+            filtered = filtered.filter(book =>
+                book.title.toLowerCase().includes(title.toLowerCase())
+            )
+        }
+
+        if (maxPrice) {
+            filtered = filtered.filter(book =>
+                book.listPrice.amount <= +maxPrice
+            )
+        }
+
+        return filtered
     })
 }
 
@@ -40,7 +52,9 @@ function save(book) {
             book.thumbnail = `${imgNum}.jpg`
         }
         return storageService.post(BOOKS_KEY, book)
-    } else return storageService.put(BOOKS_KEY, book)
+    } else {
+        return storageService.put(BOOKS_KEY, book)
+    }
 }
 
 function add(book) {
@@ -66,69 +80,57 @@ function getEmptyBook() {
     return {
         id: '',
         title: '',
-        subtitle: '',
+        description: '',
         authors: [''],
         publishedDate: '',
-        description: '',
-        pageCount: '',
-        categories: [],
         thumbnail: '',
-        language: 'en',
         listPrice: { amount: 0, currencyCode: 'USD', isOnSale: false },
         rating: 0,
     }
 }
 
 function createDemoBooks() {
-    localStorage.removeItem(BOOKS_KEY)
-    function getRandomImg() {
-        const imgNum = Math.ceil(Math.random() * 20)
-        return `${imgNum}.jpg`
-    }
-    const books = [
+    const demoBooks = [
         {
             id: utilService.makeId(),
             title: 'Harry Potter and the Philosopher’s Stone',
-            subtitle: 'The Boy Who Lived',
+            description:
+                'Harry discovers he is a wizard and attends Hogwarts School of Witchcraft and Wizardry.',
             authors: ['J.K. Rowling'],
             publishedDate: 1997,
-            description: 'Harry discovers he is a wizard and attends Hogwarts School of Witchcraft and Wizardry.',
-            pageCount: 223,
-            categories: ['Fantasy', 'Adventure'],
-            thumbnail: getRandomImg(),
-            language: 'en',
+            thumbnail: randomImg(),
             listPrice: { amount: 19.99, currencyCode: 'USD', isOnSale: false },
-            rating: 3,
+            rating: 4,
         },
         {
             id: utilService.makeId(),
             title: 'The Hobbit',
-            subtitle: 'There and Back Again',
+            description:
+                'Bilbo Baggins embarks on a journey with dwarves to reclaim their home.',
             authors: ['J.R.R. Tolkien'],
             publishedDate: 1937,
-            description: 'Bilbo Baggins embarks on a journey with dwarves to reclaim their home.',
-            pageCount: 310,
-            categories: ['Fantasy', 'Adventure'],
-            thumbnail: getRandomImg(),
-            language: 'en',
+            thumbnail: randomImg(),
             listPrice: { amount: 14.99, currencyCode: 'USD', isOnSale: true },
             rating: 5,
         },
         {
             id: utilService.makeId(),
             title: '1984',
-            subtitle: 'Big Brother is Watching You',
+            description:
+                'A dystopian novel depicting a totalitarian regime and the surveillance state.',
             authors: ['George Orwell'],
             publishedDate: 1949,
-            description: 'A dystopian novel depicting a totalitarian regime and the surveillance state.',
-            pageCount: 328,
-            categories: ['Dystopia', 'Political Fiction'],
-            thumbnail: getRandomImg(),
-            language: 'en',
+            thumbnail: randomImg(),
             listPrice: { amount: 9.99, currencyCode: 'USD', isOnSale: false },
-            rating: 1,
+            rating: 3,
         },
     ]
-    utilService.saveToStorage(BOOKS_KEY, books)
-    return books
+
+    utilService.saveToStorage(BOOKS_KEY, demoBooks)
+    return demoBooks
+}
+
+function randomImg() {
+    const imgNum = Math.ceil(Math.random() * 20)
+    return `${imgNum}.jpg`
 }
