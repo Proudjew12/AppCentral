@@ -1,12 +1,15 @@
 .mail-preview-container {
+  display: flex;
   background-color: white;
   padding: 20px;
+  flex: 1;
 }
 .MailPreview {
   background-color: white;
   color: black;
   padding: "20px";
   color: "black";
+  padding: 20px;
 }
 .back-btn {
   border-radius: 50%;

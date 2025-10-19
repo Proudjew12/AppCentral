@@ -22,13 +22,14 @@ return(
             <p>New message</p>
             <button className='closeComposeBtn' onClick={()=>{setOpen(false)}}>X</button> 
     </div>
+    <div className='form-container'>
       <form method='dialog' onSubmit={(ev)=>{onAddMail(ev)}}>  
-    <label htmlFor='to'>To:</label><input name='to' onChange={handleChange} type='text'/><br/>
-    <label htmlFor='subject'>Subject:</label><input name='subject' onChange={handleChange} type='text'/><br/>
+    <input name='to' onChange={handleChange} type='text' placeholder='To'/><br/>
+    <input name='subject' onChange={handleChange} type='text' placeholder='Subject'/><br/>
     <textarea rows='5' cols='50' name='body' onChange={handleChange}></textarea><br/>
-    <button type='submit'>Send</button>
+    <button type='submit' className='btn-send'>Send</button>
     </form>
-          
+          </div>
     </dialog>
     </section>
 )

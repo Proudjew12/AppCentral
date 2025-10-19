@@ -1,45 +1,76 @@
 .compose-btn {
-    background-color: #C7E9FF !important;
-    width: 120px !important;
-    height: max-content !important;
-    border-radius: 18px !important;
-    border: none !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 10px !important;
-    padding: 15px !important;
-    padding-block: 10px !important;
+  background-color: #c7e9ff !important;
+  width: 120px !important;
+  height: max-content !important;
+  border-radius: 18px !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  padding: 15px !important;
+  padding-block: 10px !important;
+  cursor: pointer;
 }
-.closeComposeBtn{
- position: absolute !important;
- right: 10px !important;
- background-color: transparent !important;
- border: 0px !important;  
- width: 30px !important;
-aspect-ratio: 1 !important; 
+.compose-btn:hover {
+  background-color: #cde9ff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
-.closeComposeBtn:hover{
-    background-color: #DADCE0;
-    
+.closeComposeBtn {
+  position: absolute !important;
+  right: 10px !important;
+  background-color: transparent !important;
+  border: 0px !important;
+  width: 30px !important;
+  aspect-ratio: 1 !important;
 }
-.compose-title{
-display: flex;
-align-items: center;
-background-color: #FAFBFC;
-padding-inline: 10px;
+.closeComposeBtn:hover {
+  background-color: #dadce0;
+}
+.compose-title {
+  display: flex;
+  align-items: center;
+  background-color: #e3ebf5;
+  padding-inline: 10px;
 }
 
-.compose-modal{
-    position: fixed;
-    bottom: 0;
-    left: 50vw;
-    padding: 0;
-    height: 500px;
-    width: 500px;
-    border: 0;
-    border-radius: 20px;
+.compose-modal {
+  position: fixed;
+  bottom: 0;
+  left: 50vw;
+  padding: 0;
+  height: 500px;
+  width: 500px;
+  border: 0;
+  border-radius: 20px;
+  z-index: 9999;
 }
-.mail-compose-container{
-    height: max-content;
+.compose-modal input {
+  height: 30px;
+  font-size: 1.5rem;
+  border: none;
+  border-block-end: 1px black !important;
+}
+.compose-modal textarea {
+  border: none;
+}
+.mail-compose-container {
+  height: max-content;
+}
+.btn-send {
+  background-color: #1a73e8 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  width: max-content !important;
+  padding: 10px 24px !important;
+  font-weight: 500 !important;
+  cursor: pointer;
+  position: absolute !important;
+  bottom: 10px !important;
+}
+.form-container{
+    display: grid;
+    padding: 20px;
+    gap: 10px;
 }
