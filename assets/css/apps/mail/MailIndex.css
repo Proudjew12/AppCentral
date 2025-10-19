@@ -1,1 +1,10 @@
  /* mail index  */
+ .mail-index-container{
+    display: flex;
+ }
+ .mail-index-container nav{
+   background-color: #F6F9FC;
+   padding: 5px;
+   display: grid;
+ }
+ 

@@ -14,6 +14,7 @@ export function MailDetails(){
 
     useEffect(() => {
         loadMail()
+        //mailService.save({...mail,isRead:true})
     }, [params.mailId])
 
     function loadMail() {
@@ -29,8 +30,15 @@ export function MailDetails(){
             })
     }
 return (!isLoading)
- ? <MailPreview mail={mail}/>
+ ? <section className='mail-preview-container'><Link to='/mail'><button className='back-btn'><BackIcon/></button></Link><MailPreview mail={mail}/></section>
  : <div>Loading...</div>
     
 
+}
+function BackIcon(){
+    return(
+        <svg xmlns="http://www.w3.org/2000/svg" 
+        height="24px" viewBox="0 -960 960 960" width="24px" 
+        fill="#1f1f1f"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
+    )
 }
