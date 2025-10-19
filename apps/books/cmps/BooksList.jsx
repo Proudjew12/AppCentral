@@ -1,10 +1,13 @@
+import { bookService } from '../services/books.service.js'
+
 export function BooksList({ books, onEditBook, onRemoveBook, onViewBook }) {
     return (
         <ul className="book-list clean-list">
             {books.map(book => {
                 const { id, title, authors, listPrice, rating, thumbnail } = book
                 const fullPrice = Number(listPrice.amount || 0)
-                const salePrice = Number((listPrice.amount || 0) * 0.5)
+                const salePrice = Number(fullPrice * 0.5)
+                const currencySymbol = bookService.getCurrencySymbol(listPrice.currencyCode)
 
                 return (
                     <li
@@ -19,18 +22,25 @@ export function BooksList({ books, onEditBook, onRemoveBook, onViewBook }) {
                                 className="book-img"
                                 onError={ev => (ev.target.src = 'assets/img/1.jpg')}
                             />
+
                             <div>
                                 <h3>{title}</h3>
                                 <p>{authors.join(', ')}</p>
 
                                 {listPrice.isOnSale ? (
                                     <p className="book-price">
-                                        <span className="old-price">💲{fullPrice.toFixed(2)}</span>
-                                        <span className="new-price">💲{salePrice.toFixed(2)}</span>
+                                        <span className="old-price">
+                                            {currencySymbol}{fullPrice.toFixed(2)}
+                                        </span>
+                                        <span className="new-price">
+                                            {currencySymbol}{salePrice.toFixed(2)}
+                                        </span>
                                         <span className="sale-badge">SALE</span>
                                     </p>
                                 ) : (
-                                    <p className="book-price">💲{fullPrice.toFixed(2)}</p>
+                                    <p className="book-price">
+                                        {currencySymbol}{fullPrice.toFixed(2)}
+                                    </p>
                                 )}
 
                                 <div className="star-rating row gap3 align-center">

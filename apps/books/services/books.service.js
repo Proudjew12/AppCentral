@@ -14,6 +14,7 @@ export const bookService = {
     clearAllBooks,
     resetDemoBooks,
     createDemoBooks,
+    getCurrencySymbol,
 }
 
 function query(filterBy = getDefaultFilter()) {
@@ -74,6 +75,18 @@ function resetDemoBooks() {
     localStorage.removeItem(BOOKS_KEY)
     createDemoBooks()
     return Promise.resolve()
+}
+function getCurrencySymbol(code) {
+    switch (code) {
+        case 'USD':
+            return '$'
+        case 'EUR':
+            return '€'
+        case 'ILS':
+            return '₪'
+        default:
+            return '$'
+    }
 }
 
 function getEmptyBook() {
