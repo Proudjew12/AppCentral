@@ -108,8 +108,11 @@ function getEmptyBook() {
         thumbnail: '',
         listPrice: { amount: 0, currencyCode: 'USD', isOnSale: false },
         rating: 0,
+        reviews: [],
     }
 }
+
+
 
 function createDemoBooks() {
     const demoBooks = [
@@ -126,6 +129,7 @@ function createDemoBooks() {
             thumbnail: randomImg(),
             listPrice: { amount: 19.99, currencyCode: 'USD', isOnSale: false },
             rating: 4,
+            reviews: [],
         },
         {
             id: utilService.makeId(),
@@ -140,6 +144,7 @@ function createDemoBooks() {
             thumbnail: randomImg(),
             listPrice: { amount: 14.99, currencyCode: 'EUR', isOnSale: true },
             rating: 5,
+            reviews: [],
         },
         {
             id: utilService.makeId(),
@@ -154,11 +159,10 @@ function createDemoBooks() {
             thumbnail: randomImg(),
             listPrice: { amount: 9.99, currencyCode: 'ILS', isOnSale: false },
             rating: 3,
+            reviews: [],
         },
     ]
 
     utilService.saveToStorage(BOOKS_KEY, demoBooks)
     return demoBooks
 }
-
-
