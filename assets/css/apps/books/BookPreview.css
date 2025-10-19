@@ -258,25 +258,28 @@
 }
 
 
-.global-arrow:focus {
-    outline: none;
+.global-arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #ffb347;
+    font-size: 2.8rem;
+    cursor: pointer;
+    z-index: 9999;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
+.global-arrow.prev {
+    left: 40px;
+}
 
-.global-arrow::-moz-focus-inner {
-    border: 0;
+.global-arrow.next {
+    right: 40px;
 }
 
 .global-arrow:hover {
     color: #fff;
     transform: translateY(-50%) scale(1.15);
-}
-
-/* positioning */
-.global-arrow.prev {
-    left: 35px;
-}
-
-.global-arrow.next {
-    right: 35px;
 }

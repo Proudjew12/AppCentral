@@ -16,6 +16,7 @@ export function BooksIndex() {
     const [selectedBook, setSelectedBook] = useState(null)
     const modalRef = useRef(null)
 
+
     useEffect(() => {
         if (!localStorage.getItem('booksDB')) bookService.createDemoBooks()
         loadBooks()
@@ -68,26 +69,6 @@ export function BooksIndex() {
         setSelectedBook(books[prevIdx])
     }
 
-    useEffect(() => {
-        function handleClickOutside(ev) {
-            const clickedGlobalArrow = ev.target.closest('.global-arrow')
-            if (clickedGlobalArrow) return
-
-            if (modalRef.current && !modalRef.current.contains(ev.target)) {
-                if (isAddOpen) closeAddModal()
-                if (isPreviewOpen) closePreviewModal()
-            }
-        }
-
-        if (isAddOpen || isPreviewOpen)
-            document.addEventListener('mousedown', handleClickOutside)
-        else
-            document.removeEventListener('mousedown', handleClickOutside)
-
-        return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [isAddOpen, isPreviewOpen])
-
-
     async function onRemoveBook(bookId) {
         const result = await notify.confirmDelete('Delete this book?')
         if (result.isConfirmed) {
@@ -104,6 +85,7 @@ export function BooksIndex() {
     return (
         <section className="books-index main-layout flex column align-center">
             <h2>📚 MissBooks Library</h2>
+
 
             <div className="books-toolbar flex row space-between align-center">
                 <BookFilter filterBy={filterBy} onSetFilter={onSetFilter} />
@@ -136,9 +118,19 @@ export function BooksIndex() {
                 </div>
             </div>
 
+
             {isAddOpen && (
-                <div className="modal-overlay">
-                    <div ref={modalRef} className="modal-content">
+                <div
+                    className="modal-overlay"
+                    onClick={(ev) => {
+                        if (ev.target.classList.contains('modal-overlay')) closeAddModal()
+                    }}
+                >
+                    <div
+                        ref={modalRef}
+                        className="modal-content"
+                        onClick={(ev) => ev.stopPropagation()}
+                    >
                         <button className="modal-close" onClick={closeAddModal}>✖</button>
                         <BookAdd
                             onBookAdded={() => {
@@ -151,17 +143,31 @@ export function BooksIndex() {
                 </div>
             )}
 
-            {isPreviewOpen && selectedBook && (
-                <div className="modal-overlay">
 
-                    <button className="global-arrow prev" onClick={(ev) => {
-                        ev.stopPropagation()
-                        onPrevBook()
-                    }}>
+            {isPreviewOpen && selectedBook && (
+                <div
+                    className="modal-overlay"
+                    onClick={(ev) => {
+                        if (ev.target.classList.contains('modal-overlay')) closePreviewModal()
+                    }}
+                >
+
+                    <button
+                        className="global-arrow prev"
+                        onClick={(ev) => {
+                            ev.stopPropagation()
+                            onPrevBook()
+                        }}
+                    >
                         &lt;
                     </button>
 
-                    <div ref={modalRef} className="modal-content">
+
+                    <div
+                        ref={modalRef}
+                        className="modal-content"
+                        onClick={(ev) => ev.stopPropagation()}
+                    >
                         <BookPreview
                             book={selectedBook}
                             onClose={closePreviewModal}
@@ -170,16 +176,20 @@ export function BooksIndex() {
                         />
                     </div>
 
-                    <button className="global-arrow next" onClick={(ev) => {
-                        ev.stopPropagation()
-                        onNextBook()
-                    }}>
+
+                    <button
+                        className="global-arrow next"
+                        onClick={(ev) => {
+                            ev.stopPropagation()
+                            onNextBook()
+                        }}
+                    >
                         &gt;
                     </button>
                 </div>
             )}
 
-
+            {/* Book List */}
             {!!books.length && (
                 <BooksList
                     books={books}
