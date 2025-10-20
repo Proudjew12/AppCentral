@@ -33,7 +33,9 @@ function query(filterBy = {}, sortBy = "date") {
      else if(filterBy.type === 'inbox'){
       Mails = Mails.filter((mail)=> (mail.from !== loggedinUser.email && !mail.removedAt))
     }
-    
+     else if(filterBy.type === 'draft'){
+      Mails = Mails.filter((mail)=>(!mail.sentAt))
+     }
      if (filterBy.subject) {
       const regExp = new RegExp(filterBy.subject, "i");
       Mails = Mails.filter((mail) => regExp.test(mail.subject));
@@ -65,7 +67,6 @@ function remove(mailId) {
 
 function save(mail) {
   if (mail.id) {
-    mail.sentAt = Date.now();
     return storageService.put(MAIL_KEY, mail);
   } else {
     return storageService.post(MAIL_KEY, mail);

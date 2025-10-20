@@ -35,12 +35,13 @@ export function MailIndex() {
     mailService.save(mail)
       .then(newMail => (setMails([newMail, ...mails])))
   }
+  
   function removeMail(ev, mailId) {
     ev.preventDefault()
     mailService.get(mailId)
       .then(prevMail => {
         const removedAt = (!prevMail.removedAt) ? Date.now() : null
-        const updatedMail = { ...prevMail, removedAt: removedAt,starred: false }
+        const updatedMail = { ...prevMail, removedAt: removedAt, starred: false }
         mailService.save(updatedMail)
         setMails(prevMails =>
           prevMails.filter(mail =>
@@ -62,7 +63,7 @@ export function MailIndex() {
         )
       })
   }
-  function toggleIsRead(ev,mailId){
+  function toggleIsRead(ev, mailId) {
     ev.preventDefault()
     mailService.get(mailId)
       .then(prevMail => {

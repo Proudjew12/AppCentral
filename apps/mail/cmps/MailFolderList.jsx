@@ -24,7 +24,7 @@ export function MailFolderList({ filterBy, onSetFilterBy,addMail}) {
         <button className={(mailType ==='inbox')?'clicked-option':''} onClick={() => handleChange('inbox')}><InboxIcon /> Inbox </button>
         <button className={(mailType ==='starred')?'clicked-option':''} onClick={() => handleChange('starred')}><StarIcon /> Starred</button>
         <button className={(mailType ==='sent')?'clicked-option':''} onClick={() => handleChange('sent')}><SentIcon /> Sent </button>
-        <button className={(mailType ==='draft')?'clicked-option':''}><DraftIcon /> Draft</button>
+        <button className={(mailType ==='draft')?'clicked-option':''} onClick={() => handleChange('draft')}><DraftIcon /> Draft</button>
         <button className={(mailType ==='removed')?'clicked-option':''} onClick={() => handleChange('removed')}><TrashIcon /> Trash</button>
         </nav>
     </section>
