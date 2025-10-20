@@ -16,18 +16,26 @@ export const mailService = {
   getDefaultFilter,
   getFilterFromParams,
   getDefaultSort,
-  getSortFromParams
+  getSortFromParams,
 };
 _createDemoData();
 function query(filterBy = {}, sortBy = "date") {
   return storageService.query(MAIL_KEY).then((Mails) => {
-    if (filterBy.type === "sent") {
-      Mails = Mails.filter((mail)=> (mail.from === loggedinUser.email))
+    if(filterBy.type === 'starred'){
+      Mails = Mails.filter((mail)=>(mail.starred && !mail.removedAt))
     }
-    if(filterBy.type === 'inbox'){
-      Mails = Mails.filter((mail)=> (mail.from !== loggedinUser.email))
+    else if(filterBy.type === 'removed'){
+      Mails = Mails.filter((mail)=>(mail.removedAt))
     }
-
+    else if (filterBy.type === "sent") {
+      Mails = Mails.filter((mail)=> (mail.from === loggedinUser.email && !mail.removedAt))
+    }
+     else if(filterBy.type === 'inbox'){
+      Mails = Mails.filter((mail)=> (mail.from !== loggedinUser.email && !mail.removedAt))
+    }
+     else if(filterBy.type === 'draft'){
+      Mails = Mails.filter((mail)=>(!mail.sentAt))
+     }
      if (filterBy.subject) {
       const regExp = new RegExp(filterBy.subject, "i");
       Mails = Mails.filter((mail) => regExp.test(mail.subject));
@@ -59,7 +67,6 @@ function remove(mailId) {
 
 function save(mail) {
   if (mail.id) {
-    mail.sentAt = Date.now();
     return storageService.put(MAIL_KEY, mail);
   } else {
     return storageService.post(MAIL_KEY, mail);
@@ -77,6 +84,7 @@ function _createDemoData() {
       removedAt: null,
       from: "user@appsus.com",
       to: "user@appsus.com",
+      starred: false
     },
     {
       id: "e102",
@@ -88,6 +96,7 @@ function _createDemoData() {
       removedAt: null,
       from: "momo@momo.com",
       to: "user@appsus.com",
+      starred: false
     },
     {
       id: "e103",
@@ -99,6 +108,7 @@ function _createDemoData() {
       removedAt: null,
       from: "momo@momo.com",
       to: "user@appsus.com",
+      starred: true
     },
   ];
   utilService.saveToStorage(MAIL_KEY, mails);

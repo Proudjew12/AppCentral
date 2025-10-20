@@ -1,14 +1,40 @@
-.mail-folder-list{
-    display: grid;
-    justify-content: center;
+.mail-folder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: start;
+  align-items: start;
 }
-.mail-folder-list button{
-border-radius: 50%;
-height: max-content;
-aspect-ratio: 1;
-background-color: transparent;
-border: none;
+.mail-folder-list nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: start;
+  align-items: start;
 }
-.mail-folder-list button:hover{
-background-color: #ECEFF1;
+.mail-folder-list button {
+  border-radius: 999px;
+  height: max-content;
+  width: 300px;
+  padding-block: 5px;
+  padding-inline-start: 15px;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+.clicked-option {
+  background-color: #e8f0fe !important;
+  font-weight: bold;
+}
+.mail-folder-list button:hover {
+  background-color: #eceff1;
+}
+.type-counter{
+  position: absolute;
+  right: 20px;
 }

@@ -1,4 +1,17 @@
-.filter-container{
- background-color: #F1F6F9;
- display: flex;   
+.filter-container {
+  background-color: #f1f6f9;
+  display: flex;
+  align-items: center;
+  padding-block: 10px;
+}
+.filter-container input {
+  background: url("https://cdn-icons-png.flaticon.com/512/622/622669.png")
+  no-repeat 8px center;
+  background-color: #e8f0fe;
+  background-size: 16px;
+  padding-left: 30px;
+  border-radius: 10px;
+  border: none;
+  height: 50px;
+  width: 250px;
 }
