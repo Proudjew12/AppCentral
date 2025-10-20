@@ -4,6 +4,9 @@ import { BooksList } from '../cmps/BooksList.jsx'
 import { BookFilter } from '../cmps/BookFilter.jsx'
 import { BookAdd } from '../cmps/BookAdd.jsx'
 import { BookPreview } from '../cmps/BookPreview.jsx'
+import { OpenBookAdd } from '../cmps/OpenBookAdd.jsx'
+
+
 import { bookService } from '../services/books.service.js'
 import { notify } from '../services/notification.service.js'
 
@@ -94,6 +97,9 @@ export function BooksIndex() {
                     <button className="add-book-btn" onClick={() => openAddModal()}>
                         ➕ Add Book
                     </button>
+
+                    <OpenBookAdd onBookAdded={loadBooks} />
+
 
                     <button
                         className="reset-btn"
@@ -189,7 +195,6 @@ export function BooksIndex() {
                 </div>
             )}
 
-            {/* Book List */}
             {!!books.length && (
                 <BooksList
                     books={books}

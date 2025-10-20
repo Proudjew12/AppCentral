@@ -17,6 +17,7 @@
 @import './apps/books/BooksList.css';
 @import './apps/books/BookAdd.css';
 @import './apps/books/BookPreview.css';
+@import './apps/books/GoogleBookAdd.css';
 
 /* 📧 Mail app */
 @import './apps/mail/MailIndex.css';

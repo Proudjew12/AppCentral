@@ -1,0 +1,27 @@
+.add-google-btn {
+    background-color: #078b2f;
+    color: #1e1f22;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    min-width: 150px;
+    text-align: center;
+}
+
+.add-google-btn:hover {
+    background-color: #0c7310;
+    transform: translateY(-1px);
+}
+
+.swal2-select {
+    background-color: #2a2c30 !important;
+    color: #f3f3f3 !important;
+    border-radius: 8px !important;
+    border: 1px solid #3b3b3b !important;
+    font-size: 1rem !important;
+    padding: 0.5em !important;
+}
