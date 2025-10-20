@@ -21,15 +21,19 @@ export const mailService = {
 _createDemoData();
 function query(filterBy = {}, sortBy = "date") {
   return storageService.query(MAIL_KEY).then((Mails) => {
-    if (filterBy.type === "sent") {
-      Mails = Mails.filter((mail)=> (mail.from === loggedinUser.email))
-    }
-    if(filterBy.type === 'inbox'){
-      Mails = Mails.filter((mail)=> (mail.from !== loggedinUser.email))
-    }
     if(filterBy.type === 'starred'){
-      Mails = Mails.filter((mail)=>(mail.starred))
+      Mails = Mails.filter((mail)=>(mail.starred && !mail.removedAt))
     }
+    else if(filterBy.type === 'removed'){
+      Mails = Mails.filter((mail)=>(mail.removedAt))
+    }
+    else if (filterBy.type === "sent") {
+      Mails = Mails.filter((mail)=> (mail.from === loggedinUser.email && !mail.removedAt))
+    }
+     else if(filterBy.type === 'inbox'){
+      Mails = Mails.filter((mail)=> (mail.from !== loggedinUser.email && !mail.removedAt))
+    }
+    
      if (filterBy.subject) {
       const regExp = new RegExp(filterBy.subject, "i");
       Mails = Mails.filter((mail) => regExp.test(mail.subject));

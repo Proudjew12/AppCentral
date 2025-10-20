@@ -37,8 +37,17 @@ export function MailIndex() {
   }
   function removeMail(ev, mailId) {
     ev.preventDefault()
-    mailService.remove(mailId)
-      .then((setMails(mails.filter(mail => (mailId !== mail.id)))))
+    mailService.get(mailId)
+      .then(prevMail => {
+        const removedAt = (!prevMail.removedAt) ? Date.now() : null
+        const updatedMail = { ...prevMail, removedAt: removedAt,starred: false }
+        mailService.save(updatedMail)
+        setMails(prevMails =>
+          prevMails.filter(mail =>
+            (mail.id !== updatedMail.id)
+          )
+        )
+      })
   }
   function toggleIsStarred(ev, mailId) {
     ev.preventDefault()
