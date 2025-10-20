@@ -2,7 +2,7 @@ import { utilService } from "../../../services/util.service.js"
 
 const { Link } = ReactRouterDOM
 
-export function MailList({ mails,removeMail,toggleIsStarred }) {
+export function MailList({ mails,removeMail,toggleIsStarred,toggleIsRead }) {
 
     function getDate(createdAt){
         const date = new Date(createdAt)
@@ -30,6 +30,9 @@ export function MailList({ mails,removeMail,toggleIsStarred }) {
                             <button className='remove-btn' onClick={(ev)=>{removeMail(ev,mail.id)}}>
                             <TrashIcon />
                             </button>
+                            <button className='read-btn' onClick={(ev)=>{toggleIsRead(ev,mail.id)}}>
+                             {(mail.isRead)?<UnreadIcon/>:<ReadIcon/>}   
+                            </button>
                             </div>
                         </div>
                         </Link>
@@ -51,4 +54,14 @@ function StarButton({bg}){
     <path d="M12 .587l3.668 7.431L24 9.748l-6 5.853 1.417 8.264L12 19.771 4.583 23.865 6 15.601 0 9.748l8.332-1.73z"/>
   </svg>
 
+}
+function ReadIcon(){
+    return <svg xmlns="http://www.w3.org/2000/svg" 
+    height="24px" viewBox="0 -960 960 960" width="24px" 
+    fill="#1f1f1f"><path d="m480-920 362 216q18 11 28 30t10 40v434q0 33-23.5 56.5T800-120H160q-33 0-56.5-23.5T80-200v-434q0-21 10-40t28-30l362-216Zm0 466 312-186-312-186-312 186 312 186Zm0 94L160-552v352h640v-352L480-360Zm0 160h320-640 320Z"/></svg>
+}
+function UnreadIcon(){
+    return <svg xmlns="http://www.w3.org/2000/svg"
+     height="24px" viewBox="0 -960 960 960" width="24px"
+      fill="#1f1f1f"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h404q-4 20-4 40t4 40H160l320 200 146-91q14 13 30.5 22.5T691-572L480-440 160-640v400h640v-324q23-5 43-14t37-22v360q0 33-23.5 56.5T800-160H160Zm0-560v480-480Zm600 80q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35Z"/></svg>
 }

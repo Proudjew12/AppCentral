@@ -61,7 +61,19 @@ export function MailIndex() {
           )
         )
       })
-
+  }
+  function toggleIsRead(ev,mailId){
+    ev.preventDefault()
+    mailService.get(mailId)
+      .then(prevMail => {
+        const updatedMail = { ...prevMail, isRead: !prevMail.isRead }
+        mailService.save(updatedMail)
+        setMails(prevMails =>
+          prevMails.map(mail =>
+            mail.id === updatedMail.id ? updatedMail : mail
+          )
+        )
+      })
   }
   if (mails) return (<section className='mail-index-container' >
     <nav>
@@ -71,7 +83,7 @@ export function MailIndex() {
 
       <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
       <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} />
-      <MailList mails={mails} removeMail={removeMail} toggleIsStarred={toggleIsStarred} />
+      <MailList mails={mails} removeMail={removeMail} toggleIsStarred={toggleIsStarred} toggleIsRead={toggleIsRead} />
     </section>
   </section>)
   else return <div>Loading Mails...</div>
