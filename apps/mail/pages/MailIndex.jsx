@@ -96,7 +96,7 @@ export function MailIndex() {
 
       <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
       <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} />
-      <MailList mails={mails} removeMail={removeMail} toggleIsStarred={toggleIsStarred} toggleIsRead={toggleIsRead} makeMailRead={makeMailRead} />
+      <MailList mails={mails} removeMail={removeMail} toggleIsStarred={toggleIsStarred} toggleIsRead={toggleIsRead} />
     </section>
   </section>)
   else return <div>Loading Mails...</div>
