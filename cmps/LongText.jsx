@@ -14,9 +14,7 @@ export function LongTxt({ txt, length = 100 }) {
             <h4>
                 {textToShow}
                 {isLongText &&
-                    <button onClick={onToggleIsShowLong}>
-                        {isShowLong ? ' Less...' : ' More...'}
-                    </button>
+                    '...'
                 }
             </h4>
         </section>

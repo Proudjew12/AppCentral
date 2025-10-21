@@ -19,7 +19,7 @@ export function MailFolderList({ filterBy, onSetFilterBy,addMail}) {
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, type: value }))
     }
     return <section className='mail-folder-list'>
-        <MailCompose addMail={addMail} />
+        <MailCompose addMail={addMail}/>
         <nav>
         <button className={(mailType ==='inbox')?'clicked-option':''} onClick={() => handleChange('inbox')}><InboxIcon /> Inbox </button>
         <button className={(mailType ==='starred')?'clicked-option':''} onClick={() => handleChange('starred')}><StarIcon /> Starred</button>

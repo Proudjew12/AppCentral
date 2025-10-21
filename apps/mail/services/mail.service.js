@@ -28,10 +28,10 @@ function query(filterBy = {}, sortBy = "date") {
       Mails = Mails.filter((mail)=>(mail.removedAt))
     }
     else if (filterBy.type === "sent") {
-      Mails = Mails.filter((mail)=> (mail.from === loggedinUser.email && !mail.removedAt))
+      Mails = Mails.filter((mail)=> (mail.from === loggedinUser.email && !mail.removedAt && mail.sentAt))
     }
      else if(filterBy.type === 'inbox'){
-      Mails = Mails.filter((mail)=> (mail.from !== loggedinUser.email && !mail.removedAt))
+      Mails = Mails.filter((mail)=> (mail.from !== loggedinUser.email && !mail.removedAt && mail.sentAt))
     }
      else if(filterBy.type === 'draft'){
       Mails = Mails.filter((mail)=>(!mail.sentAt))
@@ -90,7 +90,7 @@ function _createDemoData() {
       id: "e102",
       createdAt: 1551133124500,
       subject: "Hallo!",
-      body: "Would love to catch up sometimes",
+      body: "Would love to catch up sometimes  hb xsjh jodjc",
       isRead: true,
       sentAt: 1551133930594,
       removedAt: null,
@@ -110,6 +110,18 @@ function _createDemoData() {
       to: "user@appsus.com",
       starred: true
     },
+    {
+      id: "e104",
+      createdAt: 1551133930500,
+      subject: "Goede Morgen!",
+      body: "Would love to catch up sometimes",
+      isRead: false,
+      sentAt: null,
+      removedAt: null,
+      from: "momo@lolo.com",
+      to: "user@appsus.com",
+      starred: true
+    }
   ];
   utilService.saveToStorage(MAIL_KEY, mails);
 }

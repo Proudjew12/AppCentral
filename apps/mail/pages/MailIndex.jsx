@@ -1,4 +1,4 @@
-import { MailCompose } from '../cmps/MailCompose.jsx'
+
 import { MailFilter } from '../cmps/MailFilter.jsx'
 import { MailFolderList } from '../cmps/MailFolderList.jsx'
 import { MailList } from '../cmps/MailList.jsx'
@@ -32,13 +32,12 @@ export function MailIndex() {
     setSortBy(newSort)
   }
   function addMail(mail) {
-    mailService.save(mail)
+    mailService.save({...mail,sentAt: Date.now()})
       .then(newMail => (setMails([newMail, ...mails])))
   }
-
   function removeMail(ev, mailId) {
     ev.preventDefault()
-    mailService.get(mailId)
+    if(filterBy.type !='draft') mailService.get(mailId)
       .then(prevMail => {
         const removedAt = (!prevMail.removedAt) ? Date.now() : null
         const updatedMail = { ...prevMail, removedAt: removedAt, starred: false }
@@ -49,6 +48,10 @@ export function MailIndex() {
           )
         )
       })
+      else mailService.remove(mailId)
+      .then(setMails(prevMails =>
+          prevMails.filter(mail =>(mail.id !== mailId))
+          ))
   }
   function toggleIsStarred(ev, mailId) {
     ev.preventDefault()
@@ -63,18 +66,7 @@ export function MailIndex() {
         )
       })
   }
-  function makeMailRead(mailId) {
-    mailService.get(mailId)
-      .then(prevMail => {
-        const updatedMail = { ...prevMail, isRead:true }
-        mailService.save(updatedMail)
-        setMails(prevMails =>
-          prevMails.map(mail =>
-            mail.id === updatedMail.id ? updatedMail : mail
-          )
-        )
-      })
-  }
+  
   function toggleIsRead(ev, mailId) {
     ev.preventDefault()
     mailService.get(mailId)
