@@ -89,6 +89,12 @@ function getCurrencySymbol(code) {
     }
 }
 
+function randomImg() {
+    const imgNum = Math.ceil(Math.random() * 20)
+    return `${imgNum}.jpg`
+}
+
+
 function getEmptyBook() {
     return {
         id: '',
@@ -96,11 +102,17 @@ function getEmptyBook() {
         description: '',
         authors: [''],
         publishedDate: '',
+        pageCount: '',
+        categories: [],
+        language: 'en',
         thumbnail: '',
         listPrice: { amount: 0, currencyCode: 'USD', isOnSale: false },
         rating: 0,
+        reviews: [],
     }
 }
+
+
 
 function createDemoBooks() {
     const demoBooks = [
@@ -111,9 +123,13 @@ function createDemoBooks() {
                 'Harry discovers he is a wizard and attends Hogwarts School of Witchcraft and Wizardry.',
             authors: ['J.K. Rowling'],
             publishedDate: 1997,
+            pageCount: 223,
+            categories: ['Fantasy', 'Adventure'],
+            language: 'en',
             thumbnail: randomImg(),
             listPrice: { amount: 19.99, currencyCode: 'USD', isOnSale: false },
             rating: 4,
+            reviews: [],
         },
         {
             id: utilService.makeId(),
@@ -122,9 +138,13 @@ function createDemoBooks() {
                 'Bilbo Baggins embarks on a journey with dwarves to reclaim their home.',
             authors: ['J.R.R. Tolkien'],
             publishedDate: 1937,
+            pageCount: 310,
+            categories: ['Fantasy', 'Adventure'],
+            language: 'en',
             thumbnail: randomImg(),
-            listPrice: { amount: 14.99, currencyCode: 'USD', isOnSale: true },
+            listPrice: { amount: 14.99, currencyCode: 'EUR', isOnSale: true },
             rating: 5,
+            reviews: [],
         },
         {
             id: utilService.makeId(),
@@ -133,17 +153,16 @@ function createDemoBooks() {
                 'A dystopian novel depicting a totalitarian regime and the surveillance state.',
             authors: ['George Orwell'],
             publishedDate: 1949,
+            pageCount: 328,
+            categories: ['Dystopia', 'Political Fiction'],
+            language: 'en',
             thumbnail: randomImg(),
-            listPrice: { amount: 9.99, currencyCode: 'USD', isOnSale: false },
+            listPrice: { amount: 9.99, currencyCode: 'ILS', isOnSale: false },
             rating: 3,
+            reviews: [],
         },
     ]
 
     utilService.saveToStorage(BOOKS_KEY, demoBooks)
     return demoBooks
-}
-
-function randomImg() {
-    const imgNum = Math.ceil(Math.random() * 20)
-    return `${imgNum}.jpg`
 }

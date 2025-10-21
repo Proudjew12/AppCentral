@@ -74,6 +74,40 @@ export function BookForm({ book = bookService.getEmptyBook(), onSave }) {
                 onChange={handleChange}
             />
 
+            <label>Page Count:</label>
+            <input
+                type="number"
+                name="pageCount"
+                value={bookToEdit.pageCount}
+                onChange={handleChange}
+            />
+
+            <label>Categories (comma separated):</label>
+            <input
+                type="text"
+                name="categories"
+                value={bookToEdit.categories.join(', ')}
+                onChange={({ target }) =>
+                    setBookToEdit(prev => ({
+                        ...prev,
+                        categories: target.value.split(',').map(c => c.trim())
+                    }))
+                }
+            />
+
+            <label>Language:</label>
+            <select
+                name="language"
+                value={bookToEdit.language}
+                onChange={handleChange}
+            >
+                <option value="en">English</option>
+                <option value="he">Hebrew</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+            </select>
+
+
             <label>Price:</label>
             <input
                 type="number"

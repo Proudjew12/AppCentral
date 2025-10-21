@@ -1,49 +1,94 @@
-const { useEffect } = React
+const { useState, useEffect, useRef } = React
 
 import { BooksList } from '../cmps/BooksList.jsx'
 import { BookFilter } from '../cmps/BookFilter.jsx'
 import { BookAdd } from '../cmps/BookAdd.jsx'
 import { BookPreview } from '../cmps/BookPreview.jsx'
-import { useBooksController } from '../services/books.controller.js'
+import { OpenBookAdd } from '../cmps/OpenBookAdd.jsx'
+
+
+import { bookService } from '../services/books.service.js'
+import { notify } from '../services/notification.service.js'
 
 export function BooksIndex() {
-    const {
-        books,
-        filterBy,
-        isAddOpen,
-        isPreviewOpen,
-        bookToEdit,
-        selectedBook,
-        modalRef,
-        loadBooks,
-        onSetFilter,
-        openAddModal,
-        closeAddModal,
-        openPreviewModal,
-        closePreviewModal,
-        onRemoveBook,
-        onEditBook,
-        onResetDemo,
-        onClearAll,
-    } = useBooksController()
+    const [books, setBooks] = useState([])
+    const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
+    const [isAddOpen, setIsAddOpen] = useState(false)
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false)
+    const [bookToEdit, setBookToEdit] = useState(null)
+    const [selectedBook, setSelectedBook] = useState(null)
+    const modalRef = useRef(null)
+
 
     useEffect(() => {
-        function handleClickOutside(ev) {
-            if (modalRef.current && !modalRef.current.contains(ev.target)) {
-                if (isAddOpen) closeAddModal()
-                if (isPreviewOpen) closePreviewModal()
-            }
+        if (!localStorage.getItem('booksDB')) bookService.createDemoBooks()
+        loadBooks()
+    }, [filterBy])
+
+    async function loadBooks() {
+        try {
+            const books = await bookService.query(filterBy)
+            setBooks(books)
+        } catch (err) {
+            notify.error('Failed to load books')
         }
+    }
 
-        if (isAddOpen || isPreviewOpen) document.addEventListener('mousedown', handleClickOutside)
-        else document.removeEventListener('mousedown', handleClickOutside)
+    function onSetFilter(updatedFilter) {
+        setFilterBy(prev => ({ ...prev, ...updatedFilter }))
+    }
 
-        return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [isAddOpen, isPreviewOpen])
+    function openAddModal(book = null) {
+        setBookToEdit(book)
+        setIsAddOpen(true)
+    }
+
+    function closeAddModal() {
+        setBookToEdit(null)
+        setIsAddOpen(false)
+    }
+
+    function openPreviewModal(book) {
+        setSelectedBook(book)
+        setIsPreviewOpen(true)
+    }
+
+    function closePreviewModal() {
+        setSelectedBook(null)
+        setIsPreviewOpen(false)
+    }
+
+    function onNextBook() {
+        if (!selectedBook || !books.length) return
+        const currIdx = books.findIndex(b => b.id === selectedBook.id)
+        const nextIdx = (currIdx + 1) % books.length
+        setSelectedBook(books[nextIdx])
+    }
+
+    function onPrevBook() {
+        if (!selectedBook || !books.length) return
+        const currIdx = books.findIndex(b => b.id === selectedBook.id)
+        const prevIdx = (currIdx - 1 + books.length) % books.length
+        setSelectedBook(books[prevIdx])
+    }
+
+    async function onRemoveBook(bookId) {
+        const result = await notify.confirmDelete('Delete this book?')
+        if (result.isConfirmed) {
+            await bookService.remove(bookId)
+            notify.toast('Book deleted!')
+            loadBooks()
+        }
+    }
+
+    function onEditBook(book) {
+        openAddModal(book)
+    }
 
     return (
         <section className="books-index main-layout flex column align-center">
             <h2>📚 MissBooks Library</h2>
+
 
             <div className="books-toolbar flex row space-between align-center">
                 <BookFilter filterBy={filterBy} onSetFilter={onSetFilter} />
@@ -52,18 +97,46 @@ export function BooksIndex() {
                     <button className="add-book-btn" onClick={() => openAddModal()}>
                         ➕ Add Book
                     </button>
-                    <button className="reset-btn" onClick={onResetDemo}>
+
+                    <OpenBookAdd onBookAdded={loadBooks} />
+
+
+                    <button
+                        className="reset-btn"
+                        onClick={() => {
+                            bookService.resetDemoBooks()
+                            loadBooks()
+                        }}
+                    >
                         ♻️ Reset Demo
                     </button>
-                    <button className="remove-all-btn" onClick={onClearAll}>
+
+                    <button
+                        className="remove-all-btn"
+                        onClick={() => {
+                            bookService.clearAllBooks()
+                            setBooks([])
+                            notify.toast('All books removed!', 'info')
+                        }}
+                    >
                         🗑️ Clear All
                     </button>
                 </div>
             </div>
 
+
             {isAddOpen && (
-                <div className="modal-overlay">
-                    <div ref={modalRef} className="modal-content">
+                <div
+                    className="modal-overlay"
+                    onClick={(ev) => {
+                        if (ev.target.classList.contains('modal-overlay')) closeAddModal()
+                    }}
+                >
+                    <div
+                        ref={modalRef}
+                        className="modal-content"
+                        onClick={(ev) => ev.stopPropagation()}
+                    >
                         <button className="modal-close" onClick={closeAddModal}>✖</button>
                         <BookAdd
                             onBookAdded={() => {
@@ -76,11 +149,49 @@ export function BooksIndex() {
                 </div>
             )}
 
+
             {isPreviewOpen && selectedBook && (
-                <div className="modal-overlay">
-                    <div ref={modalRef} className="modal-content">
-                        <BookPreview book={selectedBook} onClose={closePreviewModal} />
+                <div
+                    className="modal-overlay"
+                    onClick={(ev) => {
+                        if (ev.target.classList.contains('modal-overlay')) closePreviewModal()
+                    }}
+                >
+
+                    <button
+                        className="global-arrow prev"
+                        onClick={(ev) => {
+                            ev.stopPropagation()
+                            onPrevBook()
+                        }}
+                    >
+                        &lt;
+                    </button>
+
+
+                    <div
+                        ref={modalRef}
+                        className="modal-content"
+                        onClick={(ev) => ev.stopPropagation()}
+                    >
+                        <BookPreview
+                            book={selectedBook}
+                            onClose={closePreviewModal}
+                            onNextBook={onNextBook}
+                            onPrevBook={onPrevBook}
+                        />
                     </div>
+
+
+                    <button
+                        className="global-arrow next"
+                        onClick={(ev) => {
+                            ev.stopPropagation()
+                            onNextBook()
+                        }}
+                    >
+                        &gt;
+                    </button>
                 </div>
             )}
 
@@ -92,6 +203,7 @@ export function BooksIndex() {
                     onViewBook={openPreviewModal}
                 />
             )}
+
             {!books.length && <p>No books yet...</p>}
         </section>
     )
