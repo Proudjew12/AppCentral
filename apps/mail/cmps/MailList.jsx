@@ -1,10 +1,10 @@
 import { LongTxt } from "../../../cmps/LongText.jsx"
 import { utilService } from "../../../services/util.service.js"
-import { MailCompose } from "./MailCompose.jsx"
+
 
 const { Link } = ReactRouterDOM
 
-export function MailList({ mails, removeMail, toggleIsStarred, toggleIsRead, openModal }) {
+export function MailList({ mails, removeMail, toggleIsStarred, toggleIsRead, onOpenModal }) {
 
     function getDate(createdAt) {
         const date = new Date(createdAt)
@@ -42,7 +42,7 @@ export function MailList({ mails, removeMail, toggleIsStarred, toggleIsRead, ope
                                         {(mail.sentAt) ? <button className='read-btn' onClick={(ev) => { toggleIsRead(ev, mail.id) }}>
                                             {(mail.isRead) ? <UnreadIcon /> : <ReadIcon />}
                                         </button>
-                                            : <button className='edit-btn'><WriteIcon /></button>}
+                                            : <button className='edit-btn' onClick={(ev)=>{onOpenModal(ev,mail)}}><WriteIcon /></button>}
                                     </div>
                                 </div>
                             </Link>

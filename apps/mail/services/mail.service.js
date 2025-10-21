@@ -76,9 +76,9 @@ function _createDemoData() {
   const mails = [
     {
       id: "e101",
-      createdAt: Date.now(),
+      createdAt: 1551133124500,
       subject: "Miss you!",
-      body: "Would love to catch up sometimes",
+      body: "Good morning",
       isRead: false,
       sentAt: 1351992330577,
       removedAt: null,
@@ -90,7 +90,7 @@ function _createDemoData() {
       id: "e102",
       createdAt: 1551133124500,
       subject: "Hallo!",
-      body: "Would love to catch up sometimes  hb xsjh jodjc",
+      body: "Guten Morgen",
       isRead: true,
       sentAt: 1551133930594,
       removedAt: null,
@@ -101,8 +101,8 @@ function _createDemoData() {
     {
       id: "e103",
       createdAt: 1551133930500,
-      subject: "Guten Morgen!",
-      body: "Would love to catch up sometimes",
+      subject: "Goede Morgen!",
+      body: "Goede Morgen!",
       isRead: false,
       sentAt: 1551133930594,
       removedAt: null,
@@ -113,14 +113,14 @@ function _createDemoData() {
     {
       id: "e104",
       createdAt: 1551133930500,
-      subject: "Goede Morgen!",
-      body: "Would love to catch up sometimes",
+      subject: "Buenos dias!",
+      body: "Buenos dias!",
       isRead: false,
-      sentAt: null,
+      sentAt: 9551133930594,
       removedAt: null,
       from: "momo@lolo.com",
       to: "user@appsus.com",
-      starred: true
+      starred: false
     }
   ];
   utilService.saveToStorage(MAIL_KEY, mails);

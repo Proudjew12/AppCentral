@@ -4,7 +4,7 @@ import { MailCompose } from "./MailCompose.jsx"
 
 const { useState, useEffect, useRef } = React
 
-export function MailFolderList({ filterBy, onSetFilterBy,addMail}) {
+export function MailFolderList({ filterBy, onSetFilterBy,addMail,onOpenModal}) {
 
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const onSetFilterDebounce = useRef(utilService.debounce(onSetFilterBy, 500))
@@ -19,7 +19,7 @@ export function MailFolderList({ filterBy, onSetFilterBy,addMail}) {
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, type: value }))
     }
     return <section className='mail-folder-list'>
-        <MailCompose addMail={addMail}/>
+        <MailCompose addMail={addMail} onOpenModal={onOpenModal}/>
         <nav>
         <button className={(mailType ==='inbox')?'clicked-option':''} onClick={() => handleChange('inbox')}><InboxIcon /> Inbox </button>
         <button className={(mailType ==='starred')?'clicked-option':''} onClick={() => handleChange('starred')}><StarIcon /> Starred</button>
