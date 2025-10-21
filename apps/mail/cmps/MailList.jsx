@@ -6,8 +6,8 @@ const { Link } = ReactRouterDOM
 
 export function MailList({ mails, removeMail, toggleIsStarred, toggleIsRead, onOpenModal }) {
 
-    function getDate(createdAt) {
-        const date = new Date(createdAt)
+    function getDate(sentAt) {
+        const date = new Date(sentAt)
         const year = date.getFullYear()
         const month = utilService.getMonthName(date)
         const day = date.getDate() + '.'
@@ -35,7 +35,7 @@ export function MailList({ mails, removeMail, toggleIsStarred, toggleIsRead, onO
 
                                     <span><LongTxt txt={mail.body} length={20} /></span>
                                     <div className='date-and-remove-btn-container'>
-                                        <span>{getDate(mail.createdAt)}</span>
+                                        <span>{getDate(mail.sentAt)}</span>
                                         <button className='remove-btn' onClick={(ev) => { removeMail(ev, mail.id) }}>
                                             <TrashIcon />
                                         </button>

@@ -74,55 +74,128 @@ function save(mail) {
 }
 function _createDemoData() {
   const mails = [
-    {
-      id: "e101",
-      createdAt: 1551133124500,
-      subject: "Miss you!",
-      body: "Good morning",
-      isRead: false,
-      sentAt: 1351992330577,
-      removedAt: null,
-      from: "user@appsus.com",
-      to: "user@appsus.com",
-      starred: false
-    },
-    {
-      id: "e102",
-      createdAt: 1551133124500,
-      subject: "Hallo!",
-      body: "Guten Morgen",
-      isRead: true,
-      sentAt: 1551133930594,
-      removedAt: null,
-      from: "momo@momo.com",
-      to: "user@appsus.com",
-      starred: false
-    },
-    {
-      id: "e103",
-      createdAt: 1551133930500,
-      subject: "Goede Morgen!",
-      body: "Goede Morgen!",
-      isRead: false,
-      sentAt: 1551133930594,
-      removedAt: null,
-      from: "momo@momo.com",
-      to: "user@appsus.com",
-      starred: true
-    },
-    {
-      id: "e104",
-      createdAt: 1551133930500,
-      subject: "Buenos dias!",
-      body: "Buenos dias!",
-      isRead: false,
-      sentAt: 9551133930594,
-      removedAt: null,
-      from: "momo@lolo.com",
-      to: "user@appsus.com",
-      starred: false
-    }
-  ];
+  {
+    id: "28b069d6",
+    createdAt: 1598819017985,
+    subject: "Good morning",
+    body: "Good morning",
+    isRead: false,
+    sentAt: 1598819017985,
+    removedAt: null,
+    from: "user@appsus.com",
+    to: "contact@mail.com",
+    starred: false
+  },
+  {
+    id: "b129ed52",
+    createdAt: 1709779523877,
+    subject: "Buenos días",
+    body: "Buenos días",
+    isRead: true,
+    sentAt: 1709779523877,
+    removedAt: null,
+    from: "friend@mail.com",
+    to: "contact@mail.com",
+    starred: false
+  },
+  {
+    id: "b4d61ec1",
+    createdAt: 1641095476028,
+    subject: "Bonjour",
+    body: "Bonjour",
+    isRead: true,
+    sentAt: 1641095476028,
+    removedAt: null,
+    from: "user@appsus.com",
+    to: "contact@mail.com",
+    starred: true
+  },
+  {
+    id: "af7efe98",
+    createdAt: 1763557869306,
+    subject: "Guten Morgen",
+    body: "Guten Morgen",
+    isRead: true,
+    sentAt: 1763557869306,
+    removedAt: null,
+    from: "test@example.com",
+    to: "contact@mail.com",
+    starred: true
+  },
+  {
+    id: "f4c4e685",
+    createdAt: 1635283806093,
+    subject: "Buongiorno",
+    body: "Buongiorno",
+    isRead: true,
+    sentAt: 1635283806093,
+    removedAt: null,
+    from: "friend@mail.com",
+    to: "contact@mail.com",
+    starred: false
+  },
+  {
+    id: "aec4dc07",
+    createdAt: 1763239528243,
+    subject: "おはようございます",
+    body: "おはようございます",
+    isRead: false,
+    sentAt: 1763239528243,
+    removedAt: null,
+    from: "test@example.com",
+    to: "user@appsus.com",
+    starred: false
+  },
+  {
+    id: "a0fa9b4b",
+    createdAt: 1628823465796,
+    subject: "Доброе утро",
+    body: "Доброе утро",
+    isRead: false,
+    sentAt: 1628823465796,
+    removedAt: null,
+    from: "friend@mail.com",
+    to: "contact@mail.com",
+    starred: true
+  },
+  {
+    id: "7445d16a",
+    createdAt: 1763375617667,
+    subject: 'Goede morgen',
+    body: 'Goede morgen',
+    isRead: false,
+    sentAt: 1763375617667,
+    removedAt: null,
+    from: "friend@mail.com",
+    to: "user@appsus.com",
+    starred: true
+  },
+  {
+    id: "145e3769",
+    createdAt: 1645051369319,
+    subject: "Bom dia",
+    body: "Bom dia",
+    isRead: true,
+    sentAt: 1645051369319,
+    removedAt: null,
+    from: "user@appsus.com",
+    to: "team@appsus.com",
+    starred: true
+  },
+  {
+    id: "a085ae63",
+    createdAt: 1721628511399,
+    subject: "שָׁלוֹם בּוֹקֶר טוֹב",
+    body: "שָׁלוֹם בּוֹקֶר טוֹב",
+    isRead: true,
+    sentAt: 1721628511399,
+    removedAt: null,
+    from: "user@appsus.com",
+    to: "user@appsus.com",
+    starred: false
+  }
+  
+]
   utilService.saveToStorage(MAIL_KEY, mails);
 }
 function getUser() {
