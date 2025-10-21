@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   padding-block: 10px;
+  gap: 10px;
 }
 .filter-container input {
   background: url("https://cdn-icons-png.flaticon.com/512/622/622669.png")
@@ -14,4 +15,12 @@
   border: none;
   height: 50px;
   width: 250px;
+  font-size: 1.5rem;
+}
+.filter-container select{
+  border-radius: 9999px;
+  height: 50px;
+  width: 100px;
+  text-align: center;
+  font-size: 1.5rem;
 }

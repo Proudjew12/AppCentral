@@ -2,7 +2,7 @@ import { utilService } from "../../../services/util.service.js"
 
 const { Link } = ReactRouterDOM
 
-export function MailList({ mails, removeMail, toggleIsStarred, toggleIsRead }) {
+export function MailList({ mails, removeMail, toggleIsStarred, toggleIsRead,makeMailRead }) {
 
     function getDate(createdAt) {
         const date = new Date(createdAt)
@@ -21,13 +21,15 @@ export function MailList({ mails, removeMail, toggleIsStarred, toggleIsRead }) {
                 {mails.map(
                     mail =>
                         <li key={mail.id}>
-                            <Link to={`${mail.id}`} style={{ textDecoration: 'none' }}>
+                            <Link to={`${mail.id}`} style={{ textDecoration: 'none' }} onClick={()=>{makeMailRead(mail.id)}}>
                                 <div className={'mail ' + getClassName(mail)}>
+                                    <div className='star-and-to-container'>
                                     {(!mail.removedAt) ?
                                         <button className='star-btn' onClick={(ev) => { toggleIsStarred(ev, mail.id) }}><StarButton bg={(mail.starred ? 'gold' : 'white')} /></button>
                                         :''
                                     }
                                     <span>{mail.from+' '+mail.id}</span>
+                                    </div>
                                     <span>{mail.subject}</span>
                                     <div className='date-and-remove-btn-container'>
                                         <span>{getDate(mail.createdAt)}</span>

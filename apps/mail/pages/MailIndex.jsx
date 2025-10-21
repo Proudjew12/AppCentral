@@ -35,7 +35,7 @@ export function MailIndex() {
     mailService.save(mail)
       .then(newMail => (setMails([newMail, ...mails])))
   }
-  
+
   function removeMail(ev, mailId) {
     ev.preventDefault()
     mailService.get(mailId)
@@ -55,6 +55,18 @@ export function MailIndex() {
     mailService.get(mailId)
       .then(prevMail => {
         const updatedMail = { ...prevMail, starred: !prevMail.starred }
+        mailService.save(updatedMail)
+        setMails(prevMails =>
+          prevMails.map(mail =>
+            mail.id === updatedMail.id ? updatedMail : mail
+          )
+        )
+      })
+  }
+  function makeMailRead(mailId) {
+    mailService.get(mailId)
+      .then(prevMail => {
+        const updatedMail = { ...prevMail, isRead:true }
         mailService.save(updatedMail)
         setMails(prevMails =>
           prevMails.map(mail =>
@@ -84,7 +96,7 @@ export function MailIndex() {
 
       <MailFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
       <MailSort sortBy={sortBy} onSetSortBy={onSetSortBy} />
-      <MailList mails={mails} removeMail={removeMail} toggleIsStarred={toggleIsStarred} toggleIsRead={toggleIsRead} />
+      <MailList mails={mails} removeMail={removeMail} toggleIsStarred={toggleIsStarred} toggleIsRead={toggleIsRead} makeMailRead={makeMailRead} />
     </section>
   </section>)
   else return <div>Loading Mails...</div>

@@ -1,6 +1,7 @@
-import { mailService } from "../services/mail.service"
 
+const {useState,useEffect} = React
 export function MailPreview({mail}){
+
 return(
     <section className='MailPreview'>
       <h1>{mail.subject}</h1>  

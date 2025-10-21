@@ -23,15 +23,23 @@
   border: 0px !important;
   width: 30px !important;
   aspect-ratio: 1 !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  border-radius: 0px !important;
 }
 .closeComposeBtn:hover {
-  background-color: #dadce0;
+  background-color: #dadce0 !important;
 }
 .compose-title {
   display: flex;
   align-items: center;
   background-color: #e3ebf5;
+  color: #1C1E43;
+  font-size: 1rem;
   padding-inline: 10px;
+  font-weight: 600;
+  font-size: 1.25rem;
 }
 
 .compose-modal {
@@ -48,8 +56,11 @@
 .compose-modal input {
   height: 30px;
   font-size: 1.5rem;
+  width: 100%;
   border: none;
-  border-block-end: 1px black !important;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+  margin-bottom: 20px;
 }
 .compose-modal textarea {
   border: none;
@@ -69,10 +80,8 @@
   position: absolute !important;
   bottom: 10px !important;
 }
-.form-container{
-    display: grid;
-    padding: 20px;
-    gap: 20px;
+.form-container {
+  display: grid;
+  padding: 20px;
+  gap: 20px;
 }
-
-

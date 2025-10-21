@@ -2,6 +2,7 @@
  .mail-index-container{
     display: flex;
     flex: 1;
+    font-family: Roboto;
  }
  .mail-index-container nav{
    background-color: #F6F9FC;
