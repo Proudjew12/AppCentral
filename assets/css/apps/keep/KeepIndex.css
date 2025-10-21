@@ -1,10 +1,19 @@
 .keep-index {
     gap: var(--space-md);
-    padding-block: var(--space-lg);
+    padding-top: var(--space-sm);
+    /* smaller top spacing */
+    padding-bottom: var(--space-md);
+    /* keep light space below */
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
 }
+
+.keep-index>.flex.row.space-between {
+    margin-bottom: var(--space-md);
+}
+
+
 
 .keep-index h2 {
     font-size: 1.8rem;

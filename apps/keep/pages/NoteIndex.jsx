@@ -102,13 +102,21 @@ export function NoteIndex() {
 
     return (
         <React.Fragment>
-            <section className="keep-index flex column align-center">
-                <NotePreview onAddNote={onAddNote} />
-                <NoteFilter filterBy={filterBy} onSetFilter={setFilterBy} />
+            <section className="keep-index flex column">
 
-                <div className="flex row align-center space-between">
-                    <button onClick={onResetDemo}>Reset Demo Notes</button>
-                    <button onClick={onClearAll}>Clear All Notes</button>
+                <div className="flex row align-center space-between full-width">
+                    <div className="flex row align-center gap-sm">
+                        <NoteFilter filterBy={filterBy} onSetFilter={setFilterBy} />
+                    </div>
+
+                    <div className="flex row align-center gap-sm">
+                        <button onClick={onResetDemo}>Reset Demo Notes</button>
+                        <button onClick={onClearAll}>Clear All Notes</button>
+                    </div>
+                </div>
+
+                <div className="flex row justify-center">
+                    <NotePreview onAddNote={onAddNote} />
                 </div>
 
                 <NoteList
@@ -119,6 +127,9 @@ export function NoteIndex() {
                     onTogglePin={onTogglePin}
                 />
             </section>
+
+
+
         </React.Fragment>
     )
 }
