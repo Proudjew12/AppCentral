@@ -7,30 +7,18 @@ import { NoteCanvas } from './note-types/NoteCanvas.jsx'
 import { NoteMap } from './note-types/NoteMap.jsx'
 import { NoteRecording } from './note-types/NoteRecording.jsx'
 
+import { utilService } from '../../../services/util.service.js'
+
+
 const { useState } = React
 
 export function NotePreview({ onAddNote }) {
     const [noteType, setNoteType] = useState('NoteTxt')
     const [color, setColor] = useState('#ffffff')
 
-    function getRandomPastelColor() {
-        const r = Math.floor((Math.random() * 127) + 127)
-        const g = Math.floor((Math.random() * 127) + 127)
-        const b = Math.floor((Math.random() * 127) + 127)
-        return `rgb(${r}, ${g}, ${b})`
-    }
-
     function handleRandomColor() {
-        const random = getRandomPastelColor()
-        setColor(rgbToHex(random))
-    }
-
-    function rgbToHex(rgb) {
-        const rgbValues = rgb.match(/\d+/g)
-        const hex = rgbValues
-            .map(x => parseInt(x).toString(16).padStart(2, '0'))
-            .join('')
-        return `#${hex}`
+        const random = utilService.getRandomPastelColor()
+        setColor(utilService.rgbToHex(random))
     }
 
     function renderPreviewByType() {

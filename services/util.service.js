@@ -4,6 +4,7 @@ export const utilService = {
     getRandomIntInclusive,
     getRandomColor,
     getRandomPastelColor,
+    rgbToHex,
     padNum,
     getDayName,
     getMonthName,
@@ -46,6 +47,14 @@ function getRandomIntInclusive(min, max) {
     min = Math.ceil(min)
     max = Math.floor(max)
     return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive 
+}
+
+function rgbToHex(rgb) {
+    const rgbValues = rgb.match(/\d+/g)
+    const hex = rgbValues
+        .map(x => parseInt(x).toString(16).padStart(2, '0'))
+        .join('')
+    return `#${hex}`
 }
 
 function padNum(num) {
