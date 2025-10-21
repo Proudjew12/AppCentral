@@ -1,7 +1,13 @@
-import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
+import { showSuccessMsg } from '../../../services/event-bus.service.js'
 
 export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onTogglePin }) {
-    if (!notes || !notes.length) return <p className="text-center">No notes yet...</p>
+    if (!notes || !notes.length)
+        return (
+            <div className="keep-empty flex column align-center justify-center">
+                <img src="assets/icons/lightbulb.svg" alt="No notes" className="keep-empty-icon" />
+                <p>Notes you add appear here</p>
+            </div>
+        )
 
     async function onNoteClick(note) {
         const result = await Swal.fire({

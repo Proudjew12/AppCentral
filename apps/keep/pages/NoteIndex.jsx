@@ -110,7 +110,6 @@ export function NoteIndex() {
 
             <NotePreview onAddNote={onAddNote} />
 
-            {/* Externalized filter */}
             <NoteFilter filterBy={filterBy} onSetFilter={setFilterBy} />
 
             <div className="flex row align-center space-between">
