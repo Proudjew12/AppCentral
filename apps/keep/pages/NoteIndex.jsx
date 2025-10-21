@@ -1,5 +1,6 @@
 import { NotePreview } from '../cmps/NotePreview.jsx'
 import { NoteList } from '../cmps/NoteList.jsx'
+import { NoteFilter } from '../cmps/NoteFilter.jsx'
 
 import { noteService } from '../services/note.service.js'
 import { utilService } from '../../../services/util.service.js'
@@ -11,7 +12,7 @@ export function NoteIndex() {
     const [notes, setNotes] = useState([])
     const [filterBy, setFilterBy] = useState({ txt: '', type: '' })
 
-    useEffect(() => { loadNotes() }, [filterBy]) // reload when filter changes
+    useEffect(() => { loadNotes() }, [filterBy])
 
     function loadNotes() {
         noteService.query().then(notes => {
@@ -35,12 +36,9 @@ export function NoteIndex() {
         })
     }
 
-
-
     function onAddNote({ txt, type, color }) {
         const noteType = type || 'NoteTxt'
         const note = noteService.getEmptyNote(txt, noteType)
-
         note.style = { backgroundColor: color }
 
         noteService.save(note)
@@ -50,8 +48,6 @@ export function NoteIndex() {
             })
             .catch(() => showErrorMsg('❌ Failed to add note'))
     }
-
-
 
     function onRemoveNote(noteId) {
         noteService.remove(noteId)
@@ -96,8 +92,6 @@ export function NoteIndex() {
             .catch(() => showErrorMsg('❌ Failed to toggle pin'))
     }
 
-
-
     function onResetDemo() {
         const demoNotes = noteService.createDemoNotes()
         utilService.saveToStorage('keepDB', demoNotes)
@@ -116,37 +110,8 @@ export function NoteIndex() {
 
             <NotePreview onAddNote={onAddNote} />
 
-            <section className="note-filter flex row align-center space-between">
-                <div className="flex row align-center grow">
-                    <input
-                        type="text"
-                        placeholder="Search notes..."
-                        value={filterBy.txt}
-                        onChange={(ev) => setFilterBy({ ...filterBy, txt: ev.target.value })}
-                    />
-                    {filterBy.txt && (
-                        <button
-                            className="btn-clear-search"
-                            onClick={() => setFilterBy({ txt: '', type: '' })}
-                            title="Clear search"
-                        >
-                            <i className="fa-solid fa-xmark"></i>
-                        </button>
-                    )}
-                </div>
-
-                <select
-                    value={filterBy.type}
-                    onChange={(ev) => setFilterBy({ ...filterBy, type: ev.target.value })}
-                >
-                    <option value="">All Types</option>
-                    <option value="NoteTxt">Text</option>
-                    <option value="NoteImg">Image</option>
-                    <option value="NoteVideo">Video</option>
-                    <option value="NoteTodos">Todos</option>
-                </select>
-            </section>
-
+            {/* Externalized filter */}
+            <NoteFilter filterBy={filterBy} onSetFilter={setFilterBy} />
 
             <div className="flex row align-center space-between">
                 <button onClick={onResetDemo}>Reset Demo Notes</button>
