@@ -1,3 +1,5 @@
+const { useState, useEffect } = React
+
 import { NotePreview } from '../cmps/NotePreview.jsx'
 import { NoteList } from '../cmps/NoteList.jsx'
 import { NoteFilter } from '../cmps/NoteFilter.jsx'
@@ -5,8 +7,6 @@ import { NoteFilter } from '../cmps/NoteFilter.jsx'
 import { noteService } from '../services/note.service.js'
 import { utilService } from '../../../services/util.service.js'
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
-
-const { useState, useEffect } = React
 
 export function NoteIndex() {
     const [notes, setNotes] = useState([])
@@ -66,12 +66,7 @@ export function NoteIndex() {
     }
 
     function onDuplicateNote(note) {
-        const duplicate = {
-            ...note,
-            id: utilService.makeId(),
-            createdAt: Date.now(),
-            isPinned: false,
-        }
+        const duplicate = { ...note, id: utilService.makeId(), createdAt: Date.now(), isPinned: false }
 
         noteService.add(duplicate)
             .then(() => {
@@ -106,24 +101,24 @@ export function NoteIndex() {
     }
 
     return (
-        <section className="keep-index flex column align-center">
+        <React.Fragment>
+            <section className="keep-index flex column align-center">
+                <NotePreview onAddNote={onAddNote} />
+                <NoteFilter filterBy={filterBy} onSetFilter={setFilterBy} />
 
-            <NotePreview onAddNote={onAddNote} />
+                <div className="flex row align-center space-between">
+                    <button onClick={onResetDemo}>Reset Demo Notes</button>
+                    <button onClick={onClearAll}>Clear All Notes</button>
+                </div>
 
-            <NoteFilter filterBy={filterBy} onSetFilter={setFilterBy} />
-
-            <div className="flex row align-center space-between">
-                <button onClick={onResetDemo}>Reset Demo Notes</button>
-                <button onClick={onClearAll}>Clear All Notes</button>
-            </div>
-
-            <NoteList
-                notes={notes}
-                onRemoveNote={onRemoveNote}
-                onEditNote={onEditNote}
-                onDuplicateNote={onDuplicateNote}
-                onTogglePin={onTogglePin}
-            />
-        </section>
+                <NoteList
+                    notes={notes}
+                    onRemoveNote={onRemoveNote}
+                    onEditNote={onEditNote}
+                    onDuplicateNote={onDuplicateNote}
+                    onTogglePin={onTogglePin}
+                />
+            </section>
+        </React.Fragment>
     )
 }
