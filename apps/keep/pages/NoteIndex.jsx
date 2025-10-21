@@ -113,7 +113,6 @@ export function NoteIndex() {
 
     return (
         <section className="keep-index flex column align-center">
-            <h2>Keep App</h2>
 
             <NotePreview onAddNote={onAddNote} />
 
