@@ -108,3 +108,45 @@
     z-index: 5;
     cursor: pointer;
 }
+
+body.light-mode .note-preview {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    color: var(--clr-text);
+}
+
+body.light-mode .note-preview:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    color: var(--clr-text);
+}
+
+body.light-mode .note-preview.collapsed {
+    color: var(--clr-text);
+}
+
+body.light-mode .collapsed-placeholder {
+    color: var(--clr-text-light);
+}
+
+body.light-mode .note-preview input {
+    color: var(--clr-text);
+}
+
+body.light-mode .note-preview input::placeholder {
+    color: var(--clr-text-light);
+}
+
+body.light-mode .note-type-btns button {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    color: var(--clr-text);
+}
+
+body.light-mode .note-type-btns button:hover {
+    color: var(--clr-primary-dark);
+    border-color: rgba(0, 0, 0, 0.4);
+}
+
+body.light-mode .color-picker:hover {
+    border-color: rgba(0, 0, 0, 0.4);
+}

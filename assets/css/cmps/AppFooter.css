@@ -1,7 +1,7 @@
 .app-footer {
     padding: var(--space-md);
-    background-color: var(--clr-header);
-    color: var(--clr-header-text);
+    background-color: #1C2944;
+    color: #E8C8FF;
     border-top: 1px solid var(--clr-primary-dark);
     font-size: 0.9rem;
     min-height: 60px;
@@ -9,4 +9,10 @@
 
 .app-footer p {
     margin: 0;
+}
+
+body.dark-mode .app-footer,
+body.light-mode .app-footer {
+    background-color: #1C2944 !important;
+    color: #E8C8FF !important;
 }

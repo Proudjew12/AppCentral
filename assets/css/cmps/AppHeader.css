@@ -1,17 +1,16 @@
 .app-header {
     padding: var(--space-md);
-    background: var(--clr-header);
-    color: var(--clr-header-text);
+    background: #1C2944;
+    color: #E8C8FF;
     border-bottom: 1px solid var(--clr-primary);
 }
 
 .logo {
     height: 4rem;
-
 }
 
 nav a {
-    color: var(--clr-text-invert);
+    color: #E8C8FF;
     text-decoration: none;
     transition: color var(--transition-fast);
     font-size: 0.95rem;
@@ -33,7 +32,7 @@ nav a.active {
 .apps-icon {
     font-size: 1.4rem;
     cursor: pointer;
-    color: var(--clr-text-invert);
+    color: #E8C8FF;
     padding: var(--space-xs);
     border-radius: 50%;
     transition: background var(--transition-fast);
@@ -43,7 +42,6 @@ nav a.active {
     background: rgba(255, 255, 255, 0.15);
 }
 
-/* dropdown */
 .apps-dropdown {
     position: absolute;
     top: 45px;
@@ -106,4 +104,11 @@ nav a.active {
         opacity: 1;
         transform: scale(1) translateY(0);
     }
+}
+
+/* lock colors */
+body.dark-mode .app-header,
+body.light-mode .app-header {
+    background: #1C2944 !important;
+    color: #E8C8FF !important;
 }

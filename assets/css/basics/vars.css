@@ -37,3 +37,34 @@
         radial-gradient(circle at center, #2a2b30 0%, #1a1b1f 70%),
         repeating-conic-gradient(rgba(255, 255, 255, .02) 0deg 10deg, transparent 10deg 20deg);
 }
+
+body.light-mode {
+    --clr-primary: #0a57cf;
+    --clr-primary-light: #4d8ef7;
+    --clr-primary-dark: #073a91;
+
+    --clr-header: #ffffff;
+    --clr-header-text: #1a1a1a;
+
+    --clr-cards: #ffffff;
+    --clr-cards-text: #202124;
+
+    --clr-secondary: #fbbc04;
+    --clr-accent: #ea4335;
+
+    --clr-bg: #fdfdfd;
+    --clr-bg-alt: #f3f6fc;
+
+    --clr-text: #202124;
+    --clr-text-light: #5f6368;
+    --clr-text-invert: #ffffff;
+
+    --bg-gradient-dark:
+        radial-gradient(circle at center, #ffffff 0%, #e8ebf2 70%),
+        repeating-conic-gradient(rgba(0, 0, 0, .015) 0deg 10deg, transparent 10deg 20deg);
+}
+
+body.light-mode {
+    box-shadow: none;
+    transition: all 0.3s ease-in-out;
+}

@@ -37,6 +37,16 @@
 
 }
 
+body.light-mode .keep-index button {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    color: #333;
+}
+
+body.light-mode .keep-index button:hover {
+    color: #000;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
 
 .keep-notes {
     width: 100%;

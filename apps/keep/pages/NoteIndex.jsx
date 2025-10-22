@@ -100,6 +100,13 @@ export function NoteIndex() {
         loadNotes()
     }
 
+    function toggleMode() {
+        document.body.classList.toggle('light-mode')
+    }
+
+
+
+
     return (
         <React.Fragment>
             <section className="keep-index flex column">
@@ -112,6 +119,13 @@ export function NoteIndex() {
                     <div className="flex row align-center gap-sm">
                         <button onClick={onResetDemo}>Reset Demo Notes</button>
                         <button onClick={onClearAll}>Clear All Notes</button>
+                    </div>
+                    <div>
+                        <button onClick={toggleMode} className="btn-toggle-mode">
+                            🌓
+                        </button>
+
+
                     </div>
                 </div>
 
