@@ -199,16 +199,15 @@ function createDemoNotes() {
         },
         {
             id: 'n108',
+            createdAt: Date.now(),
             type: 'NoteMap',
             isPinned: false,
             style: { backgroundColor: utilService.getRandomPastelColor() },
             info: {
                 title: 'Location Info 🗺️',
-                txt: 'Bnei Dan, The New North - Northern part, The New North, Tel Aviv, Tel-Aviv, Tel Aviv Subdistrict, Tel-Aviv District, 6230231, Israel'
-            },
-            createdAt: Date.now()
+                txt: '📍 HaRakevet 22 / Tel Aviv, 6618309 / Israel'
+            }
         }
-
     ]
     utilService.saveToStorage(NOTES_KEY, notes)
     return notes
