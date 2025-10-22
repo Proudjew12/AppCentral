@@ -1,4 +1,5 @@
 import { showSuccessMsg } from '../../../services/event-bus.service.js'
+import { CustomAudioPlayer } from './CustomPlayer.jsx'
 
 export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onTogglePin }) {
     if (!notes || !notes.length)
@@ -10,8 +11,6 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
         )
 
     async function onNoteClick(note) {
-
-        // 📝 Handle Todo Notes
         if (note.type === 'NoteTodos') {
             const currentTitle = note.info.title || ''
             const currentTodos = (note.info.todos || []).map(todo => todo.txt).join(', ')
@@ -58,7 +57,6 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
             return
         }
 
-        // 🎨 Handle Canvas Notes
         if (note.type === 'NoteCanvas') {
             const result = await Swal.fire({
                 title: note.info.title || 'Canvas Drawing 🎨',
@@ -80,7 +78,6 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
             return onRemoveNote(note.id)
         }
 
-        // 🗒️ Handle all other note types
         const result = await Swal.fire({
             title: '🗒️ Note Options',
             input: 'textarea',
@@ -117,7 +114,6 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
         }
     }
 
-    // 🔍 Render the content of each note
     function renderNoteContent(note) {
         switch (note.type) {
             case 'NoteTxt':
@@ -165,12 +161,12 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                 )
 
             case 'NoteAudio':
+            case 'NoteRecording':
                 const audioSrc = note.info.url || note.info.txt
                 return (
                     <div className="note-audio flex column align-center justify-center grow">
-                        <audio controls src={audioSrc} style={{ width: '100%' }}>
-                            Your browser does not support the audio tag.
-                        </audio>
+                        <CustomAudioPlayer src={audioSrc} />
+                        {note.info.title && <p>{note.info.title}</p>}
                     </div>
                 )
 
@@ -185,18 +181,6 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                         {note.info.title && (
                             <p style={{ marginTop: '8px', fontWeight: 500 }}>{note.info.title}</p>
                         )}
-                    </div>
-                )
-
-            case 'NoteRecording':
-                return (
-                    <div className="note-recording flex column align-center justify-center grow">
-                        <audio
-                            controls
-                            src={note.info.url || note.info.txt}
-                            style={{ width: '100%', maxWidth: '320px' }}
-                        ></audio>
-                        {note.info.title && <p>{note.info.title}</p>}
                     </div>
                 )
 
