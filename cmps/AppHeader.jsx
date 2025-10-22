@@ -24,7 +24,8 @@ export function AppHeader() {
         >
 
             <Link to="/" className="flex align-center gap-sm">
-                <img src="./logo/logo.png" alt="Logo" />
+                <img src={`../logo/logo.png`} alt="Logo" />
+
             </Link>
 
             <nav className="flex align-center gap-md" onClick={stop}>
