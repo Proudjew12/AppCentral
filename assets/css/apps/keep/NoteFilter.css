@@ -1,17 +1,37 @@
 .note-filter input,
 .note-filter select {
-    font-size: 1rem;
+    font-size: 1.05rem;
     padding: 6px 10px;
     border-radius: 6px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid #fff;
+    background-color: transparent;
+    color: var(--clr-text-invert);
     outline: none;
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    appearance: none;
+}
+
+.note-filter input:hover,
+.note-filter select:hover {
+    color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.7);
 }
 
 .note-filter input:focus,
 .note-filter select:focus {
-    border-color: var(--clr-primary);
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.note-filter select option {
+    background-color: rgba(20, 20, 20, 0.9);
+    /* semi-transparent dark background */
+    color: #fff;
+    border: none;
+}
+
+.note-filter select::-ms-expand {
+    display: none;
 }
 
 .note-filter {

@@ -1,9 +1,7 @@
 .keep-index {
     gap: var(--space-md);
     padding-top: var(--space-sm);
-    /* smaller top spacing */
     padding-bottom: var(--space-md);
-    /* keep light space below */
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
@@ -23,19 +21,22 @@
 }
 
 .keep-index button {
-    background-color: var(--clr-primary-light);
+    background-color: transparent;
     color: var(--clr-text-invert);
-    border: none;
+    border: 1px solid #fff;
     border-radius: 8px;
     padding: 0.5em 1em;
     cursor: pointer;
     font-weight: 500;
-    transition: background-color var(--transition-fast);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .keep-index button:hover {
-    background-color: var(--clr-primary);
+    background-color: #ffffff00;
+    color: rgba(255, 255, 255, 0.789);
+
 }
+
 
 .keep-notes {
     width: 100%;

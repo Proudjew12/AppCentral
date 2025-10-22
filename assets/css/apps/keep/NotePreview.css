@@ -1,19 +1,21 @@
 .note-preview {
     position: relative;
-    background-color: #fff;
-    border: 1px solid #dadce0;
+    background-color: transparent;
+    border: 1px solid #fff;
     border-radius: 8px;
     padding: 12px 16px;
     width: 100%;
     max-width: 640px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
     transition: all 0.25s ease;
     overflow: hidden;
     z-index: 10;
+    color: var(--clr-text-invert);
 }
 
 .note-preview:hover {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .note-preview.collapsed {
@@ -21,82 +23,82 @@
     max-height: 60px;
     opacity: 0.95;
     cursor: text;
+
 }
 
 .collapsed-placeholder {
-    font-size: 2rem;
-    color: #777;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.6);
     user-select: none;
     width: 100%;
     padding-left: 8px;
-    margin-top: 0%
+    margin-top: 1%;
 }
 
 .note-preview.expanded {
     opacity: 1;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
     max-height: none;
     padding-top: 16px;
+
 }
 
 .note-preview input {
     border: none;
     outline: none;
     font-size: 1.05rem;
-    color: #333;
+    color: var(--clr-text-invert);
     padding: 10px 12px;
     background: transparent;
     width: 100%;
     min-height: 44px;
+
 }
 
 .note-preview input::placeholder {
-    color: #999;
+    color: rgba(255, 255, 255, 0.6);
+
 }
 
 .note-preview.collapsed .note-type-btns {
     display: none;
+
 }
 
 .note-type-btns button {
     background: transparent;
-    border: none;
+    border: 1px solid #fff;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 1.1rem;
-    color: #aaa;
-    transition: color 0.2s ease, transform 0.2s ease;
+    color: var(--clr-text-invert);
+    transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    padding: 0.4em 0.6em;
 }
 
 .note-type-btns button.active,
 .note-type-btns button:hover {
-    color: #333;
-    transform: scale(1.1);
+    color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: scale(1.05);
 }
 
 .color-picker {
     width: 32px;
     height: 32px;
-    border: none;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    background: transparent;
     cursor: pointer;
     margin-left: 8px;
-    background: transparent;
     padding: 0;
     appearance: none;
     transition: transform 0.15s ease, border-color 0.2s ease;
 }
 
-.color-picker::-webkit-color-swatch-wrapper {
-    padding: 0;
-}
-
-.color-picker::-webkit-color-swatch,
-.color-picker::-moz-color-swatch {
-    border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, 0.25);
-}
-
 .color-picker:hover {
     transform: scale(1.1);
+    border-color: rgba(255, 255, 255, 0.8);
 }
 
 .note-overlay {
