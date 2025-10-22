@@ -11,6 +11,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
 
     async function onNoteClick(note) {
 
+        // 📝 Handle Todo Notes
         if (note.type === 'NoteTodos') {
             const currentTitle = note.info.title || ''
             const currentTodos = (note.info.todos || []).map(todo => todo.txt).join(', ')
@@ -18,9 +19,9 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
             const { value: formValues, isDenied, dismiss, isConfirmed } = await Swal.fire({
                 title: '📝 Edit Todo Note',
                 html: `
-                <input id="swal-input1" class="swal2-input" placeholder="Title" value="${currentTitle}">
-                <textarea id="swal-input2" class="swal2-textarea" placeholder="Todos (comma separated)">${currentTodos}</textarea>
-            `,
+                    <input id="swal-input1" class="swal2-input" placeholder="Title" value="${currentTitle}">
+                    <textarea id="swal-input2" class="swal2-textarea" placeholder="Todos (comma separated)">${currentTodos}</textarea>
+                `,
                 focusConfirm: false,
                 showCancelButton: true,
                 confirmButtonText: 'Save',
@@ -37,15 +38,8 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                 }
             })
 
-            if (isDenied) {
-                onRemoveNote(note.id)
-                return
-            }
-
-            if (dismiss === Swal.DismissReason.cancel) {
-                onDuplicateNote(note)
-                return
-            }
+            if (isDenied) return onRemoveNote(note.id)
+            if (dismiss === Swal.DismissReason.cancel) return onDuplicateNote(note)
 
             if (isConfirmed && formValues) {
                 const todos = formValues.todosText
@@ -64,38 +58,46 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
             return
         }
 
+        // 🎨 Handle Canvas Notes
         if (note.type === 'NoteCanvas') {
-            await Swal.fire({
+            const result = await Swal.fire({
                 title: note.info.title || 'Canvas Drawing 🎨',
                 html: `
-            <img src="${note.info.url || note.info.txt}" 
-                 alt="Canvas drawing" 
-                 style="width: 100%; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.2)" />
-        `,
+                    <img src="${note.info.url || note.info.txt}" 
+                        alt="Canvas drawing" 
+                        style="width: 100%; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.2)" />
+                `,
                 showCancelButton: true,
                 confirmButtonText: '📋 Duplicate',
                 cancelButtonText: '🗑️ Delete',
                 reverseButtons: true,
                 background: (note.style && note.style.backgroundColor) || '#fff',
                 color: '#111',
-            }).then((result) => {
-                if (result.isDismissed) return
-                if (result.isConfirmed) onDuplicateNote(note)
-                else onRemoveNote(note.id)
             })
-            return
+
+            if (result.isDismissed) return
+            if (result.isConfirmed) return onDuplicateNote(note)
+            return onRemoveNote(note.id)
         }
 
+        // 🗒️ Handle all other note types
+        const result = await Swal.fire({
+            title: '🗒️ Note Options',
+            input: 'textarea',
+            inputValue: note.info.txt || note.info.url || note.info.title || '',
+            inputPlaceholder: 'Edit your note...',
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            cancelButtonText: '📋 Duplicate',
+            showDenyButton: true,
+            denyButtonText: '🗑️ Delete',
+            reverseButtons: true,
+            background: (note.style && note.style.backgroundColor) || '#fff',
+            color: '#111',
+        })
 
-        if (result.isDenied) {
-            onRemoveNote(note.id)
-            return
-        }
-
-        if (result.dismiss === Swal.DismissReason.cancel) {
-            onDuplicateNote(note)
-            return
-        }
+        if (result.isDenied) return onRemoveNote(note.id)
+        if (result.dismiss === Swal.DismissReason.cancel) return onDuplicateNote(note)
 
         if (result.isConfirmed && result.value !== undefined) {
             let updatedNote = { ...note }
@@ -115,9 +117,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
         }
     }
 
-
-
-
+    // 🔍 Render the content of each note
     function renderNoteContent(note) {
         switch (note.type) {
             case 'NoteTxt':
@@ -129,7 +129,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                         <img
                             src={note.info.url}
                             alt={note.info.title || 'Note image'}
-                            onError={(ev) => ev.target.style.display = 'none'}
+                            onError={(ev) => (ev.target.style.display = 'none')}
                         />
                         {note.info.title && <p>{note.info.title}</p>}
                     </div>
@@ -141,10 +141,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                         <h4>{note.info.title}</h4>
                         <ul className="clean-list">
                             {note.info.todos.map((todo, idx) => (
-                                <li
-                                    key={idx}
-                                    className={todo.doneAt ? 'done' : ''}
-                                >
+                                <li key={idx} className={todo.doneAt ? 'done' : ''}>
                                     {todo.txt}
                                 </li>
                             ))}
@@ -176,20 +173,15 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                         </audio>
                     </div>
                 )
+
             case 'NoteCanvas':
                 const canvasImg = note.info.url || note.info.txt
                 return (
                     <div
                         className="note-canvas flex column align-center justify-center grow"
-                        style={{
-                            width: '100%',
-                            padding: '0.5em',
-                        }}
+                        style={{ width: '100%', padding: '0.5em' }}
                     >
-                        <img
-                            src={canvasImg}
-                            alt={note.info.title || 'Canvas drawing'}
-                        />
+                        <img src={canvasImg} alt={note.info.title || 'Canvas drawing'} />
                         {note.info.title && (
                             <p style={{ marginTop: '8px', fontWeight: 500 }}>{note.info.title}</p>
                         )}
@@ -215,9 +207,6 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                         dangerouslySetInnerHTML={{ __html: note.info.txt }}
                     ></div>
                 )
-
-
-
 
             default:
                 return <p>Unsupported note type</p>
@@ -245,7 +234,6 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                     }}
                     onClick={() => onNoteClick(note)}
                 >
-
                     <button
                         className={`btn-pin ${note.isPinned ? 'active' : ''}`}
                         title={note.isPinned ? 'Unpin note' : 'Pin note'}
@@ -259,7 +247,6 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
 
                     {renderNoteContent(note)}
                 </article>
-
             ))}
         </section>
     )
