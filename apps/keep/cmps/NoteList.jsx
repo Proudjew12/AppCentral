@@ -1,6 +1,8 @@
 import { showSuccessMsg } from '../../../services/event-bus.service.js'
+import { mailService } from '../../mail/services/mail.service.js'
 import { CustomAudioPlayer } from './CustomPlayer.jsx'
 
+const { Link, useSearchParams } = ReactRouterDOM
 export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onTogglePin }) {
     if (!notes || !notes.length)
         return (
@@ -106,8 +108,8 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                 case 'NoteImg':
                 case 'NoteVideo':
                     updatedNote.info.url = result.value
-                case 'NoteMail' :
-                    updatedNote.info.body = result.value    
+                case 'NoteMail':
+                    updatedNote.info.body = result.value
                     break
             }
 
@@ -194,12 +196,12 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                     ></div>
                 )
             case 'NoteMail':
-                return(
+                return (
                     <div
-                     className="note-todos flex column align-start justify-center grow"
+                        className="note-todos flex column align-start justify-center grow"
                     >
-                      <h4>To: {note.info.to}</h4>
-                      <p>Subject: {note.info.title}</p>  
+                        <h4>To: {note.info.to}</h4>
+                        <p>Subject: {note.info.title}</p>
                     </div>
                 )
             default:
@@ -213,7 +215,27 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
         if (url.includes('youtu.be/')) return url.replace('youtu.be/', 'www.youtube.com/embed/')
         return url
     }
-
+    function onMoveData(ev,note) {
+        ev.stopPropagation()
+        const body = note.info.todos.map(
+            todo=>todo.txt
+        ).join(' ')
+        const mail = {
+            id: '',
+            createdAt: Date.now(),
+            subject: note.info.title,
+            body: body,
+            isRead: true,
+            sentAt: Date.now(),
+            removedAt: null,
+            from: mailService.getUser().email,
+            to: "Notes@mails.com",
+            starred: false
+        }
+        mailService.save(mail)
+        
+        
+    }
     return (
         <section className="keep-notes grid">
             {notes.map(note => (
@@ -240,8 +262,17 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                     </button>
 
                     {renderNoteContent(note)}
+                   {(note.type === 'NoteTodos')?<Link to='/mail'><button onClick={(ev)=>{onMoveData(ev,note)}}><MailIcon /></button></Link>:''} 
                 </article>
             ))}
         </section>
     )
+}
+function MailIcon() {
+    return <svg xmlns="http://www.w3.org/2000/svg"
+        height="24px" viewBox="0 -960 960 960" width="24px"
+        fill="#1f1f1f"><path d="M160-160q-33 0-56.5-23.5T80-240v
+      -480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0
+       33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480
+       -440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/></svg>
 }
