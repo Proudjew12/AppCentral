@@ -98,7 +98,14 @@ function getEmptyNote(txt = '', type = 'NoteTxt') {
                 info: { url: txt, title: 'Voice Note 🎤' },
                 createdAt: Date.now()
             }
-
+        case 'NoteMail':
+            return{
+                type,
+                isPinned: false,
+                style: { backgroundColor: utilService.getRandomPastelColor() },
+                info: { to: txt.to ,title: txt.subject, body: txt.body},
+                createdAt: Date.now(),
+            }
 
 
         default:

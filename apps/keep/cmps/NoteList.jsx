@@ -81,7 +81,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
         const result = await Swal.fire({
             title: '🗒️ Note Options',
             input: 'textarea',
-            inputValue: note.info.txt || note.info.url || note.info.title || '',
+            inputValue: note.info.body || note.info.txt || note.info.url || note.info.title || '',
             inputPlaceholder: 'Edit your note...',
             showCancelButton: true,
             confirmButtonText: 'Save',
@@ -106,6 +106,8 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                 case 'NoteImg':
                 case 'NoteVideo':
                     updatedNote.info.url = result.value
+                case 'NoteMail' :
+                    updatedNote.info.body = result.value    
                     break
             }
 
@@ -191,7 +193,15 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                         dangerouslySetInnerHTML={{ __html: note.info.txt }}
                     ></div>
                 )
-
+            case 'NoteMail':
+                return(
+                    <div
+                     className="note-todos flex column align-start justify-center grow"
+                    >
+                      <h4>To: {note.info.to}</h4>
+                      <p>Subject: {note.info.title}</p>  
+                    </div>
+                )
             default:
                 return <p>Unsupported note type</p>
         }

@@ -33,7 +33,7 @@ export function MailList({ mails, removeMail, toggleIsStarred, toggleIsRead, onO
                                         <span>{mail.from}</span>
                                     </div>
 
-                                    <span><LongTxt txt={mail.body} length={20} /></span>
+                                    <span className='body-span'><LongTxt txt={mail.body} length={20} /></span>
                                     <div className='date-and-remove-btn-container'>
                                         <span>{getDate(mail.sentAt)}</span>
                                         <button className='remove-btn' onClick={(ev) => { removeMail(ev, mail.id) }}>

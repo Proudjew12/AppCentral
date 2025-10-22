@@ -28,7 +28,20 @@
   justify-content: center !important;
   border-radius: 0px !important;
 }
-.closeComposeBtn:hover {
+.intergration-btn{
+  position: absolute !important;
+  right: 30px !important;
+  background-color: transparent !important;
+  border: 0px !important;
+  width: 30px !important;
+  aspect-ratio: 1 !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  border-radius: 0px !important;
+}
+.closeComposeBtn:hover,.intergration-btn:hover {
   background-color: #dadce0 !important;
 }
 .compose-title {
