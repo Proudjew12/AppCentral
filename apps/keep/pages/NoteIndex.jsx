@@ -36,18 +36,29 @@ export function NoteIndex() {
         })
     }
 
-    function onAddNote({ txt, type, color }) {
-        const noteType = type || 'NoteTxt'
-        const note = noteService.getEmptyNote(txt, noteType)
-        note.style = { backgroundColor: color }
+    function onAddNote(newNote) {
+        let noteToSave
 
-        noteService.save(note)
+        if (newNote.info) {
+            noteToSave = {
+                ...noteService.getEmptyNote('', newNote.type),
+                ...newNote,
+                createdAt: Date.now(),
+            }
+        } else {
+            const noteType = newNote.type || 'NoteTxt'
+            noteToSave = noteService.getEmptyNote(newNote.txt, noteType)
+            noteToSave.style = { backgroundColor: newNote.color }
+        }
+
+        noteService.save(noteToSave)
             .then(() => {
                 showSuccessMsg('✅ Note added!')
                 loadNotes()
             })
             .catch(() => showErrorMsg('❌ Failed to add note'))
     }
+
 
     function onRemoveNote(noteId) {
         noteService.remove(noteId)

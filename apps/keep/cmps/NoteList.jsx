@@ -10,6 +10,60 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
         )
 
     async function onNoteClick(note) {
+
+        if (note.type === 'NoteTodos') {
+            const currentTitle = note.info.title || ''
+            const currentTodos = (note.info.todos || []).map(todo => todo.txt).join(', ')
+
+            const { value: formValues, isDenied, dismiss, isConfirmed } = await Swal.fire({
+                title: '📝 Edit Todo Note',
+                html: `
+                <input id="swal-input1" class="swal2-input" placeholder="Title" value="${currentTitle}">
+                <textarea id="swal-input2" class="swal2-textarea" placeholder="Todos (comma separated)">${currentTodos}</textarea>
+            `,
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                cancelButtonText: '📋 Duplicate',
+                showDenyButton: true,
+                denyButtonText: '🗑️ Delete',
+                background: (note.style && note.style.backgroundColor) || '#fff',
+                color: '#111',
+                reverseButtons: true,
+                preConfirm: () => {
+                    const title = document.getElementById('swal-input1').value
+                    const todosText = document.getElementById('swal-input2').value
+                    return { title, todosText }
+                }
+            })
+
+            if (isDenied) {
+                onRemoveNote(note.id)
+                return
+            }
+
+            if (dismiss === Swal.DismissReason.cancel) {
+                onDuplicateNote(note)
+                return
+            }
+
+            if (isConfirmed && formValues) {
+                const todos = formValues.todosText
+                    .split(',')
+                    .map(txt => ({ txt: txt.trim(), doneAt: null }))
+                    .filter(todo => todo.txt)
+
+                const updatedNote = {
+                    ...note,
+                    info: { ...note.info, title: formValues.title.trim(), todos }
+                }
+
+                onEditNote(updatedNote)
+                showSuccessMsg('✅ Todo note updated!')
+            }
+            return
+        }
+
         const result = await Swal.fire({
             title: '🗒️ Note Options',
             input: 'textarea',
@@ -46,15 +100,14 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
                 case 'NoteVideo':
                     updatedNote.info.url = result.value
                     break
-                case 'NoteTodos':
-                    updatedNote.info.title = result.value
-                    break
             }
 
             onEditNote(updatedNote)
             showSuccessMsg('✅ Note updated!')
         }
     }
+
+
 
 
     function renderNoteContent(note) {
