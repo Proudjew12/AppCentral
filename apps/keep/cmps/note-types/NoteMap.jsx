@@ -26,11 +26,18 @@ export function NoteMap({ onAddNote, color }) {
                     `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
                 )
                 const data = await res.json()
-                const locationName =
-                    data.display_name || `Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`
+
+                const addr = data.address || {}
+                const street = addr.road || addr.suburb || 'Unknown Street'
+                const houseNumber = addr.house_number || ''
+                const city = addr.city || addr.town || addr.village || 'Unknown City'
+                const postcode = addr.postcode || 'No Zipcode'
+                const country = addr.country || 'Unknown Country'
+
+                const locationInfo = `📍 ${street} ${houseNumber} / ${city}, ${postcode} / ${country}`
 
                 onAddNote({
-                    txt: locationName,
+                    txt: locationInfo,
                     type: 'NoteMap',
                     color,
                 })
@@ -43,6 +50,8 @@ export function NoteMap({ onAddNote, color }) {
                 })
             }
         })
+
+
 
         mapRef.current = map
     }, [])

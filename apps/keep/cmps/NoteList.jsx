@@ -64,7 +64,6 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
             return
         }
 
-        // 🎨 Special case: show the canvas image
         if (note.type === 'NoteCanvas') {
             await Swal.fire({
                 title: note.info.title || 'Canvas Drawing 🎨',
@@ -211,10 +210,12 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
 
             case 'NoteMap':
                 return (
-                    <div className="note-map-preview flex column align-center grow">
-                        <p>{note.info.txt}</p>
-                    </div>
+                    <div
+                        className="note-map-preview flex column align-start grow"
+                        dangerouslySetInnerHTML={{ __html: note.info.txt }}
+                    ></div>
                 )
+
 
 
 
