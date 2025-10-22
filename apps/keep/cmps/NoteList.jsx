@@ -64,20 +64,29 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onDuplicateNote, onT
             return
         }
 
-        const result = await Swal.fire({
-            title: '🗒️ Note Options',
-            input: 'textarea',
-            inputValue: note.info.txt || note.info.url || note.info.title || '',
-            inputPlaceholder: 'Edit your note...',
-            showCancelButton: true,
-            confirmButtonText: 'Save',
-            cancelButtonText: '📋 Duplicate',
-            showDenyButton: true,
-            denyButtonText: '🗑️ Delete',
-            reverseButtons: true,
-            background: (note.style && note.style.backgroundColor) || '#fff',
-            color: '#111',
-        })
+        // 🎨 Special case: show the canvas image
+        if (note.type === 'NoteCanvas') {
+            await Swal.fire({
+                title: note.info.title || 'Canvas Drawing 🎨',
+                html: `
+            <img src="${note.info.url || note.info.txt}" 
+                 alt="Canvas drawing" 
+                 style="width: 100%; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.2)" />
+        `,
+                showCancelButton: true,
+                confirmButtonText: '📋 Duplicate',
+                cancelButtonText: '🗑️ Delete',
+                reverseButtons: true,
+                background: (note.style && note.style.backgroundColor) || '#fff',
+                color: '#111',
+            }).then((result) => {
+                if (result.isDismissed) return
+                if (result.isConfirmed) onDuplicateNote(note)
+                else onRemoveNote(note.id)
+            })
+            return
+        }
+
 
         if (result.isDenied) {
             onRemoveNote(note.id)
