@@ -21,3 +21,20 @@
 .back-btn:hover {
   background-color: #f1f3f4;
 }
+.intergration-btn{
+  position: absolute !important;
+  right: 100px !important;
+  background-color: transparent !important;
+  border: 0px !important;
+  width: 50px !important;
+  aspect-ratio: 1 !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  border-radius: 0px !important;
+  border: 1px solid black !important;
+}
+.intergration-btn:hover{
+  background-color: #dadce0 !important;
+}
