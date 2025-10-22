@@ -39,3 +39,7 @@
     font-family: "Font Awesome Brands";
     src: url("/fonts/fa/fa-brands-400.woff2") format("woff2");
 }
+@font-face {
+    font-family: 'Roboto';
+    src: url(/fonts/Roboto/Roboto_Condensed-Regular.ttf);
+}

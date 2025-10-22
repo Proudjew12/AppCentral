@@ -12,9 +12,10 @@ export function MailDetails(){
     const params = useParams()
     const navigate = useNavigate()
 
+
     useEffect(() => {
         loadMail()
-        //mailService.save({...mail,isRead:true})
+        makeMailRead(params.mailId)
     }, [params.mailId])
 
     function loadMail() {
@@ -40,5 +41,13 @@ function BackIcon(){
         <svg xmlns="http://www.w3.org/2000/svg" 
         height="24px" viewBox="0 -960 960 960" width="24px" 
         fill="#1f1f1f"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
+    )
+}
+function makeMailRead(mailId){
+    mailService.get(mailId)
+      .then(prevMail => {
+        const updatedMail = { ...prevMail, isRead:true }
+        mailService.save(updatedMail)
+      }
     )
 }

@@ -20,7 +20,8 @@
   transition: all 0.15s ease;
 }
 .mail:hover .remove-btn,
-.mail:hover .read-btn {
+.mail:hover .read-btn,
+.mail:hover .edit-btn {
   visibility: visible;
 }
 .star-btn{
@@ -37,7 +38,7 @@
   align-items: center;
   gap: 10px;
 }
-.remove-btn, .read-btn {
+.remove-btn, .read-btn,.edit-btn {
   z-index: 10;
   border-radius: 50%;
   background-color: transparent;
@@ -46,6 +47,12 @@
   padding: 10px;
   cursor: pointer;
 }
-.remove-btn:hover, .read-btn:hover {
+.remove-btn:hover, .read-btn:hover,.edit-btn:hover {
   background-color: #f1f3f4;
+}
+.star-and-to-container{
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+  align-items: center;
 }

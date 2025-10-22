@@ -1,59 +1,11 @@
 import { mailService } from "../services/mail.service.js";
 
 const { useState, useEffect, useRef } = React
-export function MailCompose({ addMail }) {
-  const [open, setOpen] = useState(false);
-  const [mail, setMail] = useState(mailService.getEmptyMail())
-  const intervalRef = useRef()
-  /*useEffect(() => {
-    if (open){ 
-      console.log('open');
-      
-     intervalRef.current = setInterval(() => {
-      console.log('saving');
-
-      saveDraft()
-    }, 5000)
-    } 
-   if(!open)clearInterval(intervalRef.current)
-    
-  }, [open])
-  function saveDraft() {
-    console.log(mail);
-      mailService.save(mail)
-        .then(
-          newMail => {
-          
-          setMail(newMail)
-    })
-  } */
-  function handleChange({ target }) {
-    const { value, name: prop } = target
-    setMail((prevMail) => ({ ...prevMail, [prop]: value }))
-  }
-  function onAddMail(ev) {
-    setMail((prevMail) => ({ ...prevMail, sentAt: Date.now() }))
-    ev.preventDefault()
-    addMail(mail)
-    setOpen(false)
-  }
+export function MailCompose({onOpenModal}) {
+  
   return (
     <section className='mail-compose-container'>
-      <button className='compose-btn' onClick={() => { setOpen(true) }}><WriteIcon /> Compose</button>
-      <dialog open={open} className='compose-modal'>
-        <div className='compose-title'>
-          <p>New message</p>
-          <button className='closeComposeBtn' onClick={() => { setOpen(false) }}>X</button>
-        </div>
-        <div className='form-container'>
-          <form method='dialog' onSubmit={(ev) => { onAddMail(ev) }}>
-            <input name='to' onChange={handleChange} type='text' placeholder='To' /><br />
-            <input name='subject' onChange={handleChange} type='text' placeholder='Subject' /><br />
-            <textarea rows='5' cols='50' name='body' onChange={handleChange}></textarea><br />
-            <button type='submit' className='btn-send'>Send</button>
-          </form>
-        </div>
-      </dialog>
+      <button className='compose-btn' onClick={onOpenModal}><WriteIcon /> Compose</button>
     </section>
   )
 }
